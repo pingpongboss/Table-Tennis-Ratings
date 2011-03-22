@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	android:orientation="vertical">
+	<include layout="@layout/action_bar" android:id="@+id/action_bar" android:layout_width="fill_parent" android:layout_height="25dp"></include>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal"
+		android:id="@+id/searchLinearLayout">
+		<EditText android:layout_height="wrap_content"
+			android:id="@+id/playerNameEditText" android:inputType="textCapWords" android:imeOptions="actionSearch" android:hint="Last, First" android:layout_weight="1" android:layout_width="0dp"></EditText>
+		<Button android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="Search" android:id="@+id/searchButton"></Button>
+	</LinearLayout>
+	<ListView android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:id="@id/android:list" android:fastScrollEnabled="true"></ListView>
+	<TextView android:id="@id/android:empty" android:text="No History"
+		android:layout_height="fill_parent" android:layout_width="fill_parent"
+		android:gravity="center"></TextView>
+</LinearLayout>
