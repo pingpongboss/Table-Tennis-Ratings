@@ -48,30 +48,18 @@ public class FragmentPlayerSearch extends Fragment {
 	String mRCQuery, mUSATTQuery;
 
 	ListView rcListView, usattListView;
-	EditText rcNameInput, usattNameInput;
 	Button rcSearchButton, usattSearchButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (savedInstanceState != null) {
-			mRCHistory = savedInstanceState.getStringArrayList("rchistory");
-			mRCQuery = savedInstanceState.getString("rcquery");
-			mUSATTHistory = savedInstanceState
-					.getStringArrayList("usatthistory");
-			mUSATTQuery = savedInstanceState.getString("usattquery");
-			mProvider = savedInstanceState.getString("provider");
-			mCurrentScreen = savedInstanceState.getInt("currentscreen");
-			mSearching = savedInstanceState.getBoolean("searching");
-		} else {
-			mRCHistory = retrieveHistory("rc");
-			mRCQuery = null;
-			mUSATTHistory = retrieveHistory("usatt");
-			mUSATTQuery = null;
-			mCurrentScreen = 0;
-			mSearching = false;
-		}
+		mRCHistory = retrieveHistory("rc");
+		mRCQuery = null;
+		mUSATTHistory = retrieveHistory("usatt");
+		mUSATTQuery = null;
+		mCurrentScreen = 0;
+		mSearching = false;
 
 		setRetainInstance(true);
 	}
@@ -84,7 +72,7 @@ public class FragmentPlayerSearch extends Fragment {
 		View rcView = inflater.inflate(R.layout.fragment_player_search_rc,
 				null, false);
 		((TextView) rcView.findViewById(R.id.title)).setText("Ratings Central");
-		rcNameInput = (EditText) rcView.findViewById(R.id.playerNameEditText);
+		final EditText rcNameInput = (EditText) rcView.findViewById(R.id.rcPlayerNameEditText);
 
 		rcListView = (ListView) rcView.findViewById(android.R.id.list);
 		rcListView.setAdapter(new ArrayAdapter<String>(getActivity(),
@@ -135,8 +123,8 @@ public class FragmentPlayerSearch extends Fragment {
 		View usattView = inflater.inflate(
 				R.layout.fragment_player_search_usatt, null, false);
 		((TextView) usattView.findViewById(R.id.title)).setText("USATT");
-		usattNameInput = (EditText) usattView
-				.findViewById(R.id.playerNameEditText);
+		final EditText usattNameInput = (EditText) usattView
+				.findViewById(R.id.usattPlayerNameEditText);
 
 		usattListView = (ListView) usattView.findViewById(android.R.id.list);
 		usattListView.setAdapter(new ArrayAdapter<String>(getActivity(),
@@ -226,12 +214,6 @@ public class FragmentPlayerSearch extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		if (savedInstanceState != null) {
-			rcNameInput.setText(savedInstanceState.getString("currentRCinput"));
-			usattNameInput.setText(savedInstanceState
-					.getString("currentUSATTinput"));
-		}
-
 		View contentFrame = getActivity().findViewById(R.id.content);
 		mDualPane = contentFrame != null
 				&& contentFrame.getVisibility() == View.VISIBLE;
@@ -286,23 +268,6 @@ public class FragmentPlayerSearch extends Fragment {
 			editor.putString("usatthistory" + i++, q);
 		}
 		editor.commit();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		outState.putStringArrayList("rchistory", mRCHistory);
-		outState.putString("rcquery", mRCQuery);
-		outState.putStringArrayList("usatthistory", mUSATTHistory);
-		outState.putString("usattquery", mUSATTQuery);
-		outState.putString("provider", mProvider);
-		outState.putInt("currentscreen", mCurrentScreen);
-
-		outState.putString("currentRCinput", rcNameInput.getText().toString());
-		outState.putString("currentUSATTinput", usattNameInput.getText()
-				.toString());
-		outState.putBoolean("searching", mSearching);
 	}
 
 	private ArrayList<String> retrieveHistory(String provider) {

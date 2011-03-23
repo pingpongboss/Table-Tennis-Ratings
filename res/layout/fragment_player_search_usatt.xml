@@ -2,17 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	android:orientation="vertical">
-    <include android:layout_height="25dp" android:layout_width="fill_parent" layout="@layout/action_bar" android:id="@+id/action_bar"></include>
+	<include android:layout_height="25dp" android:layout_width="fill_parent"
+		layout="@layout/action_bar" android:id="@+id/action_bar"></include>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal"
 		android:id="@+id/searchLinearLayout">
-		<EditText android:layout_height="wrap_content" android:id="@+id/playerNameEditText"
-			android:inputType="textCapWords"
-			android:imeOptions="actionSearch" android:hint="Last Name" android:layout_width="0dp" android:layout_weight="1"></EditText>
-		<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/searchButton" android:text="Search"></Button>
+		<EditText android:layout_height="wrap_content" android:inputType="textCapWords" android:imeOptions="actionSearch"
+			android:hint="Last Name" android:layout_width="0dp"
+			android:layout_weight="1" android:id="@+id/usattPlayerNameEditText"></EditText>
+		<Button android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/searchButton"
+			android:text="Search"></Button>
 	</LinearLayout>
 	<ListView android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:id="@id/android:list" android:fastScrollEnabled="true"></ListView>
+		android:layout_height="fill_parent" android:id="@id/android:list"
+		android:fastScrollEnabled="true"></ListView>
 	<TextView android:id="@id/android:empty" android:text="No History"
 		android:layout_height="fill_parent" android:layout_width="fill_parent"
 		android:gravity="center"></TextView>
