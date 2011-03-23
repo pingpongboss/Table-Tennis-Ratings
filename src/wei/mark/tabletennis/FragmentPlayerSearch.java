@@ -6,12 +6,15 @@ import org.jared.commons.ui.OnLoadListener;
 import org.jared.commons.ui.OnScrollToScreenListener;
 import org.jared.commons.ui.WorkspaceView;
 
+import wei.mark.tabletennis.FragmentProgressBar.ProgressBarState;
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.ProviderParser;
 import wei.mark.tabletennis.util.RatingsCentralParser;
 import wei.mark.tabletennis.util.USATTParser;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -72,7 +75,8 @@ public class FragmentPlayerSearch extends Fragment {
 		View rcView = inflater.inflate(R.layout.fragment_player_search_rc,
 				null, false);
 		((TextView) rcView.findViewById(R.id.title)).setText("Ratings Central");
-		final EditText rcNameInput = (EditText) rcView.findViewById(R.id.rcPlayerNameEditText);
+		final EditText rcNameInput = (EditText) rcView
+				.findViewById(R.id.rcPlayerNameEditText);
 
 		rcListView = (ListView) rcView.findViewById(android.R.id.list);
 		rcListView.setAdapter(new ArrayAdapter<String>(getActivity(),
@@ -295,16 +299,27 @@ public class FragmentPlayerSearch extends Fragment {
 		return history;
 	}
 
-	private void removeFromHistory(String provider, String item) {
-		// TODO confirm
-		if ("rc".equals(provider)) {
-			mRCHistory.remove(item);
-			((ArrayAdapter<?>) rcListView.getAdapter()).notifyDataSetChanged();
-		} else if ("usatt".equals(provider)) {
-			mUSATTHistory.remove(item);
-			((ArrayAdapter<?>) usattListView.getAdapter())
-					.notifyDataSetChanged();
-		}
+	private void removeFromHistory(final String provider, final String item) {
+		new AlertDialog.Builder(getActivity())
+				.setTitle(String.format("Remove %s from History?", item))
+				.setPositiveButton("Remove",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if ("rc".equals(provider)) {
+									mRCHistory.remove(item);
+									((ArrayAdapter<?>) rcListView.getAdapter())
+											.notifyDataSetChanged();
+								} else if ("usatt".equals(provider)) {
+									mUSATTHistory.remove(item);
+									((ArrayAdapter<?>) usattListView
+											.getAdapter())
+											.notifyDataSetChanged();
+								}
+							}
+						}).setNegativeButton("Cancel", null).show();
 	}
 
 	protected void beginSearch(String provider, String query) {
@@ -414,7 +429,7 @@ public class FragmentPlayerSearch extends Fragment {
 		}
 
 		FragmentProgressBar fragment = FragmentProgressBar.getInstance(title,
-				message);
+				message, ProgressBarState.INDETERMINATE.getCode());
 		if (mDualPane) {
 			getFragmentManager().beginTransaction()
 					.replace(R.id.content, fragment)
