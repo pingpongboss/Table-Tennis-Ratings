@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.xml.transform.Transformer;
@@ -31,7 +31,15 @@ public class RatingsCentralParser implements ProviderParser {
 	private Map<String, ArrayList<PlayerModel>> mCache;
 
 	private RatingsCentralParser() {
-		mCache = new HashMap<String, ArrayList<PlayerModel>>();
+		mCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(MAX_CACHE, .75f, true) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected boolean removeEldestEntry(
+					java.util.Map.Entry<String, ArrayList<PlayerModel>> eldest) {
+				return size() > MAX_CACHE;
+			}
+		};
 	}
 
 	public static synchronized RatingsCentralParser getParser() {
@@ -113,5 +121,12 @@ public class RatingsCentralParser implements ProviderParser {
 		} catch (Exception ex) {
 			return mCache.get(lastAndFirstName);
 		}
+	}
+
+	@Override
+	public void onLowMemory() {
+		mCache.clear();
+		mCache = null;
+		mParser = null;
 	}
 }

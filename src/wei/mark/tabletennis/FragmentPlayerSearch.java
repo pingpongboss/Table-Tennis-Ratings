@@ -273,6 +273,15 @@ public class FragmentPlayerSearch extends Fragment {
 		}
 		editor.commit();
 	}
+	
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		mRCQuery = null;
+		mUSATTQuery = null;
+		getProviderParser("rc").onLowMemory();
+		getProviderParser("usatt").onLowMemory();
+	}
 
 	private ArrayList<String> retrieveHistory(String provider) {
 		ArrayList<String> history = new ArrayList<String>();
