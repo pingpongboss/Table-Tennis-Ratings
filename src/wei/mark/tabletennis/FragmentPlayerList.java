@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.tabletennis.util.Debuggable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ListFragment;
@@ -81,11 +82,19 @@ public class FragmentPlayerList extends ListFragment {
 				Toast.LENGTH_SHORT).show();
 	}
 
+	private void debug(String msg) {
+		((Debuggable) getActivity()).debug(msg);
+	}
+
 	private class ListFragmentTouchListener implements View.OnTouchListener {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.LIST;
+			debug("Current navigation is now "
+					+ ((TableTennisRatings) getActivity()
+							.getApplication()).CurrentNavigation
+							.toString());
 			return false;
 		}
 

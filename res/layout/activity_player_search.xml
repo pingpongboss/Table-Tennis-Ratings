@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
-	<fragment android:layout_width="fill_parent" android:layout_height="fill_parent"
-		android:id="@+id/player_search" android:name="wei.mark.tabletennis.FragmentPlayerSearch"></fragment>
+	<fragment android:layout_width="fill_parent"
+		android:id="@+id/player_search"
+		android:name="wei.mark.tabletennis.FragmentPlayerSearch" android:layout_height="0dp" android:layout_weight="1"></fragment>
+	<ViewStub android:id="@+id/debug_stub"
+		android:layout="@layout/debug_bar" android:layout_height="50dp" android:layout_width="fill_parent"></ViewStub>
 </LinearLayout>

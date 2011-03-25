@@ -3,10 +3,12 @@
 	android:layout_height="fill_parent" android:orientation="vertical"
 	android:layout_width="fill_parent">
 	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:layout_height="fill_parent" android:orientation="horizontal"
-		android:layout_width="fill_parent">
+		android:orientation="horizontal"
+		android:layout_width="fill_parent" android:layout_height="0dp" android:layout_weight="1">
 		<fragment android:layout_height="fill_parent" android:id="@+id/player_search" android:name="wei.mark.tabletennis.FragmentPlayerSearch" android:layout_width="150dp"></fragment>
 		<FrameLayout android:layout_height="fill_parent"
 			android:id="@+id/content" android:layout_width="fill_parent"></FrameLayout>
 	</LinearLayout>
+	<ViewStub android:id="@+id/debug_stub"
+		android:layout="@layout/debug_bar" android:layout_height="50dp" android:layout_width="fill_parent"></ViewStub>
 </LinearLayout>

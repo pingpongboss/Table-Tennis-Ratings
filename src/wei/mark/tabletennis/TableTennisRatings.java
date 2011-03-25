@@ -4,9 +4,10 @@ import android.app.Application;
 
 public class TableTennisRatings extends Application {
 	public Navigation CurrentNavigation;
+	public String CurrentDebugMessage = "";
 
 	public enum Navigation {
-		SEARCH, LIST
+		IDLE, SEARCHING, LIST
 	}
 
 }
