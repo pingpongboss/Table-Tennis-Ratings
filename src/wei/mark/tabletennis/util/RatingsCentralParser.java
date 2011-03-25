@@ -28,10 +28,13 @@ public class RatingsCentralParser implements ProviderParser {
 	private static RatingsCentralParser mParser;
 	private static final String TAG = "RatingsCentralParser";
 
+	private Debuggable mDebuggable;
+
 	private Map<String, ArrayList<PlayerModel>> mCache;
 
-	private RatingsCentralParser() {
-		mCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(MAX_CACHE, .75f, true) {
+	private RatingsCentralParser(Debuggable debuggable) {
+		mCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(MAX_CACHE,
+				.75f, true) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -40,11 +43,13 @@ public class RatingsCentralParser implements ProviderParser {
 				return size() > MAX_CACHE;
 			}
 		};
+		mDebuggable = debuggable;
 	}
 
-	public static synchronized RatingsCentralParser getParser() {
+	public static synchronized RatingsCentralParser getParser(
+			Debuggable debuggable) {
 		if (mParser == null)
-			mParser = new RatingsCentralParser();
+			mParser = new RatingsCentralParser(debuggable);
 		return mParser;
 	}
 
@@ -128,5 +133,9 @@ public class RatingsCentralParser implements ProviderParser {
 		mCache.clear();
 		mCache = null;
 		mParser = null;
+	}
+
+	private void debug(String msg) {
+		mDebuggable.debug(msg);
 	}
 }

@@ -445,9 +445,9 @@ public class FragmentPlayerSearch extends Fragment {
 
 	private ProviderParser getProviderParser(String provider) {
 		if ("rc".equals(provider)) {
-			return RatingsCentralParser.getParser();
+			return RatingsCentralParser.getParser((Debuggable) getActivity());
 		} else if ("usatt".equals(provider)) {
-			return USATTParser.getParser();
+			return USATTParser.getParser((Debuggable) getActivity());
 		} else
 			return null;
 	}
