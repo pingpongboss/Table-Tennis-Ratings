@@ -273,7 +273,7 @@ public class FragmentPlayerSearch extends Fragment {
 		}
 		editor.commit();
 	}
-	
+
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
@@ -298,10 +298,10 @@ public class FragmentPlayerSearch extends Fragment {
 		if (history.isEmpty()) {
 			if ("rc".equals(provider)) {
 				history.add("Wei, Mark");
-				history.add("Ma, Lin");
+				history.add("Boll, Timo");
 			} else if ("usatt".equals(provider)) {
 				history.add("Wei");
-				history.add("Ma");
+				history.add("Boll");
 			}
 		}
 
@@ -323,6 +323,24 @@ public class FragmentPlayerSearch extends Fragment {
 											.notifyDataSetChanged();
 								} else if ("usatt".equals(provider)) {
 									mUSATTHistory.remove(item);
+									((ArrayAdapter<?>) usattListView
+											.getAdapter())
+											.notifyDataSetChanged();
+								}
+							}
+						})
+				.setNeutralButton("Clear All",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								if ("rc".equals(provider)) {
+									mRCHistory.clear();
+									((ArrayAdapter<?>) rcListView.getAdapter())
+											.notifyDataSetChanged();
+								} else if ("usatt".equals(provider)) {
+									mUSATTHistory.clear();
 									((ArrayAdapter<?>) usattListView
 											.getAdapter())
 											.notifyDataSetChanged();
