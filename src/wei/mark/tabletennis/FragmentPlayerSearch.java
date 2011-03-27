@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -378,7 +379,8 @@ public class FragmentPlayerSearch extends Fragment {
 		showProgressDialog(
 				String.format("Searching %s for %s", providerName, query), "");
 
-		new ProviderSearchTask().execute(provider, query, String.valueOf(user));
+		new ProviderSearchTask().execute(getDeviceId(), provider, query,
+				String.valueOf(user));
 	}
 
 	protected void finishSearch(String provider, String query,
@@ -465,17 +467,29 @@ public class FragmentPlayerSearch extends Fragment {
 		((Debuggable) getActivity()).debug(msg);
 	}
 
+	private String getDeviceId() {
+		TelephonyManager manager = (TelephonyManager) getActivity()
+				.getSystemService(Context.TELEPHONY_SERVICE);
+		String id = manager.getDeviceId();
+
+		if (id == null || id.equals("")) {
+			id = "unknown";
+		}
+		return id;
+	}
+
 	private class ProviderSearchTask extends
 			AsyncTask<String, Void, ArrayList<PlayerModel>> {
-		String provider, query;
+		String provider, query, id;
 		boolean user;
 
 		@Override
 		protected ArrayList<PlayerModel> doInBackground(String... params) {
 			try {
-				provider = params[0];
-				query = params[1];
-				user = Boolean.parseBoolean(params[2]);
+				id = params[0];
+				provider = params[1];
+				query = params[2];
+				user = Boolean.parseBoolean(params[3]);
 
 				if (user) {
 					((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.SEARCHING;
@@ -487,7 +501,7 @@ public class FragmentPlayerSearch extends Fragment {
 
 				AppEngineParser parser = AppEngineParser.getParser();
 
-				return parser.execute(provider, query);
+				return parser.execute(id, provider, query);
 			} catch (Exception ex) {
 				return null;
 			}

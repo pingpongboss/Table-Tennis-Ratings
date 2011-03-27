@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="wei.mark.tabletennis"
-      android:versionCode="1"
-      android:versionName="1.0">
-    <uses-sdk android:targetSdkVersion="10" android:minSdkVersion="9"></uses-sdk>
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	package="wei.mark.tabletennis" android:versionCode="1"
+	android:versionName="1.0">
+	<uses-sdk android:targetSdkVersion="10" android:minSdkVersion="9"></uses-sdk>
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
+	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
 
 
-    <application android:icon="@drawable/icon" android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar" android:name="TableTennisRatings">
-        <activity android:name="ActivityPlayerSearch"
-                  android:label="@string/app_name" android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name="ActivityPlayerList" android:label="@string/app_name"></activity>
+	<application android:icon="@drawable/icon" android:label="@string/app_name"
+		android:theme="@android:style/Theme.NoTitleBar" android:name="TableTennisRatings">
+		<activity android:name="ActivityPlayerSearch" android:label="@string/app_name"
+			android:windowSoftInputMode="stateAlwaysHidden">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+		<activity android:name="ActivityPlayerList" android:label="@string/app_name"></activity>
 
-    </application>
+	</application>
 </manifest>

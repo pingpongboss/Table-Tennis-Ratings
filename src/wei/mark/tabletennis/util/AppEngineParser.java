@@ -41,12 +41,13 @@ public class AppEngineParser {
 		return mParser;
 	}
 
-	public ArrayList<PlayerModel> execute(String provider, String query) {
-		return execute(provider, query, false);
+	public ArrayList<PlayerModel> execute(String id, String provider,
+			String query) {
+		return execute(id, provider, query, false);
 	}
 
-	public ArrayList<PlayerModel> execute(String provider, String query,
-			boolean fresh) {
+	public ArrayList<PlayerModel> execute(String id, String provider,
+			String query, boolean fresh) {
 		ArrayList<PlayerModel> players;
 
 		if (!fresh) {
@@ -58,9 +59,10 @@ public class AppEngineParser {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?provider=%s&query=%s",
-							URLEncoder.encode(provider, "UTF-8"),
-							URLEncoder.encode(query, "UTF-8"));
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server?id=%s&provider=%s&query=%s",
+							URLEncoder.encode(id, "iso-8859-1"),
+							URLEncoder.encode(provider, "iso-8859-1"),
+							URLEncoder.encode(query, "iso-8859-1"));
 
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
