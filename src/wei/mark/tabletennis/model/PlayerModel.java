@@ -5,8 +5,6 @@ import android.os.Parcelable;
 
 public class PlayerModel implements Parcelable {
 	public String mProvider;
-	
-	public String mRank;
 	public String mRating;
 	public String mName;
 	public String mId;
@@ -31,7 +29,6 @@ public class PlayerModel implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(mProvider);
-		dest.writeString(mRank);
 		dest.writeString(mRating);
 		dest.writeString(mName);
 		dest.writeString(mId);
@@ -44,7 +41,6 @@ public class PlayerModel implements Parcelable {
 
 	private void readFromParcel(Parcel in) {
 		mProvider = in.readString();
-		mRank = in.readString();
 		mRating = in.readString();
 		mName = in.readString();
 		mId = in.readString();
@@ -58,6 +54,26 @@ public class PlayerModel implements Parcelable {
 	@Override
 	public String toString() {
 		return String.format("%s (%s)", mName, mRating);
+	}
+
+	public String toDetailedString() {
+		String clubs;
+
+		if (mClubs == null)
+			clubs = null;
+		else {
+			StringBuilder sb = new StringBuilder();
+			for (String club : mClubs) {
+				if (sb.length() != 0)
+					sb.append(", ");
+				sb.append(club);
+			}
+			clubs = sb.toString();
+		}
+
+		return String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t",
+				mId, mExpires, mName, mRating, clubs, mState, mCountry,
+				mLastPlayed);
 	}
 
 	public static final Parcelable.Creator<PlayerModel> CREATOR = new Parcelable.Creator<PlayerModel>() {

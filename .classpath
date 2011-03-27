@@ -3,7 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="lib/tagsoup-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/gson-1.6.jar" sourcepath="lib/gson-1.6-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Table Tennis Ratings/lib/gson-1.6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

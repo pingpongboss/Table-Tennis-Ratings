@@ -9,10 +9,8 @@ import org.jared.commons.ui.WorkspaceView;
 import wei.mark.tabletennis.FragmentProgressBar.ProgressBarState;
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.tabletennis.util.AppEngineParser;
 import wei.mark.tabletennis.util.Debuggable;
-import wei.mark.tabletennis.util.ProviderParser;
-import wei.mark.tabletennis.util.RatingsCentralParser;
-import wei.mark.tabletennis.util.USATTParser;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -285,8 +283,7 @@ public class FragmentPlayerSearch extends Fragment {
 		super.onLowMemory();
 		mRCQuery = null;
 		mUSATTQuery = null;
-		getProviderParser("rc").onLowMemory();
-		getProviderParser("usatt").onLowMemory();
+		AppEngineParser.getParser().onLowMemory();
 	}
 
 	private ArrayList<String> retrieveHistory(String provider) {
@@ -443,15 +440,6 @@ public class FragmentPlayerSearch extends Fragment {
 		}
 	}
 
-	private ProviderParser getProviderParser(String provider) {
-		if ("rc".equals(provider)) {
-			return RatingsCentralParser.getParser((Debuggable) getActivity());
-		} else if ("usatt".equals(provider)) {
-			return USATTParser.getParser((Debuggable) getActivity());
-		} else
-			return null;
-	}
-
 	private void showProgressDialog(String title, String message) {
 		// remove previous progress bar dialog
 		try {
@@ -497,9 +485,9 @@ public class FragmentPlayerSearch extends Fragment {
 									.toString());
 				}
 
-				ProviderParser parser = getProviderParser(provider);
+				AppEngineParser parser = AppEngineParser.getParser();
 
-				return parser.playerNameSearch(query);
+				return parser.execute(provider, query);
 			} catch (Exception ex) {
 				return null;
 			}
