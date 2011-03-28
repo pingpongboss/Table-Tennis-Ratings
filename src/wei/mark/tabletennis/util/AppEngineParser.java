@@ -20,7 +20,7 @@ public class AppEngineParser {
 	private static AppEngineParser mParser;
 
 	private Map<String, ArrayList<PlayerModel>> mCache;
-	public static final int MAX_CACHE = 20;
+	public static final int MAX_CACHE = 100;
 
 	private AppEngineParser() {
 		mCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(MAX_CACHE,

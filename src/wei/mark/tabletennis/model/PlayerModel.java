@@ -4,15 +4,15 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class PlayerModel implements Parcelable {
-	public String mProvider;
-	public String mRating;
-	public String mName;
-	public String mId;
-	public String[] mClubs;
-	public String mState;
-	public String mCountry;
-	public String mLastPlayed;
-	public String mExpires;
+	private String mProvider;
+	private String mRating;
+	private String mName;
+	private String mId;
+	private String[] mClubs;
+	private String mState;
+	private String mCountry;
+	private String mLastPlayed;
+	private String mExpires;
 
 	public PlayerModel() {
 	}
@@ -71,9 +71,80 @@ public class PlayerModel implements Parcelable {
 			clubs = sb.toString();
 		}
 
-		return String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t",
-				mId, mExpires, mName, mRating, clubs, mState, mCountry,
-				mLastPlayed);
+		return String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t", mId, mExpires,
+				mName, mRating, clubs, mState, mCountry, mLastPlayed);
+	}
+	
+	public String getProvider() {
+		return mProvider;
+	}
+
+	public void setProvider(String provider) {
+		this.mProvider = provider;
+	}
+	
+	public String getRating() {
+		return mRating;
+	}
+
+	public void setRating(String rating) {
+		this.mRating = rating;
+	}
+
+	public String getName() {
+		return mName;
+	}
+
+	public void setName(String name) {
+		this.mName = name;
+	}
+
+	public String getId() {
+		return mId;
+	}
+
+	public void setId(String id) {
+		this.mId = id;
+	}
+
+	public String[] getClubs() {
+		return mClubs;
+	}
+
+	public void setClubs(String[] clubs) {
+		this.mClubs = clubs;
+	}
+
+	public String getState() {
+		return mState;
+	}
+
+	public void setState(String state) {
+		this.mState = state;
+	}
+
+	public String getCountry() {
+		return mCountry;
+	}
+
+	public void setCountry(String country) {
+		this.mCountry = country;
+	}
+
+	public String getLastPlayed() {
+		return mLastPlayed;
+	}
+
+	public void setLastPlayed(String lastPlayed) {
+		this.mLastPlayed = lastPlayed;
+	}
+
+	public String getExpires() {
+		return mExpires;
+	}
+
+	public void setExpires(String expires) {
+		this.mExpires = expires;
 	}
 
 	public static final Parcelable.Creator<PlayerModel> CREATOR = new Parcelable.Creator<PlayerModel>() {
