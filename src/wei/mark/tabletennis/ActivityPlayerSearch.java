@@ -1,5 +1,6 @@
 package wei.mark.tabletennis;
 
+import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.Debuggable;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
@@ -43,6 +44,24 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 				debugScrollView.fullScroll(ScrollView.FOCUS_DOWN);
 			}
 		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+
+		int stackCount = getSupportFragmentManager().getBackStackEntryCount();
+		if (stackCount == 0) {
+			try {
+				((FragmentPlayerSearch) getSupportFragmentManager()
+						.findFragmentById(R.id.player_search)).clearQuery();
+			} catch (Exception ex) {
+				debug(ex.getMessage());
+			}
+			app.CurrentNavigation = Navigation.IDLE;
+			debug("Current navigation is now "
+					+ app.CurrentNavigation.toString());
+		}
 	}
 
 	@Override

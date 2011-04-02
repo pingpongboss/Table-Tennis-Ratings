@@ -23,7 +23,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -42,8 +41,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FragmentPlayerSearch extends Fragment {
-	private static final String TAG = "FragmentPlayerSearch";
-
 	TableTennisRatings app;
 
 	String mProvider;
@@ -413,10 +410,10 @@ public class FragmentPlayerSearch extends Fragment {
 					.findFragmentByTag("dialog"));
 			if (dialog != null)
 				dialog.dismiss();
-			
+
 			getFragmentManager().popBackStackImmediate();
 		} catch (Exception ex) {
-			Log.d(TAG, ex.getMessage() == null ? "" : ex.getMessage());
+			debug(ex.getMessage() == null ? "" : ex.getMessage());
 		}
 
 		if (app.DualPane) {
@@ -451,7 +448,7 @@ public class FragmentPlayerSearch extends Fragment {
 			if (dialog != null)
 				dialog.dismiss();
 		} catch (Exception ex) {
-			Log.d(TAG, ex.getMessage() == null ? "" : ex.getMessage());
+			debug(ex.getMessage() == null ? "" : ex.getMessage());
 		}
 
 		FragmentProgressBar fragment = FragmentProgressBar.getInstance(title,
@@ -464,6 +461,10 @@ public class FragmentPlayerSearch extends Fragment {
 		} else {
 			fragment.show(getFragmentManager(), "dialog");
 		}
+	}
+
+	public void clearQuery() {
+		mRCQuery = mUSATTQuery = null;
 	}
 
 	private void debug(String msg) {
