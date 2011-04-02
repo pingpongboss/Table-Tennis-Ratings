@@ -23,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -41,6 +42,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FragmentPlayerSearch extends Fragment {
+	private static final String TAG = "FragmentPlayerSearch";
+
 	TableTennisRatings app;
 
 	String mProvider;
@@ -406,10 +409,14 @@ public class FragmentPlayerSearch extends Fragment {
 
 		// remove progress bar dialog
 		try {
-			((FragmentProgressBar) getFragmentManager().findFragmentByTag(
-					"dialog")).dismiss();
+			FragmentProgressBar dialog = ((FragmentProgressBar) getFragmentManager()
+					.findFragmentByTag("dialog"));
+			if (dialog != null)
+				dialog.dismiss();
+			
 			getFragmentManager().popBackStackImmediate();
 		} catch (Exception ex) {
+			Log.d(TAG, ex.getMessage() == null ? "" : ex.getMessage());
 		}
 
 		if (app.DualPane) {
@@ -439,17 +446,19 @@ public class FragmentPlayerSearch extends Fragment {
 	private void showProgressDialog(String title, String message) {
 		// remove previous progress bar dialog
 		try {
-			((FragmentProgressBar) getFragmentManager().findFragmentByTag(
-					"dialog")).dismiss();
-			getFragmentManager().popBackStackImmediate();
+			FragmentProgressBar dialog = ((FragmentProgressBar) getFragmentManager()
+					.findFragmentByTag("dialog"));
+			if (dialog != null)
+				dialog.dismiss();
 		} catch (Exception ex) {
+			Log.d(TAG, ex.getMessage() == null ? "" : ex.getMessage());
 		}
 
 		FragmentProgressBar fragment = FragmentProgressBar.getInstance(title,
 				message, ProgressBarState.INDETERMINATE.getCode());
 		if (app.DualPane) {
 			getFragmentManager().beginTransaction()
-					.replace(R.id.content, fragment, "dialog")
+					.replace(R.id.content, fragment)
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.addToBackStack(null).commit();
 		} else {
