@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentPlayerList extends ListFragment {
+	TableTennisRatings app;
 	ArrayList<PlayerModel> mPlayers;
 
 	public static FragmentPlayerList getInstance(String provider, String query,
@@ -75,6 +76,13 @@ public class FragmentPlayerList extends ListFragment {
 	}
 
 	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		app = (TableTennisRatings) getActivity().getApplication();
+	}
+
+	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO
 		Toast.makeText(getActivity(),
@@ -90,11 +98,9 @@ public class FragmentPlayerList extends ListFragment {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.LIST;
+			app.CurrentNavigation = Navigation.LIST;
 			debug("Current navigation is now "
-					+ ((TableTennisRatings) getActivity()
-							.getApplication()).CurrentNavigation
-							.toString());
+					+ app.CurrentNavigation.toString());
 			return false;
 		}
 

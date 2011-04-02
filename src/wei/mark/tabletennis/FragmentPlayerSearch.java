@@ -41,7 +41,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FragmentPlayerSearch extends Fragment {
-	boolean mDualPane;
+	TableTennisRatings app;
 
 	String mProvider;
 	int mCurrentScreen;
@@ -55,6 +55,7 @@ public class FragmentPlayerSearch extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (TableTennisRatings) getActivity().getApplication();
 
 		mRCHistory = retrieveHistory("rc");
 		mRCQuery = null;
@@ -62,10 +63,8 @@ public class FragmentPlayerSearch extends Fragment {
 		mUSATTQuery = null;
 		mCurrentScreen = 0;
 
-		((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.IDLE;
-		debug("Current navigation is now "
-				+ ((TableTennisRatings) getActivity().getApplication()).CurrentNavigation
-						.toString());
+		app.CurrentNavigation = Navigation.IDLE;
+		debug("Current navigation is now " + app.CurrentNavigation.toString());
 
 		setRetainInstance(true);
 	}
@@ -217,10 +216,10 @@ public class FragmentPlayerSearch extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 
 		View contentFrame = getActivity().findViewById(R.id.content);
-		mDualPane = contentFrame != null
+		app.DualPane = contentFrame != null
 				&& contentFrame.getVisibility() == View.VISIBLE;
 
-		if (mDualPane) {
+		if (app.DualPane) {
 			rcListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			usattListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
@@ -228,13 +227,9 @@ public class FragmentPlayerSearch extends Fragment {
 			usattSearchButton.setVisibility(View.GONE);
 		}
 
-		Navigation currentNavigation = ((TableTennisRatings) getActivity()
-				.getApplication()).CurrentNavigation;
-		debug("Current navigation is now "
-				+ ((TableTennisRatings) getActivity().getApplication()).CurrentNavigation
-						.toString());
+		debug("Current navigation is now " + app.CurrentNavigation.toString());
 
-		if (currentNavigation == Navigation.SEARCHING) {
+		if (app.CurrentNavigation == Navigation.SEARCHING) {
 			if ("rc".equals(mProvider)) {
 				showProgressDialog(String.format("Searching %s for %s",
 						mProvider, mRCQuery), "");
@@ -244,9 +239,9 @@ public class FragmentPlayerSearch extends Fragment {
 			} else {
 				showProgressDialog(String.format("Searching %s", mProvider), "");
 			}
-		} else if (currentNavigation == Navigation.LIST || mDualPane) {
-			boolean screenOrientationChange = mDualPane
-					&& currentNavigation != Navigation.LIST;
+		} else if (app.CurrentNavigation == Navigation.LIST || app.DualPane) {
+			boolean screenOrientationChange = app.DualPane
+					&& app.CurrentNavigation != Navigation.LIST;
 			if ("rc".equals(mProvider)) {
 				beginSearch(mProvider, mRCQuery, !screenOrientationChange);
 			} else if ("usatt".equals(mProvider)) {
@@ -363,9 +358,9 @@ public class FragmentPlayerSearch extends Fragment {
 			mRCQuery = query;
 		} else if ("usatt".equals(provider)) {
 			mUSATTQuery = query;
-		} else {
-			if (mDualPane || provider != null)
-				finishSearch(provider, query, null);
+		}
+
+		if (provider == null || query == null) {
 			return;
 		}
 
@@ -383,7 +378,7 @@ public class FragmentPlayerSearch extends Fragment {
 				String.valueOf(user));
 	}
 
-	protected void finishSearch(String provider, String query,
+	protected void finishSearch(String provider, String query, boolean user,
 			ArrayList<PlayerModel> results) {
 		if ("rc".equals(provider)) {
 			if (mRCQuery != null) {
@@ -411,20 +406,20 @@ public class FragmentPlayerSearch extends Fragment {
 
 		// remove progress bar dialog
 		try {
-			getFragmentManager().beginTransaction()
-					.remove(getFragmentManager().findFragmentByTag("dialog"))
-					.commit();
+			((FragmentProgressBar) getFragmentManager().findFragmentByTag(
+					"dialog")).dismiss();
+			getFragmentManager().popBackStackImmediate();
 		} catch (Exception ex) {
 		}
 
-		if (mDualPane) {
+		if (app.DualPane) {
 			FragmentPlayerList fragment = FragmentPlayerList.getInstance(
 					provider, query, results);
 
 			getFragmentManager().beginTransaction()
 					.replace(R.id.content, fragment)
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-					.commit();
+					.addToBackStack(null).commit();
 		} else {
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), ActivityPlayerList.class);
@@ -435,29 +430,28 @@ public class FragmentPlayerSearch extends Fragment {
 		}
 
 		if (results == null) {
-			((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.IDLE;
+			app.CurrentNavigation = Navigation.IDLE;
 			debug("Current navigation is now "
-					+ ((TableTennisRatings) getActivity().getApplication()).CurrentNavigation
-							.toString());
+					+ app.CurrentNavigation.toString());
 		}
 	}
 
 	private void showProgressDialog(String title, String message) {
 		// remove previous progress bar dialog
 		try {
-			getFragmentManager().beginTransaction()
-					.remove(getFragmentManager().findFragmentByTag("dialog"))
-					.commit();
+			((FragmentProgressBar) getFragmentManager().findFragmentByTag(
+					"dialog")).dismiss();
+			getFragmentManager().popBackStackImmediate();
 		} catch (Exception ex) {
 		}
 
 		FragmentProgressBar fragment = FragmentProgressBar.getInstance(title,
 				message, ProgressBarState.INDETERMINATE.getCode());
-		if (mDualPane) {
+		if (app.DualPane) {
 			getFragmentManager().beginTransaction()
-					.replace(R.id.content, fragment)
+					.replace(R.id.content, fragment, "dialog")
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-					.commit();
+					.addToBackStack(null).commit();
 		} else {
 			fragment.show(getFragmentManager(), "dialog");
 		}
@@ -492,11 +486,9 @@ public class FragmentPlayerSearch extends Fragment {
 				user = Boolean.parseBoolean(params[3]);
 
 				if (user) {
-					((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.SEARCHING;
+					app.CurrentNavigation = Navigation.SEARCHING;
 					debug("Current navigation is now "
-							+ ((TableTennisRatings) getActivity()
-									.getApplication()).CurrentNavigation
-									.toString());
+							+ app.CurrentNavigation.toString());
 				}
 
 				AppEngineParser parser = AppEngineParser.getParser();
@@ -511,15 +503,14 @@ public class FragmentPlayerSearch extends Fragment {
 		protected void onPostExecute(ArrayList<PlayerModel> result) {
 			if (user) {
 				if (result == null)
-					((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.IDLE;
+					app.CurrentNavigation = Navigation.IDLE;
 				else
-					((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.LIST;
+					app.CurrentNavigation = Navigation.LIST;
 				debug("Current navigation is now "
-						+ ((TableTennisRatings) getActivity().getApplication()).CurrentNavigation
-								.toString());
+						+ app.CurrentNavigation.toString());
 			}
 
-			finishSearch(provider, query, result);
+			finishSearch(provider, query, user, result);
 		}
 	}
 
@@ -527,11 +518,10 @@ public class FragmentPlayerSearch extends Fragment {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
-			if (((TableTennisRatings) getActivity().getApplication()).CurrentNavigation == Navigation.LIST) {
-				((TableTennisRatings) getActivity().getApplication()).CurrentNavigation = Navigation.IDLE;
+			if (app.CurrentNavigation == Navigation.LIST) {
+				app.CurrentNavigation = Navigation.IDLE;
 				debug("Current navigation is now "
-						+ ((TableTennisRatings) getActivity().getApplication()).CurrentNavigation
-								.toString());
+						+ app.CurrentNavigation.toString());
 			}
 			return false;
 		}

@@ -11,6 +11,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ActivityPlayerList extends FragmentActivity implements Debuggable {
+	TableTennisRatings app;
 	boolean mDebuggable;
 
 	TextView debugTextView;
@@ -19,6 +20,7 @@ public class ActivityPlayerList extends FragmentActivity implements Debuggable {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (TableTennisRatings) getApplication();
 
 		setContentView(R.layout.activity_player_list);
 
@@ -46,8 +48,7 @@ public class ActivityPlayerList extends FragmentActivity implements Debuggable {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		debugTextView
-				.setText(((TableTennisRatings) getApplication()).CurrentDebugMessage);
+		debugTextView.setText(app.CurrentDebugMessage);
 		debugScrollView.post(new Runnable() {
 
 			@Override
@@ -60,24 +61,20 @@ public class ActivityPlayerList extends FragmentActivity implements Debuggable {
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		((TableTennisRatings) getApplication()).CurrentNavigation = Navigation.IDLE;
-		debug("Current navigation is now "
-				+ ((TableTennisRatings) getApplication()).CurrentNavigation
-						.toString());
+		app.CurrentNavigation = Navigation.IDLE;
+		debug("Current navigation is now " + app.CurrentNavigation.toString());
 	}
 
 	@Override
 	public void debug(String msg) {
 		if (mDebuggable) {
-			((TableTennisRatings) getApplication()).CurrentDebugMessage = ((TableTennisRatings) getApplication()).CurrentDebugMessage
-					+ "\n" + msg;
+			app.CurrentDebugMessage = app.CurrentDebugMessage + "\n" + msg;
 
 			debugTextView.post(new Runnable() {
 
 				@Override
 				public void run() {
-					debugTextView
-							.setText(((TableTennisRatings) getApplication()).CurrentDebugMessage);
+					debugTextView.setText(app.CurrentDebugMessage);
 
 					debugScrollView.post(new Runnable() {
 

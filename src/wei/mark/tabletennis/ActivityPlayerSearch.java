@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 public class ActivityPlayerSearch extends FragmentActivity implements
 		Debuggable {
+	TableTennisRatings app;
 	boolean mDebuggable;
 
 	TextView debugTextView;
@@ -19,6 +20,8 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		app = (TableTennisRatings) getApplication();
+
 		setContentView(R.layout.activity_player_search);
 
 		mDebuggable = (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
@@ -32,8 +35,7 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		debugTextView
-				.setText(((TableTennisRatings) getApplication()).CurrentDebugMessage);
+		debugTextView.setText(app.CurrentDebugMessage);
 		debugScrollView.post(new Runnable() {
 
 			@Override
@@ -46,15 +48,13 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 	@Override
 	public void debug(String msg) {
 		if (mDebuggable) {
-			((TableTennisRatings) getApplication()).CurrentDebugMessage = ((TableTennisRatings) getApplication()).CurrentDebugMessage
-					+ "\n" + msg;
+			app.CurrentDebugMessage = app.CurrentDebugMessage + "\n" + msg;
 
 			debugTextView.post(new Runnable() {
 
 				@Override
 				public void run() {
-					debugTextView
-							.setText(((TableTennisRatings) getApplication()).CurrentDebugMessage);
+					debugTextView.setText(app.CurrentDebugMessage);
 
 					debugScrollView.post(new Runnable() {
 
