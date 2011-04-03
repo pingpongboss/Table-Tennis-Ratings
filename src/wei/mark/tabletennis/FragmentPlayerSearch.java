@@ -19,7 +19,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.telephony.TelephonyManager;
@@ -44,7 +43,8 @@ public class FragmentPlayerSearch extends Fragment {
 	TableTennisRatings app;
 
 	String mProvider;
-	int mCurrentScreen;
+	int mCurrentScreen, mRCListIndex, mRCListTop, mUSATTListIndex,
+			mUSATTListTop;
 
 	ArrayList<String> mRCHistory, mUSATTHistory;
 	String mRCQuery, mUSATTQuery;
@@ -61,7 +61,7 @@ public class FragmentPlayerSearch extends Fragment {
 		mRCQuery = null;
 		mUSATTHistory = retrieveHistory("usatt");
 		mUSATTQuery = null;
-		mCurrentScreen = 0;
+		mCurrentScreen = mRCListIndex = mRCListTop = mUSATTListIndex = mUSATTListTop = 0;
 
 		app.CurrentNavigation = Navigation.IDLE;
 		debug("Current navigation is now " + app.CurrentNavigation.toString());
@@ -215,6 +215,9 @@ public class FragmentPlayerSearch extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		rcListView.setSelectionFromTop(mRCListIndex, mRCListTop);
+		usattListView.setSelectionFromTop(mUSATTListIndex, mUSATTListTop);
+
 		View contentFrame = getActivity().findViewById(R.id.content);
 		app.DualPane = contentFrame != null
 				&& contentFrame.getVisibility() == View.VISIBLE;
@@ -256,8 +259,16 @@ public class FragmentPlayerSearch extends Fragment {
 	public void onPause() {
 		super.onPause();
 
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
+		mRCListIndex = rcListView.getFirstVisiblePosition();
+		View rcv = rcListView.getChildAt(0);
+		mRCListTop = rcv == null ? 0 : rcv.getTop();
+
+		mUSATTListIndex = usattListView.getFirstVisiblePosition();
+		View usattv = usattListView.getChildAt(0);
+		mUSATTListTop = usattv == null ? 0 : usattv.getTop();
+
+		SharedPreferences prefs = getActivity().getSharedPreferences("history",
+				0);
 		Editor editor = prefs.edit();
 
 		editor.clear();
@@ -284,8 +295,9 @@ public class FragmentPlayerSearch extends Fragment {
 
 	private ArrayList<String> retrieveHistory(String provider) {
 		ArrayList<String> history = new ArrayList<String>();
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
+		SharedPreferences prefs = getActivity().getSharedPreferences("history",
+				0);
+
 		for (String hist : prefs.getAll().keySet()) {
 			if (hist.contains(provider + "history")) {
 				String q = prefs.getString(hist, "");

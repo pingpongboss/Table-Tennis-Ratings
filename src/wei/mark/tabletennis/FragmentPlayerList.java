@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.Debuggable;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -20,6 +23,7 @@ import android.widget.Toast;
 public class FragmentPlayerList extends ListFragment {
 	TableTennisRatings app;
 	ArrayList<PlayerModel> mPlayers;
+	String mQuery;
 
 	public static FragmentPlayerList getInstance(String provider, String query,
 			ArrayList<PlayerModel> players) {
@@ -45,6 +49,8 @@ public class FragmentPlayerList extends ListFragment {
 				mPlayers.add((PlayerModel) item);
 			}
 		}
+
+		mQuery = b.getString("query");
 
 		setListAdapter(new ArrayAdapter<PlayerModel>(getActivity(),
 				android.R.layout.simple_list_item_1, mPlayers));
@@ -78,8 +84,36 @@ public class FragmentPlayerList extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
 		app = (TableTennisRatings) getActivity().getApplication();
+
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getActivity());
+
+		if (prefs.getString("listQuery", "").equals(mQuery)) {
+			int index = prefs.getInt("listIndex", 0);
+			int top = prefs.getInt("listTop", 0);
+			getListView().setSelectionFromTop(index, top);
+		}
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+
+		Editor edit = PreferenceManager.getDefaultSharedPreferences(
+				getActivity()).edit();
+
+		int index = getListView().getFirstVisiblePosition();
+		View v = getListView().getChildAt(0);
+		int top = v == null ? 0 : v.getTop();
+
+		edit.putString("listQuery", mQuery);
+		if (index != 0)
+			edit.putInt("listIndex", index);
+		if (top != 0)
+			edit.putInt("listTop", top);
+
+		edit.commit();
 	}
 
 	@Override
