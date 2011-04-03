@@ -11,4 +11,10 @@ public class TableTennisRatings extends Application {
 		IDLE, SEARCHING, LIST
 	}
 
+	@Override
+	public void onCreate() {
+		super.onCreate();
+
+		getSharedPreferences("listScroll", 0).edit().clear().commit();
+	}
 }

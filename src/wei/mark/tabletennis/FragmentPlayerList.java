@@ -9,12 +9,14 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,6 +26,8 @@ public class FragmentPlayerList extends ListFragment {
 	TableTennisRatings app;
 	ArrayList<PlayerModel> mPlayers;
 	String mQuery;
+	int mListIndex, mListTop;
+	boolean mUserScroll;
 
 	public static FragmentPlayerList getInstance(String provider, String query,
 			ArrayList<PlayerModel> players) {
@@ -36,11 +40,17 @@ public class FragmentPlayerList extends ListFragment {
 		return fragment;
 	}
 
+	public FragmentPlayerList() {
+		mPlayers = new ArrayList<PlayerModel>();
+		mQuery = null;
+		mListIndex = -1;
+		mListTop = 0;
+		mUserScroll = false;
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		mPlayers = new ArrayList<PlayerModel>();
 		Bundle b = getArguments();
 
 		ArrayList<Parcelable> items = b.getParcelableArrayList("players");
@@ -86,34 +96,57 @@ public class FragmentPlayerList extends ListFragment {
 		super.onActivityCreated(savedInstanceState);
 		app = (TableTennisRatings) getActivity().getApplication();
 
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getActivity());
+		SharedPreferences prefs = getActivity().getSharedPreferences(
+				"listScroll", 0);
 
 		if (prefs.getString("listQuery", "").equals(mQuery)) {
 			int index = prefs.getInt("listIndex", 0);
 			int top = prefs.getInt("listTop", 0);
 			getListView().setSelectionFromTop(index, top);
 		}
+
+		getListView().setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mUserScroll = true;
+				return false;
+			}
+		});
+
+		getListView().setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				if (mUserScroll) {
+					mListIndex = firstVisibleItem;
+					View firstView = view.getChildAt(0);
+					mListTop = firstView == null ? 0 : firstView.getTop();
+				}
+			}
+		});
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
 
-		Editor edit = PreferenceManager.getDefaultSharedPreferences(
-				getActivity()).edit();
+		mUserScroll = false;
 
-		int index = getListView().getFirstVisiblePosition();
-		View v = getListView().getChildAt(0);
-		int top = v == null ? 0 : v.getTop();
+		if (mListIndex != -1) {
+			Editor edit = getActivity().getSharedPreferences("listScroll", 0)
+					.edit();
+			edit.putString("listQuery", mQuery);
+			edit.putInt("listIndex", mListIndex);
+			edit.putInt("listTop", mListTop);
 
-		edit.putString("listQuery", mQuery);
-		if (index != 0)
-			edit.putInt("listIndex", index);
-		if (top != 0)
-			edit.putInt("listTop", top);
-
-		edit.commit();
+			edit.commit();
+		}
 	}
 
 	@Override
