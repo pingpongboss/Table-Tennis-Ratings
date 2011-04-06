@@ -38,6 +38,7 @@ public class ActivityPlayerList extends FragmentActivity implements Debuggable {
 		}
 
 		mDebuggable = (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+		mDebuggable = false;
 		if (mDebuggable) {
 			findViewById(R.id.debug_stub).setVisibility(View.VISIBLE);
 			debugTextView = (TextView) findViewById(R.id.debug);
@@ -48,14 +49,17 @@ public class ActivityPlayerList extends FragmentActivity implements Debuggable {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		debugTextView.setText(app.CurrentDebugMessage);
-		debugScrollView.post(new Runnable() {
 
-			@Override
-			public void run() {
-				debugScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-			}
-		});
+		if (mDebuggable) {
+			debugTextView.setText(app.CurrentDebugMessage);
+			debugScrollView.post(new Runnable() {
+
+				@Override
+				public void run() {
+					debugScrollView.fullScroll(ScrollView.FOCUS_DOWN);
+				}
+			});
+		}
 	}
 
 	@Override

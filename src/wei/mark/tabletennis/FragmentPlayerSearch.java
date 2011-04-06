@@ -28,14 +28,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -50,7 +51,8 @@ public class FragmentPlayerSearch extends Fragment {
 	String mRCQuery, mUSATTQuery;
 
 	ListView rcListView, usattListView;
-	Button rcSearchButton, usattSearchButton;
+	EditText rcNameInput, usattNameInput;
+	ImageButton rcSearchButton, usattSearchButton;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -77,8 +79,7 @@ public class FragmentPlayerSearch extends Fragment {
 		View rcView = inflater.inflate(R.layout.fragment_player_search_rc,
 				null, false);
 		((TextView) rcView.findViewById(R.id.title)).setText("Ratings Central");
-		final EditText rcNameInput = (EditText) rcView
-				.findViewById(R.id.rcPlayerNameEditText);
+		rcNameInput = (EditText) rcView.findViewById(R.id.rcPlayerNameEditText);
 
 		rcListView = (ListView) rcView.findViewById(android.R.id.list);
 		rcListView.setAdapter(new ArrayAdapter<String>(getActivity(),
@@ -114,7 +115,7 @@ public class FragmentPlayerSearch extends Fragment {
 			}
 		});
 
-		rcSearchButton = (Button) rcView.findViewById(R.id.searchButton);
+		rcSearchButton = (ImageButton) rcView.findViewById(R.id.searchButton);
 		rcSearchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -126,7 +127,7 @@ public class FragmentPlayerSearch extends Fragment {
 		View usattView = inflater.inflate(
 				R.layout.fragment_player_search_usatt, null, false);
 		((TextView) usattView.findViewById(R.id.title)).setText("USATT");
-		final EditText usattNameInput = (EditText) usattView
+		usattNameInput = (EditText) usattView
 				.findViewById(R.id.usattPlayerNameEditText);
 
 		usattListView = (ListView) usattView.findViewById(android.R.id.list);
@@ -164,7 +165,8 @@ public class FragmentPlayerSearch extends Fragment {
 			}
 		});
 
-		usattSearchButton = (Button) usattView.findViewById(R.id.searchButton);
+		usattSearchButton = (ImageButton) usattView
+				.findViewById(R.id.searchButton);
 		usattSearchButton.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -188,16 +190,19 @@ public class FragmentPlayerSearch extends Fragment {
 
 			@Override
 			public void OnScrollToScreen(int screen) {
-				mCurrentScreen = screen;
-				if (screen == 0) {
-					usattNameInput.requestFocus();
-				} else if (screen == 1) {
-					rcNameInput.requestFocus();
-				}
+				updateCurrentNavigation();
 			}
 		});
 
-		SearchFragmentTouchListener l = new SearchFragmentTouchListener();
+		OnTouchListener l = new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				updateCurrentNavigation();
+				return false;
+			}
+		};
+
 		work.setOnTouchListener(l);
 		rcView.setOnTouchListener(l);
 		usattView.setOnTouchListener(l);
@@ -226,6 +231,8 @@ public class FragmentPlayerSearch extends Fragment {
 			rcListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 			usattListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
+			rcNameInput.setBackgroundResource(R.drawable.white_selector);
+			usattNameInput.setBackgroundResource(R.drawable.white_selector);
 			rcSearchButton.setVisibility(View.GONE);
 			usattSearchButton.setVisibility(View.GONE);
 		}
@@ -536,17 +543,11 @@ public class FragmentPlayerSearch extends Fragment {
 		}
 	}
 
-	private class SearchFragmentTouchListener implements View.OnTouchListener {
-
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			if (app.CurrentNavigation == Navigation.LIST) {
-				app.CurrentNavigation = Navigation.IDLE;
-				debug("Current navigation is now "
-						+ app.CurrentNavigation.toString());
-			}
-			return false;
+	private void updateCurrentNavigation() {
+		if (app.CurrentNavigation == Navigation.LIST) {
+			app.CurrentNavigation = Navigation.IDLE;
+			debug("Current navigation is now "
+					+ app.CurrentNavigation.toString());
 		}
-
 	}
 }
