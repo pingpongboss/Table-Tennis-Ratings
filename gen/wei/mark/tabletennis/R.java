@@ -32,19 +32,21 @@ public final class R {
         public static final int white_selector=0x7f020012;
     }
     public static final class id {
-        public static final int action_bar=0x7f060006;
-        public static final int content=0x7f060001;
-        public static final int debug=0x7f060005;
-        public static final int debug_scroll=0x7f060004;
-        public static final int debug_stub=0x7f060002;
-        public static final int message=0x7f06000c;
-        public static final int player_search=0x7f060003;
-        public static final int progress=0x7f06000b;
-        public static final int rcPlayerNameEditText=0x7f060008;
-        public static final int searchButton=0x7f060009;
-        public static final int searchLinearLayout=0x7f060007;
-        public static final int title=0x7f060000;
-        public static final int usattPlayerNameEditText=0x7f06000a;
+        public static final int action_bar=0x7f060008;
+        public static final int content=0x7f060003;
+        public static final int debug=0x7f060007;
+        public static final int debug_scroll=0x7f060006;
+        public static final int debug_stub=0x7f060004;
+        public static final int home=0x7f060000;
+        public static final int logo=0x7f060001;
+        public static final int message=0x7f06000e;
+        public static final int player_search=0x7f060005;
+        public static final int progress=0x7f06000d;
+        public static final int rcPlayerNameEditText=0x7f06000a;
+        public static final int searchButton=0x7f06000b;
+        public static final int searchLinearLayout=0x7f060009;
+        public static final int title=0x7f060002;
+        public static final int usattPlayerNameEditText=0x7f06000c;
     }
     public static final class layout {
         public static final int action_bar=0x7f030000;
@@ -62,7 +64,10 @@ public final class R {
     }
     public static final class style {
         public static final int ActionBar=0x7f050009;
-        public static final int ActionBarText=0x7f05000a;
+        public static final int ActionBarItem=0x7f05000a;
+        public static final int ActionBarItem_Home=0x7f05000b;
+        public static final int ActionBarItem_Logo=0x7f05000c;
+        public static final int ActionBarItem_Text=0x7f05000d;
         public static final int Button=0x7f050003;
         public static final int Button_Right=0x7f050005;
         public static final int Button_Right_Search=0x7f050007;
@@ -72,6 +77,6 @@ public final class R {
         public static final int RootLayout=0x7f050008;
         public static final int Theme_DarkBlue=0x7f050001;
         public static final int Theme_Dialog_Translucent=0x7f050000;
-        public static final int TransparentListView=0x7f05000b;
+        public static final int TransparentListView=0x7f05000e;
     }
 }

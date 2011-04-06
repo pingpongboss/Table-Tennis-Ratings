@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -79,6 +81,17 @@ public class FragmentPlayerSearch extends Fragment {
 		View rcView = inflater.inflate(R.layout.fragment_player_search_rc,
 				null, false);
 		((TextView) rcView.findViewById(R.id.title)).setText("Ratings Central");
+		Button rcLogo = (Button) rcView.findViewById(R.id.logo);
+		rcLogo.setBackgroundResource(R.drawable.rc_selector);
+		rcLogo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri
+						.parse("http://www.ratingscentral.com")));
+			}
+		});
+
 		rcNameInput = (EditText) rcView.findViewById(R.id.rcPlayerNameEditText);
 
 		rcListView = (ListView) rcView.findViewById(android.R.id.list);
@@ -127,6 +140,17 @@ public class FragmentPlayerSearch extends Fragment {
 		View usattView = inflater.inflate(
 				R.layout.fragment_player_search_usatt, null, false);
 		((TextView) usattView.findViewById(R.id.title)).setText("USATT");
+		Button usattLogo = (Button) usattView.findViewById(R.id.logo);
+		usattLogo.setBackgroundResource(R.drawable.usatt_selector);
+		usattLogo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivity(new Intent(Intent.ACTION_VIEW, Uri
+						.parse("http://www.usatt.org")));
+			}
+		});
+
 		usattNameInput = (EditText) usattView
 				.findViewById(R.id.usattPlayerNameEditText);
 
@@ -190,7 +214,12 @@ public class FragmentPlayerSearch extends Fragment {
 
 			@Override
 			public void OnScrollToScreen(int screen) {
-				updateCurrentNavigation();
+				mCurrentScreen = screen;
+				if (screen == 0) {
+					usattNameInput.requestFocus();
+				} else if (screen == 1) {
+					rcNameInput.requestFocus();
+				}
 			}
 		});
 

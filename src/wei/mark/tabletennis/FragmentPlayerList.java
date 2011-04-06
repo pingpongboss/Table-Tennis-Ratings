@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -83,6 +84,12 @@ public class FragmentPlayerList extends ListFragment {
 		if (providerName != null && query != null)
 			titleTextView.setText(String.format("%s search: %s", providerName,
 					query));
+
+		Button logoButton = (Button) v.findViewById(R.id.logo);
+		if ("rc".equals(provider))
+			logoButton.setBackgroundResource(R.drawable.rc_selector);
+		else if ("usatt".equals(provider))
+			logoButton.setBackgroundResource(R.drawable.usatt_selector);
 
 		ListFragmentTouchListener l = new ListFragmentTouchListener();
 		v.setOnTouchListener(l);
