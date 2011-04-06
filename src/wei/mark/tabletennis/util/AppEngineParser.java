@@ -52,7 +52,7 @@ public class AppEngineParser {
 
 		if (!fresh) {
 			// first check cache
-			players = mCache.get(query);
+			players = mCache.get(getCacheKey(provider, query));
 			if (players != null)
 				return players;
 		}
@@ -87,13 +87,21 @@ public class AppEngineParser {
 
 			players = new ArrayList<PlayerModel>(playersLinkedList);
 
-			mCache.put(query, players);
+			mCache.put(getCacheKey(provider, query), players);
 			return players;
 		} catch (Exception ex) {
-			return mCache.get(query);
+			return mCache.get(getCacheKey(provider, query));
 		} finally {
 			if (connection != null)
 				connection.disconnect();
+		}
+	}
+
+	private String getCacheKey(String provider, String query) {
+		try {
+			return provider + query;
+		} catch (Exception ex) {
+			return null;
 		}
 	}
 
