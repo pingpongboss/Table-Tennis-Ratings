@@ -15,6 +15,8 @@
 		<item name="android:background">@drawable/white_selector</item>
 		<item name="android:textColor">#000000</item>
 		<item name="android:textSize">14sp</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
 	</style>
 	<style name="EditText.Left">
 		<item name="android:background">@drawable/white_left_selector</item>
@@ -68,9 +70,12 @@
 	<style name="ActionBarItem.Home">
 		<item name="android:background">@drawable/icon</item>
 	</style>
-	<style name="ActionBarItem.Logo">
+	<style name="ActionBarItem.LogoLayout">
 		<item name="android:layout_width">0dp</item>
 		<item name="android:layout_weight">1</item>
+	</style>
+	<style name="ActionBarItem.Logo">
+		<item name="android:layout_gravity">center</item>
 		<item name="android:background">#0e0e0e</item>
 	</style>
 	<style name="ActionBarItem.Text">
@@ -91,6 +96,7 @@
 	</style>
 	<style name="EmptyListIndicator">
 		<item name="android:layout_gravity">center</item>
+		<item name="android:gravity">center</item>
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
 	</style>

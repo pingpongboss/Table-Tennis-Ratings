@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/ActionBar">
 	<Button android:id="@+id/home" style="@style/ActionBarItem.Home"></Button>
-	<Button android:id="@+id/logo" style="@style/ActionBarItem.Logo"></Button>
+	<FrameLayout style="@style/ActionBarItem.LogoLayout">
+		<Button android:layout_height="wrap_content" android:layout_width="wrap_content" style="@style/ActionBarItem.Logo" android:id="@+id/logo"></Button>
+	</FrameLayout>
 	<TextView android:id="@+id/title" android:text="Table Tennis Ratings"
 		style="@style/ActionBarItem.Text"></TextView>
 </LinearLayout>

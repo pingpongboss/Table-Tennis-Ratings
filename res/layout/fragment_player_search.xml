@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/RootLayout" android:orientation="vertical">
 	<include layout="@layout/action_bar" android:id="@+id/action_bar"
-		android:layout_height="wrap_content" android:layout_width="wrap_content"></include>
+		android:layout_height="wrap_content" android:layout_width="fill_parent"></include>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal"
 		android:id="@+id/searchLinearLayout">
-		<EditText style="@style/EditText.Left.Search"
-			android:hint="Last, First" android:id="@+id/searchEditText"></EditText>
+		<EditText style="@style/EditText.Left.Search" android:hint="Last, First"
+			android:id="@+id/searchEditText"></EditText>
 		<ImageButton android:id="@+id/searchButton" style="@style/Button.Right.Search"></ImageButton>
 	</LinearLayout>
 	<ListView style="@style/ListView" android:id="@id/android:list"></ListView>
-	<TextView android:id="@id/android:empty" android:text="No History" style="@style/EmptyListIndicator"></TextView>
+	<FrameLayout style="@style/EmptyListLayout">
+		<TextView style="@style/EmptyListIndicator" android:text="No history"></TextView>
+	</FrameLayout>
 </LinearLayout>

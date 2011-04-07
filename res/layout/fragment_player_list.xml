@@ -2,11 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/RootLayout" android:orientation="vertical">
 	<include layout="@layout/action_bar" android:id="@+id/action_bar"
-		android:layout_height="wrap_content" android:layout_width="wrap_content"></include>
+		android:layout_height="wrap_content" android:layout_width="fill_parent"></include>
 	<ListView style="@style/ListView" android:id="@id/android:list"></ListView>
 	<FrameLayout style="@style/EmptyListLayout">
-		<TextView android:text="No Search Results"
-			android:id="@+id/emptyListText" android:visibility="gone" style="@style/EmptyListIndicator"></TextView>
 		<ProgressBar android:id="@+id/progress" style="@style/EmptyListIndicator"></ProgressBar>
+	<LinearLayout android:orientation="vertical" android:layout_height="fill_parent" style="@style/EmptyListIndicator">
+		<TextView android:layout_width="wrap_content" android:text="No search results"
+			android:layout_height="wrap_content" android:id="@+id/emptyListText"
+			style="@style/EmptyListIndicator" android:visibility="gone"></TextView>
+		<Button android:layout_width="wrap_content" android:visibility="gone" android:layout_height="wrap_content" android:text="Retry" style="@style/Button" android:id="@+id/retry"></Button>
+	</LinearLayout>
 	</FrameLayout>
 </LinearLayout>
