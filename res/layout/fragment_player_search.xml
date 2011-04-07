@@ -6,11 +6,10 @@
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal"
 		android:id="@+id/searchLinearLayout">
-		<EditText android:hint="Last, First" android:id="@+id/rcPlayerNameEditText" style="@style/EditText.Left.Search"></EditText>
+		<EditText style="@style/EditText.Left.Search"
+			android:hint="Last, First" android:id="@+id/searchEditText"></EditText>
 		<ImageButton android:id="@+id/searchButton" style="@style/Button.Right.Search"></ImageButton>
 	</LinearLayout>
-	<ListView android:id="@id/android:list" style="@style/TransparentListView"></ListView>
-	<TextView android:id="@id/android:empty" android:text="No History"
-		android:layout_height="fill_parent" android:layout_width="fill_parent"
-		android:gravity="center"></TextView>
+	<ListView style="@style/ListView" android:id="@id/android:list"></ListView>
+	<TextView android:id="@id/android:empty" android:text="No History" style="@style/EmptyListIndicator"></TextView>
 </LinearLayout>

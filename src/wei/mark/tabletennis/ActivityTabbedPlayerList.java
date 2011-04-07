@@ -2,28 +2,60 @@ package wei.mark.tabletennis;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.Debuggable;
+import wei.mark.tabletennis.util.ProviderSearchTask;
+import android.app.TabActivity;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ScrollView;
+import android.widget.TabHost;
 import android.widget.TextView;
 
-public class ActivityPlayerSearch extends FragmentActivity implements
-		Debuggable {
+public class ActivityTabbedPlayerList extends TabActivity implements Debuggable {
 	TableTennisRatings app;
 	boolean mDebuggable;
 
 	TextView debugTextView;
 	ScrollView debugScrollView;
 
-	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (TableTennisRatings) getApplication();
 
-		setContentView(R.layout.activity_player_search);
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+			finish();
+			return;
+		}
+
+		setContentView(R.layout.activity_tabbed_player_list);
+
+		TabHost tabHost = getTabHost();
+		TabHost.TabSpec spec;
+		Intent intent;
+
+		intent = new Intent().setClass(this, ActivityPlayerList.class)
+				.putExtras(getIntent().getExtras())
+				.putExtra("provider", "usatt");
+		spec = tabHost
+				.newTabSpec("usatt")
+				.setIndicator(null,
+						getResources().getDrawable(R.drawable.usatt_selector))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
+		intent = new Intent().setClass(this, ActivityPlayerList.class)
+				.putExtras(getIntent().getExtras()).putExtra("provider", "rc");
+		spec = tabHost
+				.newTabSpec("rc")
+				.setIndicator(null,
+						getResources().getDrawable(R.drawable.rc_selector))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
+		tabHost.setCurrentTab(0); // TODO set to saved tab
 
 		mDebuggable = (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
 		mDebuggable = false;
@@ -53,20 +85,8 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-
-		int stackCount = getSupportFragmentManager().getBackStackEntryCount();
-		if (stackCount == 0) {
-			try {
-				((FragmentPlayerSearch) getSupportFragmentManager()
-						.findFragmentById(R.id.player_search)).clearQuery();
-			} catch (Exception ex) {
-				debug(ex.getMessage());
-			}
-
-			app.CurrentNavigation = Navigation.IDLE;
-			debug("Current navigation is now "
-					+ app.CurrentNavigation.toString());
-		}
+		app.CurrentNavigation = Navigation.IDLE;
+		debug("Current navigation is now " + app.CurrentNavigation.toString());
 	}
 
 	@Override

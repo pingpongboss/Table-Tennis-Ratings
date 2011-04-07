@@ -17,6 +17,7 @@
 			</intent-filter>
 		</activity>
 		<activity android:name="ActivityPlayerList" android:label="@string/app_name"></activity>
+		<activity android:name="ActivityTabbedPlayerList" android:label="@string/app_name"></activity>
 
 	</application>
 </manifest>

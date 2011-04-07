@@ -1,14 +1,18 @@
 package wei.mark.tabletennis;
 
+import wei.mark.tabletennis.util.ProviderSearchTask;
 import android.app.Application;
+import android.content.Context;
+import android.telephony.TelephonyManager;
 
 public class TableTennisRatings extends Application {
 	public Navigation CurrentNavigation;
-	public String CurrentDebugMessage = "";
 	public boolean DualPane;
+	public ProviderSearchTask usattSearchTask, rcSearchTask;
+	public String CurrentDebugMessage;
 
 	public enum Navigation {
-		IDLE, SEARCHING, LIST
+		IDLE, LIST
 	}
 
 	@Override
@@ -16,5 +20,18 @@ public class TableTennisRatings extends Application {
 		super.onCreate();
 
 		getSharedPreferences("listScroll", 0).edit().clear().commit();
+		
+		CurrentNavigation = Navigation.IDLE;
+		CurrentDebugMessage = "";
+	}
+
+	public String getDeviceId() {
+		TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+		String id = manager.getDeviceId();
+
+		if (id == null || id.equals("")) {
+			id = "unknown";
+		}
+		return id;
 	}
 }

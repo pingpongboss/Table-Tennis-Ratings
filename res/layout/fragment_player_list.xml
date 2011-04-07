@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/RootLayout" android:orientation="vertical">
-	<include layout="@layout/action_bar" android:id="@+id/action_bar" android:layout_height="wrap_content" android:layout_width="wrap_content"></include>
-	<ListView style="@style/TransparentListView" android:id="@id/android:list"
-		></ListView>
-	<TextView android:id="@id/android:empty" android:text="No Search Results"
-		android:layout_height="fill_parent" android:layout_width="fill_parent"
-		android:gravity="center"></TextView>
+	<include layout="@layout/action_bar" android:id="@+id/action_bar"
+		android:layout_height="wrap_content" android:layout_width="wrap_content"></include>
+	<ListView style="@style/ListView" android:id="@id/android:list"></ListView>
+	<FrameLayout style="@style/EmptyListLayout">
+		<TextView android:text="No Search Results"
+			android:id="@+id/emptyListText" android:visibility="gone" style="@style/EmptyListIndicator"></TextView>
+		<ProgressBar android:id="@+id/progress" style="@style/EmptyListIndicator"></ProgressBar>
+	</FrameLayout>
 </LinearLayout>

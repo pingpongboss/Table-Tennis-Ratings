@@ -41,6 +41,19 @@
 		<item name="android:padding">2dp</item>
 		<item name="android:background">#0e0e0e</item>
 	</style>
+	<style name="RootLayout.Search">
+		<item name="android:name">wei.mark.tabletennis.FragmentPlayerSearch</item>
+	</style>
+	<style name="RootLayout.Search.Landscape">
+		<item name="android:layout_width">150dp</item>
+	</style>
+	<style name="RootLayout.List">
+		<item name="android:name">wei.mark.tabletennis.FragmentPlayerList</item>
+	</style>
+	<style name="RootLayout.List.Landscape">
+		<item name="android:layout_width">0dp</item>
+		<item name="android:layout_weight">1</item>
+	</style>
 	<style name="ActionBar">
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">fill_parent</item>
@@ -54,7 +67,6 @@
 	</style>
 	<style name="ActionBarItem.Home">
 		<item name="android:background">@drawable/icon</item>
-		<item name="android:visibility">gone</item>
 	</style>
 	<style name="ActionBarItem.Logo">
 		<item name="android:layout_width">0dp</item>
@@ -66,10 +78,20 @@
 		<item name="android:textSize">18sp</item>
 		<item name="android:visibility">gone</item>
 	</style>
-	<style name="TransparentListView">
+	<style name="ListView">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>
 		<item name="android:cacheColorHint">#0e0e0e</item>
 		<item name="android:fastScrollEnabled">true</item>
+	</style>
+	<style name="EmptyListLayout">
+		<item name="android:id">@android:id/empty</item>
+		<item name="android:layout_width">fill_parent</item>
+		<item name="android:layout_height">fill_parent</item>
+	</style>
+	<style name="EmptyListIndicator">
+		<item name="android:layout_gravity">center</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
 	</style>
 </resources>
