@@ -276,7 +276,7 @@ public class FragmentPlayerSearch extends ListFragment {
 					.replace(R.id.content_usatt, usattFragment)
 					.replace(R.id.content_rc, rcFragment)
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-					.addToBackStack(null).commit();
+					.commit();
 		} else {
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), ActivityTabbedPlayerList.class);
