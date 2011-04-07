@@ -2,7 +2,6 @@ package wei.mark.tabletennis;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.Debuggable;
-import wei.mark.tabletennis.util.ProviderSearchTask;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;

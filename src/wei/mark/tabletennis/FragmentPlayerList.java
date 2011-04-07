@@ -199,14 +199,15 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			text = (TextView) getView().findViewById(R.id.emptyListText);
 			text.setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.progress).setVisibility(View.GONE);
-			getView().findViewById(R.id.retry).setVisibility(View.VISIBLE);
 		} catch (Exception ex) {
 		}
 
 		if (players != null)
 			mPlayers.addAll(players);
-		else if (text != null)
+		else if (text != null) {
 			text.setText("An error occurred");
+			getView().findViewById(R.id.retry).setVisibility(View.VISIBLE);
+		}
 
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 
