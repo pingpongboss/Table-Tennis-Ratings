@@ -7,11 +7,14 @@ import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.Debuggable;
 import wei.mark.tabletennis.util.ProviderSearchTask;
 import wei.mark.tabletennis.util.SearchCallback;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -81,12 +84,31 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 		v.findViewById(R.id.logo).setVisibility(View.GONE);
 		Button providerLogoButton = (Button) v.findViewById(R.id.provider_logo);
-		if (!app.DualPane)
+		if (!app.DualPane) {
 			providerLogoButton.setVisibility(View.GONE);
-		else if ("rc".equals(mProvider))
-			providerLogoButton.setBackgroundResource(R.drawable.rc_selector);
-		else if ("usatt".equals(mProvider))
+		} else if ("usatt".equals(mProvider)) {
 			providerLogoButton.setBackgroundResource(R.drawable.usatt_selector);
+			providerLogoButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri
+							.parse("http://www.usatt.org/")));
+				}
+			});
+		} else if ("rc".equals(mProvider)) {
+			providerLogoButton.setBackgroundResource(R.drawable.rc_selector);
+			providerLogoButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent(Intent.ACTION_VIEW, Uri
+							.parse("http://www.ratingscentral.com/")));
+				}
+			});
+		} else {
+			providerLogoButton.setVisibility(View.GONE);
+		}
 
 		ListFragmentTouchListener l = new ListFragmentTouchListener();
 		v.setOnTouchListener(l);
