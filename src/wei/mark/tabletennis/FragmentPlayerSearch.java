@@ -63,6 +63,7 @@ public class FragmentPlayerSearch extends ListFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_player_search, null,
 				false);
+
 		((TextView) view.findViewById(R.id.title))
 				.setText("Table Tennis Ratings");
 		view.findViewById(R.id.logo).setVisibility(View.GONE);
@@ -151,6 +152,9 @@ public class FragmentPlayerSearch extends ListFragment {
 
 			searchInput.setBackgroundResource(R.drawable.white_selector);
 			searchButton.setVisibility(View.GONE);
+
+			getView().findViewById(R.id.home).setBackgroundResource(
+					R.drawable.logo_small);
 		}
 
 		debug("Current navigation is now " + app.CurrentNavigation.toString());

@@ -69,7 +69,7 @@
 		<item name="android:layout_gravity">center</item>
 	</style>
 	<style name="ActionBarItem.Home">
-		<item name="android:background">@drawable/icon</item>
+		<item name="android:background">@drawable/logo</item>
 	</style>
 	<style name="ActionBarItem.LogoLayout">
 		<item name="android:layout_width">0dp</item>
