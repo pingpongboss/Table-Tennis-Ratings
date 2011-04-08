@@ -47,8 +47,10 @@ public final class R {
         public static final int emptyListText=0x7f060008;
         public static final int logo=0x7f060000;
         public static final int message=0x7f06000d;
+        public static final int name=0x7f06000e;
         public static final int progress=0x7f060007;
         public static final int provider_logo=0x7f060001;
+        public static final int rating=0x7f06000f;
         public static final int retry=0x7f060009;
         public static final int searchButton=0x7f06000c;
         public static final int searchEditText=0x7f06000b;
@@ -63,6 +65,8 @@ public final class R {
         public static final int fragment_player_list=0x7f030004;
         public static final int fragment_player_search=0x7f030005;
         public static final int fragment_progress_bar=0x7f030006;
+        public static final int item_player_list=0x7f030007;
+        public static final int item_player_search=0x7f030008;
     }
     public static final class string {
         public static final int app_name=0x7f040001;
@@ -81,9 +85,10 @@ public final class R {
         public static final int EditText=0x7f050002;
         public static final int EditText_Left=0x7f050004;
         public static final int EditText_Left_Search=0x7f050006;
-        public static final int EmptyListIndicator=0x7f050015;
-        public static final int EmptyListLayout=0x7f050014;
+        public static final int EmptyListIndicator=0x7f050016;
+        public static final int EmptyListLayout=0x7f050015;
         public static final int ListView=0x7f050013;
+        public static final int ListViewItem=0x7f050014;
         public static final int RootLayout=0x7f050008;
         public static final int RootLayout_List=0x7f05000b;
         public static final int RootLayout_List_Landscape=0x7f05000c;

@@ -56,7 +56,7 @@ public class FragmentPlayerSearch extends ListFragment {
 		mListTop = prefs.getInt("listTop", 0);
 
 		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				android.R.layout.simple_list_item_1, mHistory));
+				R.layout.item_player_search, mHistory));
 	}
 
 	@Override

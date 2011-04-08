@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.tabletennis.util.PlayerModelAdapter;
 import wei.mark.tabletennis.util.SearchCallback;
 import wei.mark.tabletennis.util.SearchTask;
 import android.content.Intent;
@@ -61,8 +62,8 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		mQuery = b.getString("query");
 		mUser = b.getBoolean("user");
 
-		setListAdapter(new ArrayAdapter<PlayerModel>(getActivity(),
-				android.R.layout.simple_list_item_1, mPlayers));
+		setListAdapter(new PlayerModelAdapter(getActivity(),
+				R.layout.item_player_list, mPlayers));
 	}
 
 	@Override
