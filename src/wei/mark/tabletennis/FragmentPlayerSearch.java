@@ -303,7 +303,8 @@ public class FragmentPlayerSearch extends ListFragment {
 			startActivity(intent);
 		}
 
-		app.CurrentNavigation = Navigation.LIST;
+		if (user)
+			app.CurrentNavigation = Navigation.LIST;
 	}
 
 	public void clearQuery() {
