@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.AppEngineParser;
-import wei.mark.tabletennis.util.Debuggable;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,8 +48,6 @@ public class FragmentPlayerSearch extends ListFragment {
 		mHistory = retrieveHistory();
 		mQuery = null;
 		mListIndex = mListTop = 0;
-
-		debug("Current navigation is now " + app.CurrentNavigation.toString());
 
 		setListAdapter(new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, mHistory));
@@ -156,8 +153,6 @@ public class FragmentPlayerSearch extends ListFragment {
 			getView().findViewById(R.id.logo).setBackgroundResource(
 					R.drawable.logo_small_selector);
 		}
-
-		debug("Current navigation is now " + app.CurrentNavigation.toString());
 
 		if (app.CurrentNavigation == Navigation.LIST || app.DualPane) {
 			boolean screenOrientationChange = app.DualPane
@@ -296,12 +291,7 @@ public class FragmentPlayerSearch extends ListFragment {
 		mQuery = null;
 	}
 
-	private void debug(String msg) {
-		((Debuggable) getActivity()).debug(msg);
-	}
-
 	private void updateCurrentNavigation() {
 		app.CurrentNavigation = Navigation.IDLE;
-		debug("Current navigation is now " + app.CurrentNavigation.toString());
 	}
 }

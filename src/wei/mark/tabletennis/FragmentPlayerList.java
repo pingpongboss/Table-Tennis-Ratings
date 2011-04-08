@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
-import wei.mark.tabletennis.util.Debuggable;
-import wei.mark.tabletennis.util.ProviderSearchTask;
+import wei.mark.tabletennis.util.SearchTask;
 import wei.mark.tabletennis.util.SearchCallback;
 import android.content.Intent;
 import android.net.Uri;
@@ -123,14 +122,14 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 		if ("usatt".equals(mProvider)) {
 			if (app.usattSearchTask == null) {
-				app.usattSearchTask = new ProviderSearchTask(this);
+				app.usattSearchTask = new SearchTask(this);
 				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
 						mQuery, String.valueOf(mUser));
 			}
 			app.usattSearchTask.setSearchCallback(this);
 		} else if ("rc".equals(mProvider)) {
 			if (app.rcSearchTask == null) {
-				app.rcSearchTask = new ProviderSearchTask(this);
+				app.rcSearchTask = new SearchTask(this);
 				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
 						String.valueOf(mUser));
 			}
@@ -177,6 +176,14 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	public void onPause() {
 		super.onPause();
 
+		if ("usatt".equals(mProvider)) {
+			if (app.usattSearchTask != null)
+				app.usattSearchTask.setSearchCallback(null);
+		} else if ("rc".equals(mProvider)) {
+			if (app.rcSearchTask != null)
+				app.rcSearchTask.setSearchCallback(null);
+		}
+
 		// mUserScroll = false;
 		//
 		// if (mListIndex != -1) {
@@ -198,17 +205,11 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 				Toast.LENGTH_SHORT).show();
 	}
 
-	private void debug(String msg) {
-		((Debuggable) getActivity()).debug(msg);
-	}
-
 	private class ListFragmentTouchListener implements View.OnTouchListener {
 
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			app.CurrentNavigation = Navigation.LIST;
-			debug("Current navigation is now "
-					+ app.CurrentNavigation.toString());
 			return false;
 		}
 

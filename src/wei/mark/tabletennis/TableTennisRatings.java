@@ -1,6 +1,6 @@
 package wei.mark.tabletennis;
 
-import wei.mark.tabletennis.util.ProviderSearchTask;
+import wei.mark.tabletennis.util.SearchTask;
 import android.app.Application;
 import android.content.Context;
 import android.telephony.TelephonyManager;
@@ -8,7 +8,7 @@ import android.telephony.TelephonyManager;
 public class TableTennisRatings extends Application {
 	public Navigation CurrentNavigation;
 	public boolean DualPane;
-	public ProviderSearchTask usattSearchTask, rcSearchTask;
+	public SearchTask usattSearchTask, rcSearchTask;
 	public String CurrentDebugMessage;
 
 	public enum Navigation {

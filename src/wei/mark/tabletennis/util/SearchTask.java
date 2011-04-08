@@ -2,23 +2,18 @@ package wei.mark.tabletennis.util;
 
 import java.util.ArrayList;
 
-import wei.mark.tabletennis.TableTennisRatings;
-import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
 import android.os.AsyncTask;
 
-public class ProviderSearchTask extends
-		AsyncTask<String, Void, ArrayList<PlayerModel>> {
+public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> {
 	SearchCallback callback;
 	String provider, query, id;
 	boolean user;
+	ArrayList<PlayerModel> savedResult;
 
-	public ProviderSearchTask(SearchCallback searchCallback) {
+	public SearchTask(SearchCallback searchCallback) {
 		callback = searchCallback;
-	}
-
-	public void setSearchCallback(SearchCallback searchCallback) {
-		callback = searchCallback;
+		savedResult = null;
 	}
 
 	@Override
@@ -39,6 +34,16 @@ public class ProviderSearchTask extends
 
 	@Override
 	protected void onPostExecute(ArrayList<PlayerModel> result) {
-		callback.searchCompleted(result);
+		savedResult = result;
+
+		if (callback != null)
+			callback.searchCompleted(savedResult);
+	}
+
+	public void setSearchCallback(SearchCallback searchCallback) {
+		callback = searchCallback;
+
+		if (callback != null && savedResult != null)
+			callback.searchCompleted(savedResult);
 	}
 }

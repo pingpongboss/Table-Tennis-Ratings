@@ -1,23 +1,13 @@
 package wei.mark.tabletennis;
 
-import wei.mark.tabletennis.TableTennisRatings.Navigation;
-import wei.mark.tabletennis.util.Debuggable;
 import android.app.TabActivity;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ScrollView;
 import android.widget.TabHost;
-import android.widget.TextView;
 
-public class ActivityTabbedPlayerList extends TabActivity implements Debuggable {
+public class ActivityTabbedPlayerList extends TabActivity {
 	TableTennisRatings app;
-	boolean mDebuggable;
-
-	TextView debugTextView;
-	ScrollView debugScrollView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,59 +45,5 @@ public class ActivityTabbedPlayerList extends TabActivity implements Debuggable 
 		tabHost.addTab(spec);
 
 		tabHost.setCurrentTab(0); // TODO set to saved tab
-
-		mDebuggable = (getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
-		mDebuggable = false;
-		if (mDebuggable) {
-			findViewById(R.id.debug_stub).setVisibility(View.VISIBLE);
-			debugTextView = (TextView) findViewById(R.id.debug);
-			debugScrollView = (ScrollView) findViewById(R.id.debug_scroll);
-		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
-		if (mDebuggable) {
-			debugTextView.setText(app.CurrentDebugMessage);
-			debugScrollView.post(new Runnable() {
-
-				@Override
-				public void run() {
-					debugScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-				}
-			});
-		}
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
-		app.CurrentNavigation = Navigation.IDLE;
-		debug("Current navigation is now " + app.CurrentNavigation.toString());
-	}
-
-	@Override
-	public void debug(String msg) {
-		if (mDebuggable) {
-			app.CurrentDebugMessage = app.CurrentDebugMessage + "\n" + msg;
-
-			debugTextView.post(new Runnable() {
-
-				@Override
-				public void run() {
-					debugTextView.setText(app.CurrentDebugMessage);
-
-					debugScrollView.post(new Runnable() {
-
-						@Override
-						public void run() {
-							debugScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-						}
-					});
-				}
-			});
-		}
 	}
 }

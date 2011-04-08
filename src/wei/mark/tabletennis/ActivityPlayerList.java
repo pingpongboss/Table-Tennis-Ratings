@@ -1,10 +1,11 @@
 package wei.mark.tabletennis;
 
-import wei.mark.tabletennis.util.Debuggable;
+import wei.mark.tabletennis.TableTennisRatings.Navigation;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class ActivityPlayerList extends FragmentActivity implements Debuggable {
+public class ActivityPlayerList extends FragmentActivity {
 	TableTennisRatings app;
 
 	@Override
@@ -24,25 +25,10 @@ public class ActivityPlayerList extends FragmentActivity implements Debuggable {
 	}
 
 	@Override
-	public void debug(String msg) {
-//		if (mDebuggable) {
-//			app.CurrentDebugMessage = app.CurrentDebugMessage + "\n" + msg;
-//
-//			debugTextView.post(new Runnable() {
-//
-//				@Override
-//				public void run() {
-//					debugTextView.setText(app.CurrentDebugMessage);
-//
-//					debugScrollView.post(new Runnable() {
-//
-//						@Override
-//						public void run() {
-//							debugScrollView.fullScroll(ScrollView.FOCUS_DOWN);
-//						}
-//					});
-//				}
-//			});
-//		}
+	public void onBackPressed() {
+		super.onBackPressed();
+		app.CurrentNavigation = Navigation.IDLE;
+		startActivity(new Intent().setClass(this, ActivityPlayerSearch.class)
+				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 }
