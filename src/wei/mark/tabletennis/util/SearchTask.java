@@ -8,12 +8,11 @@ import android.os.AsyncTask;
 public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> {
 	SearchCallback callback;
 	String provider, query, id;
-	boolean user;
+	boolean user, hasSavedResult;
 	ArrayList<PlayerModel> savedResult;
 
 	public SearchTask(SearchCallback searchCallback) {
 		callback = searchCallback;
-		savedResult = null;
 	}
 
 	@Override
@@ -34,6 +33,7 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 
 	@Override
 	protected void onPostExecute(ArrayList<PlayerModel> result) {
+		hasSavedResult = true;
 		savedResult = result;
 
 		if (callback != null)
@@ -43,7 +43,7 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 	public void setSearchCallback(SearchCallback searchCallback) {
 		callback = searchCallback;
 
-		if (callback != null && savedResult != null)
+		if (callback != null && hasSavedResult)
 			callback.searchCompleted(savedResult);
 	}
 }

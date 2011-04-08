@@ -217,6 +217,12 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 	@Override
 	public void searchCompleted(ArrayList<PlayerModel> players) {
+		if ("usatt".equals(mProvider)) {
+			app.usattSearchTask = null;
+		} else if ("rc".equals(mProvider)) {
+			app.rcSearchTask = null;
+		}
+		
 		TextView text = null;
 		try {
 			text = (TextView) getView().findViewById(R.id.emptyListText);
@@ -233,11 +239,5 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		}
 
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-
-		if ("usatt".equals(mProvider)) {
-			app.usattSearchTask = null;
-		} else if ("rc".equals(mProvider)) {
-			app.rcSearchTask = null;
-		}
 	}
 }
