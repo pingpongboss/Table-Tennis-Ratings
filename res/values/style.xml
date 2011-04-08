@@ -68,14 +68,14 @@
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_gravity">center</item>
 	</style>
-	<style name="ActionBarItem.Home">
-		<item name="android:background">@drawable/logo</item>
+	<style name="ActionBarItem.Logo">
+		<item name="android:background">@drawable/logo_selector</item>
 	</style>
-	<style name="ActionBarItem.LogoLayout">
+	<style name="ActionBarItem.ProviderLogoLayout">
 		<item name="android:layout_width">0dp</item>
 		<item name="android:layout_weight">1</item>
 	</style>
-	<style name="ActionBarItem.Logo">
+	<style name="ActionBarItem.ProviderLogo">
 		<item name="android:layout_gravity">center</item>
 		<item name="android:background">#0e0e0e</item>
 	</style>

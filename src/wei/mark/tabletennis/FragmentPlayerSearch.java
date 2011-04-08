@@ -66,7 +66,7 @@ public class FragmentPlayerSearch extends ListFragment {
 
 		((TextView) view.findViewById(R.id.title))
 				.setText("Table Tennis Ratings");
-		view.findViewById(R.id.logo).setVisibility(View.GONE);
+		view.findViewById(R.id.provider_logo).setVisibility(View.GONE);
 
 		searchInput = (EditText) view.findViewById(R.id.searchEditText);
 
@@ -153,8 +153,8 @@ public class FragmentPlayerSearch extends ListFragment {
 			searchInput.setBackgroundResource(R.drawable.white_selector);
 			searchButton.setVisibility(View.GONE);
 
-			getView().findViewById(R.id.home).setBackgroundResource(
-					R.drawable.logo_small);
+			getView().findViewById(R.id.logo).setBackgroundResource(
+					R.drawable.logo_small_selector);
 		}
 
 		debug("Current navigation is now " + app.CurrentNavigation.toString());

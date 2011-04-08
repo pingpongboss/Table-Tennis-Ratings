@@ -79,14 +79,14 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			titleTextView.setText(String.format("%s search: %s", providerName,
 					mQuery));
 
-		v.findViewById(R.id.home).setVisibility(View.GONE);
-		Button logoButton = (Button) v.findViewById(R.id.logo);
+		v.findViewById(R.id.logo).setVisibility(View.GONE);
+		Button providerLogoButton = (Button) v.findViewById(R.id.provider_logo);
 		if (!app.DualPane)
-			logoButton.setVisibility(View.GONE);
+			providerLogoButton.setVisibility(View.GONE);
 		else if ("rc".equals(mProvider))
-			logoButton.setBackgroundResource(R.drawable.rc_selector);
+			providerLogoButton.setBackgroundResource(R.drawable.rc_selector);
 		else if ("usatt".equals(mProvider))
-			logoButton.setBackgroundResource(R.drawable.usatt_selector);
+			providerLogoButton.setBackgroundResource(R.drawable.usatt_selector);
 
 		ListFragmentTouchListener l = new ListFragmentTouchListener();
 		v.setOnTouchListener(l);
