@@ -107,6 +107,7 @@ public class FragmentPlayerSearch extends ListFragment {
 		view.setOnTouchListener(l);
 		searchInput.setOnTouchListener(l);
 		searchButton.setOnTouchListener(l);
+		view.findViewById(R.id.logo).setOnTouchListener(l);
 
 		return view;
 	}
@@ -265,15 +266,13 @@ public class FragmentPlayerSearch extends ListFragment {
 	}
 
 	protected void search(String query, boolean user) {
-		// InputMethodManager imm = (InputMethodManager) getActivity()
-		// .getSystemService(Context.INPUT_METHOD_SERVICE);
-		// imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
-
 		mQuery = query;
 
 		if (mQuery == null) {
 			return;
-		} else {
+		}
+
+		if (user) {
 			mHistory.remove(mQuery);
 			mHistory.add(0, mQuery);
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();

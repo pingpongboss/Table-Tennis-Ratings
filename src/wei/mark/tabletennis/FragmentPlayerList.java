@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
-import wei.mark.tabletennis.util.SearchTask;
 import wei.mark.tabletennis.util.SearchCallback;
+import wei.mark.tabletennis.util.SearchTask;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -82,6 +82,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 					mQuery));
 
 		v.findViewById(R.id.logo).setVisibility(View.GONE);
+
 		Button providerLogoButton = (Button) v.findViewById(R.id.provider_logo);
 		if (!app.DualPane) {
 			providerLogoButton.setVisibility(View.GONE);
@@ -109,9 +110,19 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			providerLogoButton.setVisibility(View.GONE);
 		}
 
+		Button retryButton = (Button) v.findViewById(R.id.retry);
+		retryButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startSearch();
+			}
+		});
+
 		ListFragmentTouchListener l = new ListFragmentTouchListener();
 		v.setOnTouchListener(l);
-		v.findViewById(android.R.id.list).setOnTouchListener(l);
+		providerLogoButton.setOnTouchListener(l);
+		retryButton.setOnTouchListener(l);
 
 		return v;
 	}
@@ -120,21 +131,9 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		if ("usatt".equals(mProvider)) {
-			if (app.usattSearchTask == null) {
-				app.usattSearchTask = new SearchTask(this);
-				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
-						mQuery, String.valueOf(mUser));
-			}
-			app.usattSearchTask.setSearchCallback(this);
-		} else if ("rc".equals(mProvider)) {
-			if (app.rcSearchTask == null) {
-				app.rcSearchTask = new SearchTask(this);
-				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
-						String.valueOf(mUser));
-			}
-			app.rcSearchTask.setSearchCallback(this);
-		}
+		startSearch();
+
+		getListView().setOnTouchListener(new ListFragmentTouchListener());
 
 		// SharedPreferences prefs = getActivity().getSharedPreferences(
 		// "listScroll", 0);
@@ -215,6 +214,34 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 	}
 
+	private void startSearch() {
+		TextView text = null;
+		try {
+			text = (TextView) getView().findViewById(R.id.emptyListText);
+			text.setVisibility(View.GONE);
+			text.setText("No search results");
+			getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.retry).setVisibility(View.GONE);
+		} catch (Exception ex) {
+		}
+
+		if ("usatt".equals(mProvider)) {
+			if (app.usattSearchTask == null) {
+				app.usattSearchTask = new SearchTask(this);
+				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
+						mQuery, String.valueOf(mUser));
+			}
+			app.usattSearchTask.setSearchCallback(this);
+		} else if ("rc".equals(mProvider)) {
+			if (app.rcSearchTask == null) {
+				app.rcSearchTask = new SearchTask(this);
+				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
+						String.valueOf(mUser));
+			}
+			app.rcSearchTask.setSearchCallback(this);
+		}
+	}
+
 	@Override
 	public void searchCompleted(ArrayList<PlayerModel> players) {
 		if ("usatt".equals(mProvider)) {
@@ -222,7 +249,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		} else if ("rc".equals(mProvider)) {
 			app.rcSearchTask = null;
 		}
-		
+
 		TextView text = null;
 		try {
 			text = (TextView) getView().findViewById(R.id.emptyListText);
