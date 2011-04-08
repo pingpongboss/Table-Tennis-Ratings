@@ -35,7 +35,8 @@ public class FragmentPlayerSearch extends ListFragment {
 	int mListIndex, mListTop;
 
 	ArrayList<String> mHistory;
-	String mQuery;
+	String mQuery, mPreviousInput;
+	boolean mUserChangedScroll;
 
 	EditText searchInput;
 	ImageButton searchButton;
@@ -46,13 +47,16 @@ public class FragmentPlayerSearch extends ListFragment {
 		app = (TableTennisRatings) getActivity().getApplication();
 
 		mHistory = retrieveHistory();
-		mQuery = null;
-		mListIndex = mListTop = 0;
+
+		SharedPreferences prefs = getActivity().getSharedPreferences("search",
+				0);
+		mQuery = prefs.getString("query", null);
+		mPreviousInput = prefs.getString("input", null);
+		mListIndex = prefs.getInt("listIndex", 0);
+		mListTop = prefs.getInt("listTop", 0);
 
 		setListAdapter(new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_list_item_1, mHistory));
-
-		setRetainInstance(true);
 	}
 
 	@Override
@@ -66,6 +70,9 @@ public class FragmentPlayerSearch extends ListFragment {
 		view.findViewById(R.id.provider_logo).setVisibility(View.GONE);
 
 		searchInput = (EditText) view.findViewById(R.id.searchEditText);
+		if (mPreviousInput != null) {
+			searchInput.setText(mPreviousInput);
+		}
 
 		searchInput.setOnKeyListener(new OnKeyListener() {
 
@@ -133,6 +140,7 @@ public class FragmentPlayerSearch extends ListFragment {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				mUserChangedScroll = true;
 				updateCurrentNavigation();
 				return false;
 			}
@@ -165,10 +173,21 @@ public class FragmentPlayerSearch extends ListFragment {
 	public void onPause() {
 		super.onPause();
 
+		SharedPreferences prefs = getActivity().getSharedPreferences("search",
+				0);
+		Editor editor = prefs.edit();
+
 		// save ListView scroll position
-		mListIndex = getListView().getFirstVisiblePosition();
-		View rcv = getListView().getChildAt(0);
-		mListTop = rcv == null ? 0 : rcv.getTop();
+		if (mUserChangedScroll) {
+			editor.putInt("listIndex", getListView().getFirstVisiblePosition());
+			View rcv = getListView().getChildAt(0);
+			editor.putInt("listTop", rcv == null ? 0 : rcv.getTop());
+		}
+
+		editor.putString("query", mQuery);
+		editor.putString("input", searchInput.getText().toString());
+
+		editor.commit();
 
 		// save search history
 		saveHistory();

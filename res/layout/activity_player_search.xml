@@ -3,6 +3,4 @@
 	android:orientation="vertical" android:layout_width="fill_parent"
 	android:layout_height="fill_parent">
 	<fragment  style="@style/RootLayout.Search"></fragment>
-	<ViewStub android:id="@+id/debug_stub" android:layout="@layout/debug_bar"
-		android:layout_height="50dp" android:layout_width="fill_parent"></ViewStub>
 </LinearLayout>

@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_height="fill_parent" android:orientation="vertical"
-	android:layout_width="fill_parent">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		android:orientation="horizontal" android:layout_width="fill_parent"
-		android:layout_height="0dp" android:layout_weight="1">
-		<fragment android:id="@+id/player_search" style="@style/RootLayout.Search.Landscape"></fragment>
+	style="@style/RootLayout" android:orientation="horizontal">
+	<fragment style="@style/RootLayout.Search.Landscape"></fragment>
+
 	<LinearLayout android:layout_height="fill_parent"
-		android:layout_width="fill_parent" android:background="@drawable/empty_content" android:id="@+id/content">
+		android:layout_width="fill_parent" android:background="@drawable/empty_content"
+		android:id="@+id/content">
 		<FrameLayout android:layout_height="match_parent"
-			android:id="@+id/content_usatt" android:layout_weight="1" android:layout_width="0dp"></FrameLayout>
-		<FrameLayout android:id="@+id/content_rc" android:layout_height="fill_parent" android:layout_width="0dp" android:layout_weight="1"></FrameLayout>
+			android:id="@+id/content_usatt" android:layout_weight="1"
+			android:layout_width="0dp"></FrameLayout>
+		<FrameLayout android:id="@+id/content_rc"
+			android:layout_height="fill_parent" android:layout_width="0dp"
+			android:layout_weight="1"></FrameLayout>
 	</LinearLayout>
-	</LinearLayout>
-	<ViewStub android:id="@+id/debug_stub" android:layout="@layout/debug_bar"
-		android:layout_height="50dp" android:layout_width="fill_parent"></ViewStub>
 </LinearLayout>

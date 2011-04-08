@@ -40,23 +40,19 @@ public final class R {
         public static final int white_selector=0x7f02001a;
     }
     public static final class id {
-        public static final int action_bar=0x7f06000a;
+        public static final int action_bar=0x7f060006;
         public static final int content=0x7f060003;
-        public static final int content_rc=0x7f060007;
-        public static final int content_usatt=0x7f060006;
-        public static final int debug=0x7f060009;
-        public static final int debug_scroll=0x7f060008;
-        public static final int debug_stub=0x7f060004;
-        public static final int emptyListText=0x7f06000c;
+        public static final int content_rc=0x7f060005;
+        public static final int content_usatt=0x7f060004;
+        public static final int emptyListText=0x7f060008;
         public static final int logo=0x7f060000;
-        public static final int message=0x7f060011;
-        public static final int player_search=0x7f060005;
-        public static final int progress=0x7f06000b;
+        public static final int message=0x7f06000d;
+        public static final int progress=0x7f060007;
         public static final int provider_logo=0x7f060001;
-        public static final int retry=0x7f06000d;
-        public static final int searchButton=0x7f060010;
-        public static final int searchEditText=0x7f06000f;
-        public static final int searchLinearLayout=0x7f06000e;
+        public static final int retry=0x7f060009;
+        public static final int searchButton=0x7f06000c;
+        public static final int searchEditText=0x7f06000b;
+        public static final int searchLinearLayout=0x7f06000a;
         public static final int title=0x7f060002;
     }
     public static final class layout {
@@ -64,10 +60,9 @@ public final class R {
         public static final int activity_player_list=0x7f030001;
         public static final int activity_player_search=0x7f030002;
         public static final int activity_tabbed_player_list=0x7f030003;
-        public static final int debug_bar=0x7f030004;
-        public static final int fragment_player_list=0x7f030005;
-        public static final int fragment_player_search=0x7f030006;
-        public static final int fragment_progress_bar=0x7f030007;
+        public static final int fragment_player_list=0x7f030004;
+        public static final int fragment_player_search=0x7f030005;
+        public static final int fragment_progress_bar=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

@@ -20,7 +20,8 @@ public class TableTennisRatings extends Application {
 		super.onCreate();
 
 		getSharedPreferences("listScroll", 0).edit().clear().commit();
-		
+		getSharedPreferences("search", 0).edit().clear().commit();
+
 		CurrentNavigation = Navigation.IDLE;
 		CurrentDebugMessage = "";
 	}
