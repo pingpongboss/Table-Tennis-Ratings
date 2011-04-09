@@ -31,13 +31,16 @@ public final class R {
         public static final int usatt_selector=0x7f020011;
         public static final int white=0x7f020012;
         public static final int white_border=0x7f020013;
-        public static final int white_left=0x7f020014;
-        public static final int white_left_border=0x7f020015;
-        public static final int white_left_selector=0x7f020016;
-        public static final int white_right=0x7f020017;
-        public static final int white_right_border=0x7f020018;
-        public static final int white_right_selector=0x7f020019;
-        public static final int white_selector=0x7f02001a;
+        public static final int white_border_fill=0x7f020014;
+        public static final int white_left=0x7f020015;
+        public static final int white_left_border=0x7f020016;
+        public static final int white_left_border_fill=0x7f020017;
+        public static final int white_left_selector=0x7f020018;
+        public static final int white_right=0x7f020019;
+        public static final int white_right_border=0x7f02001a;
+        public static final int white_right_border_fill=0x7f02001b;
+        public static final int white_right_selector=0x7f02001c;
+        public static final int white_selector=0x7f02001d;
     }
     public static final class id {
         public static final int action_bar=0x7f060006;
@@ -87,6 +90,7 @@ public final class R {
         public static final int EditText_Left_Search=0x7f050006;
         public static final int EmptyListIndicator=0x7f050016;
         public static final int EmptyListLayout=0x7f050015;
+        public static final int HorizontalSpacer=0x7f050017;
         public static final int ListView=0x7f050013;
         public static final int ListViewItem=0x7f050014;
         public static final int RootLayout=0x7f050008;
@@ -96,5 +100,6 @@ public final class R {
         public static final int RootLayout_Search_Landscape=0x7f05000a;
         public static final int Theme_DarkBlue=0x7f050001;
         public static final int Theme_Dialog_Translucent=0x7f050000;
+        public static final int VerticalSpacer=0x7f050018;
     }
 }
