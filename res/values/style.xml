@@ -6,14 +6,14 @@
 	</style>
 	<style name="EditText">
 		<item name="android:background">@drawable/white_selector</item>
-		<item name="android:textColor">#000000</item>
-		<item name="android:textColorHint">#ffffff</item>
+		<item name="android:textColor">@color/edittext_text</item>
+		<item name="android:textColorHint">@color/edittext_hint</item>
 		<item name="android:textSize">14sp</item>
 		<item name="android:textStyle">bold</item>
 	</style>
 	<style name="Button">
 		<item name="android:background">@drawable/white_selector</item>
-		<item name="android:textColor">#000000</item>
+		<item name="android:textColor">@color/button_text</item>
 		<item name="android:textSize">14sp</item>
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
@@ -42,7 +42,7 @@
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>
 		<item name="android:padding">2dp</item>
-		<item name="android:background">#0e0e0e</item>
+		<item name="android:background">@color/dark_gray</item>
 	</style>
 	<style name="RootLayout.Search">
 		<item name="android:name">wei.mark.tabletennis.FragmentPlayerSearch</item>
@@ -61,7 +61,7 @@
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:orientation">horizontal</item>
-		<item name="android:background">#0e0e0e</item>
+		<item name="android:background">@color/dark_gray</item>
 	</style>
 	<style name="ActionBarItem">
 		<item name="android:layout_height">wrap_content</item>
@@ -77,7 +77,7 @@
 	</style>
 	<style name="ActionBarItem.ProviderLogo">
 		<item name="android:layout_gravity">center</item>
-		<item name="android:background">#0e0e0e</item>
+		<item name="android:background">@color/dark_gray</item>
 	</style>
 	<style name="ActionBarItem.Text">
 		<item name="android:textColor">#ffffff</item>
@@ -87,7 +87,7 @@
 	<style name="ListView">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>
-		<item name="android:cacheColorHint">#0e0e0e</item>
+		<item name="android:cacheColorHint">@color/dark_gray</item>
 		<item name="android:fastScrollEnabled">true</item>
 	</style>
 	<style name="ListViewItem">
