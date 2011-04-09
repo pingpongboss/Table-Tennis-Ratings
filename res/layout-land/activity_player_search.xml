@@ -6,7 +6,7 @@
 	<LinearLayout android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:background="@drawable/empty_content"
 		android:id="@+id/content">
-		<FrameLayout android:layout_height="match_parent"
+		<FrameLayout android:layout_height="fill_parent"
 			android:id="@+id/content_usatt" android:layout_weight="1"
 			android:layout_width="0dp"></FrameLayout>
 		<FrameLayout android:id="@+id/content_rc"
