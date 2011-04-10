@@ -168,7 +168,9 @@ public class FragmentPlayerSearch extends ListFragment {
 					&& app.CurrentNavigation != Navigation.LIST;
 			search(mQuery, !screenOrientationChange);
 		}
-		
+
+		AppEngineParser.getParser().ping(false);
+
 		searchInput.requestFocus();
 	}
 

@@ -41,6 +41,45 @@ public class AppEngineParser {
 		return mParser;
 	}
 
+	public String ping(boolean sync) {
+		if (sync)
+			return pingSync();
+		else {
+			new Thread(new Runnable() {
+
+				@Override
+				public void run() {
+					pingSync();
+				}
+			}).run();
+			return null;
+		}
+	}
+
+	private String pingSync() {
+		HttpURLConnection connection = null;
+		try {
+			String uri = "http://ttratings.appspot.com/statuscheck_server";
+
+			URL url = new URL(uri);
+			connection = (HttpURLConnection) url.openConnection();
+
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					connection.getInputStream(), "iso-8859-1"));
+
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			rd.close();
+
+			return sb.toString();
+		} catch (Exception ex) {
+			return null;
+		}
+	}
+
 	public ArrayList<PlayerModel> execute(String id, String provider,
 			String query) {
 		return execute(id, provider, query, false);
