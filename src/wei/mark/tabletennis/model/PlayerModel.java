@@ -74,7 +74,7 @@ public class PlayerModel implements Parcelable {
 		return String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t", mId, mExpires,
 				mName, mRating, clubs, mState, mCountry, mLastPlayed);
 	}
-	
+
 	public String getProvider() {
 		return mProvider;
 	}
@@ -82,9 +82,22 @@ public class PlayerModel implements Parcelable {
 	public void setProvider(String provider) {
 		this.mProvider = provider;
 	}
-	
+
 	public String getRating() {
 		return mRating;
+	}
+
+	public String getBaseRating() {
+		if ("usatt".equals(mProvider))
+			return getRating();
+		else if ("rc".equals(mProvider)) {
+			try {
+				//get up to the +- symbol
+				return getRating().substring(0, getRating().indexOf(177)); 
+			} catch (Exception ex) {
+			}
+		}
+		return null;
 	}
 
 	public void setRating(String rating) {

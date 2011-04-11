@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/ListViewItem">
 	<TextView android:id="@+id/name" android:layout_height="wrap_content"
-		android:layout_width="wrap_content" android:layout_centerVertical="true" android:layout_alignParentLeft="true">
+		android:layout_centerVertical="true" android:text="name" android:layout_width="fill_parent" android:layout_toLeftOf="@+id/rating">
 	</TextView>
 	<TextView android:id="@+id/rating" android:layout_height="wrap_content"
-		android:layout_width="wrap_content" android:layout_alignParentRight="true" android:layout_centerVertical="true">
+		android:layout_width="wrap_content" android:text="rating" android:layout_alignParentRight="true">
 	</TextView>
 </RelativeLayout>

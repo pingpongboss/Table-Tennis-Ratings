@@ -44,7 +44,7 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 		PlayerModel player = players.get(position);
 		if (player != null) {
 			holder.name.setText(player.getName());
-			holder.rating.setText(player.getRating());
+			holder.rating.setText(player.getBaseRating());
 		}
 		return convertView;
 	}
