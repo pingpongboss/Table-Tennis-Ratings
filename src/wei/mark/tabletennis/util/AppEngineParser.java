@@ -42,16 +42,16 @@ public class AppEngineParser {
 	}
 
 	public String ping(boolean sync) {
-		if (sync)
+		if (sync) {
 			return pingSync();
-		else {
+		} else {
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
 					pingSync();
 				}
-			}).run();
+			}).start();
 			return null;
 		}
 	}
