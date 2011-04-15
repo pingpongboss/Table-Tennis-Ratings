@@ -2,6 +2,7 @@ package wei.mark.tabletennis;
 
 import java.util.ArrayList;
 
+import wei.mark.tabletennis.TableTennisRatings.ListNavigation;
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.PlayerModelAdapter;
@@ -154,14 +155,17 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		if (mQuery.equals(mListQuery))
 			getListView().setSelectionFromTop(mListIndex, mListTop);
 		else
-			getActivity().getSharedPreferences(mProvider, 0).edit().clear().commit();
+			getActivity().getSharedPreferences(mProvider, 0).edit().clear()
+					.commit();
 
 		getListView().setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				mUserChangedScroll = true;
+
 				updateCurrentNavigation();
+
 				return false;
 			}
 		});
@@ -204,6 +208,11 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 	private void updateCurrentNavigation() {
 		app.CurrentNavigation = Navigation.LIST;
+		
+		if ("usatt".equals(mProvider))
+			app.CurrentListNavigation = ListNavigation.USATT;
+		else if ("rc".equals(mProvider))
+			app.CurrentListNavigation = ListNavigation.RC;
 	}
 
 	private void startSearch() {

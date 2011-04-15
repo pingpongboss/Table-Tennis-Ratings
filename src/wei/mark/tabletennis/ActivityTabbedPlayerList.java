@@ -1,10 +1,12 @@
 package wei.mark.tabletennis;
 
+import wei.mark.tabletennis.TableTennisRatings.ListNavigation;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 
 public class ActivityTabbedPlayerList extends TabActivity {
 	TableTennisRatings app;
@@ -44,6 +46,27 @@ public class ActivityTabbedPlayerList extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(spec);
 
-		tabHost.setCurrentTab(0); // TODO set to saved tab
+		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
+
+			@Override
+			public void onTabChanged(String tabId) {
+				if ("usatt".equals(tabId))
+					app.CurrentListNavigation = ListNavigation.USATT;
+				else if ("rc".equals(tabId))
+					app.CurrentListNavigation = ListNavigation.RC;
+			}
+		});
+
+		switch (app.CurrentListNavigation) {
+		case USATT:
+			tabHost.setCurrentTab(0);
+			break;
+		case RC:
+			tabHost.setCurrentTab(1);
+			break;
+		default:
+			tabHost.setCurrentTab(0);
+			break;
+		}
 	}
 }
