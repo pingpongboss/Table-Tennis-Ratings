@@ -262,6 +262,8 @@ public class FragmentPlayerSearch extends ListFragment {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								mHistory.clear();
+								mHistory.add("Wei, Mark");
+								mHistory.add("Boll, Timo");
 								((ArrayAdapter<?>) getListAdapter())
 										.notifyDataSetChanged();
 								saveHistory();
