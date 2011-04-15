@@ -33,10 +33,10 @@ public class FragmentPlayerSearch extends ListFragment {
 	TableTennisRatings app;
 
 	int mListIndex, mListTop;
+	boolean mUserChangedScroll;
 
 	ArrayList<String> mHistory;
 	String mQuery, mPreviousInput;
-	boolean mUserChangedScroll;
 
 	EditText searchInput;
 	ImageButton searchButton;

@@ -8,6 +8,8 @@ import wei.mark.tabletennis.util.PlayerModelAdapter;
 import wei.mark.tabletennis.util.SearchCallback;
 import wei.mark.tabletennis.util.SearchTask;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -15,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,9 +28,9 @@ import android.widget.Toast;
 public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	TableTennisRatings app;
 	ArrayList<PlayerModel> mPlayers;
-	String mProvider, mQuery;
+	String mProvider, mQuery, mListQuery;
 	int mListIndex, mListTop;
-	boolean mUserScroll, mUser;
+	boolean mUserChangedScroll, mUser;
 
 	public static FragmentPlayerList getInstance(String provider, String query,
 			boolean user) {
@@ -45,9 +48,10 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		mPlayers = new ArrayList<PlayerModel>();
 		mProvider = null;
 		mQuery = null;
+		mListQuery = null;
 		mListIndex = -1;
 		mListTop = 0;
-		mUserScroll = false;
+		mUserChangedScroll = false;
 		mUser = false;
 	}
 
@@ -61,6 +65,12 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		mProvider = b.getString("provider");
 		mQuery = b.getString("query");
 		mUser = b.getBoolean("user");
+
+		SharedPreferences prefs = getActivity().getSharedPreferences(mProvider,
+				0);
+		mListQuery = prefs.getString("listQuery", null);
+		mListIndex = prefs.getInt("listIndex", 0);
+		mListTop = prefs.getInt("listTop", 0);
 
 		setListAdapter(new PlayerModelAdapter(getActivity(),
 				R.layout.item_player_list, mPlayers));
@@ -120,7 +130,14 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			}
 		});
 
-		ListFragmentTouchListener l = new ListFragmentTouchListener();
+		OnTouchListener l = new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				updateCurrentNavigation();
+				return false;
+			}
+		};
 		v.setOnTouchListener(l);
 		providerLogoButton.setOnTouchListener(l);
 		retryButton.setOnTouchListener(l);
@@ -134,42 +151,20 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 		startSearch();
 
-		getListView().setOnTouchListener(new ListFragmentTouchListener());
+		if (mQuery.equals(mListQuery))
+			getListView().setSelectionFromTop(mListIndex, mListTop);
+		else
+			getActivity().getSharedPreferences(mProvider, 0).edit().clear().commit();
 
-		// SharedPreferences prefs = getActivity().getSharedPreferences(
-		// "listScroll", 0);
-		//
-		// if (prefs.getString("listQuery", "").equals(mQuery)) {
-		// int index = prefs.getInt("listIndex", 0);
-		// int top = prefs.getInt("listTop", 0);
-		// getListView().setSelectionFromTop(index, top);
-		// }
-		//
-		// getListView().setOnTouchListener(new OnTouchListener() {
-		//
-		// @Override
-		// public boolean onTouch(View v, MotionEvent event) {
-		// mUserScroll = true;
-		// return false;
-		// }
-		// });
-		//
-		// getListView().setOnScrollListener(new OnScrollListener() {
-		//
-		// @Override
-		// public void onScrollStateChanged(AbsListView view, int scrollState) {
-		// }
-		//
-		// @Override
-		// public void onScroll(AbsListView view, int firstVisibleItem,
-		// int visibleItemCount, int totalItemCount) {
-		// if (mUserScroll) {
-		// mListIndex = firstVisibleItem;
-		// View firstView = view.getChildAt(0);
-		// mListTop = firstView == null ? 0 : firstView.getTop();
-		// }
-		// }
-		// });
+		getListView().setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mUserChangedScroll = true;
+				updateCurrentNavigation();
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -184,17 +179,19 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 				app.rcSearchTask.setSearchCallback(null);
 		}
 
-		// mUserScroll = false;
-		//
-		// if (mListIndex != -1) {
-		// Editor edit = getActivity().getSharedPreferences("listScroll", 0)
-		// .edit();
-		// edit.putString("listQuery", mQuery);
-		// edit.putInt("listIndex", mListIndex);
-		// edit.putInt("listTop", mListTop);
-		//
-		// edit.commit();
-		// }
+		SharedPreferences prefs = getActivity().getSharedPreferences(mProvider,
+				0);
+		Editor editor = prefs.edit();
+
+		// save ListView scroll position
+		if (mUserChangedScroll) {
+			editor.putString("listQuery", mQuery);
+			editor.putInt("listIndex", getListView().getFirstVisiblePosition());
+			View rcv = getListView().getChildAt(0);
+			editor.putInt("listTop", rcv == null ? 0 : rcv.getTop());
+		}
+
+		editor.commit();
 	}
 
 	@Override
@@ -205,14 +202,8 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 				Toast.LENGTH_SHORT).show();
 	}
 
-	private class ListFragmentTouchListener implements View.OnTouchListener {
-
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			app.CurrentNavigation = Navigation.LIST;
-			return false;
-		}
-
+	private void updateCurrentNavigation() {
+		app.CurrentNavigation = Navigation.LIST;
 	}
 
 	private void startSearch() {

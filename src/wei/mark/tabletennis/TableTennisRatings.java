@@ -19,7 +19,8 @@ public class TableTennisRatings extends Application {
 	public void onCreate() {
 		super.onCreate();
 
-		getSharedPreferences("listScroll", 0).edit().clear().commit();
+		getSharedPreferences("usatt", 0).edit().clear().commit();
+		getSharedPreferences("rc", 0).edit().clear().commit();
 		getSharedPreferences("search", 0).edit().clear().commit();
 
 		CurrentNavigation = Navigation.IDLE;
