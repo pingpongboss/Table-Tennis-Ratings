@@ -46,4 +46,12 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 		if (callback != null && hasSavedResult)
 			callback.searchCompleted(savedResult);
 	}
+
+	public String getProvider() {
+		return provider;
+	}
+
+	public String getQuery() {
+		return query;
+	}
 }

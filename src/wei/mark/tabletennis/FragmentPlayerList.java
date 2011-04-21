@@ -229,10 +229,20 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 				app.usattSearchTask = new SearchTask(this);
 				app.usattSearchTask.execute(TableTennisRatings.getDeviceId(),
 						mProvider, mQuery, String.valueOf(mUser));
+			} else if (app.usattSearchTask.getQuery() != mQuery) {
+				app.usattSearchTask.cancel(true);
+				app.usattSearchTask = new SearchTask(this);
+				app.usattSearchTask.execute(TableTennisRatings.getDeviceId(),
+						mProvider, mQuery, String.valueOf(mUser));
 			}
 			app.usattSearchTask.setSearchCallback(this);
 		} else if ("rc".equals(mProvider)) {
 			if (app.rcSearchTask == null) {
+				app.rcSearchTask = new SearchTask(this);
+				app.rcSearchTask.execute(TableTennisRatings.getDeviceId(),
+						mProvider, mQuery, String.valueOf(mUser));
+			} else if (app.rcSearchTask.getQuery() != mQuery) {
+				app.rcSearchTask.cancel(true);
 				app.rcSearchTask = new SearchTask(this);
 				app.rcSearchTask.execute(TableTennisRatings.getDeviceId(),
 						mProvider, mQuery, String.valueOf(mUser));
