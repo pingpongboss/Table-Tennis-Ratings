@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	TableTennisRatings app;
@@ -201,14 +200,13 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO
-		Toast.makeText(getActivity(),
-				String.format("Clicked %s", mPlayers.get(position)),
-				Toast.LENGTH_SHORT).show();
+		TableTennisRatings.getToast(getActivity(), 0,
+				String.format("Clicked %s", mPlayers.get(position))).show();
 	}
 
 	private void updateCurrentNavigation() {
 		app.CurrentNavigation = Navigation.LIST;
-		
+
 		if ("usatt".equals(mProvider))
 			app.CurrentListNavigation = ListNavigation.USATT;
 		else if ("rc".equals(mProvider))
@@ -229,15 +227,15 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		if ("usatt".equals(mProvider)) {
 			if (app.usattSearchTask == null) {
 				app.usattSearchTask = new SearchTask(this);
-				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
-						mQuery, String.valueOf(mUser));
+				app.usattSearchTask.execute(TableTennisRatings.getDeviceId(),
+						mProvider, mQuery, String.valueOf(mUser));
 			}
 			app.usattSearchTask.setSearchCallback(this);
 		} else if ("rc".equals(mProvider)) {
 			if (app.rcSearchTask == null) {
 				app.rcSearchTask = new SearchTask(this);
-				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
-						String.valueOf(mUser));
+				app.rcSearchTask.execute(TableTennisRatings.getDeviceId(),
+						mProvider, mQuery, String.valueOf(mUser));
 			}
 			app.rcSearchTask.setSearchCallback(this);
 		}

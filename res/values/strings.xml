@@ -2,4 +2,10 @@
 <resources>
     <string name="hello">Hello World, TableTennisRatingsActivity!</string>
     <string name="app_name">Table Tennis Ratings</string>
+    <string-array name="example_searches">
+        <item>Wei, Mark</item>
+        <item>Ma, Lin</item>
+        <item>Wei</item>
+        <item>Ma</item>
+    </string-array>
 </resources>

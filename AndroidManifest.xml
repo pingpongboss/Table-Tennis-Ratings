@@ -8,7 +8,7 @@
 
 
 	<application android:icon="@drawable/icon" android:label="@string/app_name"
-		android:name="TableTennisRatings" android:theme="@style/Theme.DarkBlue">
+		android:name="TableTennisRatings" android:theme="@style/Theme.DarkWithOrangeHighlights">
 		<activity android:name="ActivityPlayerSearch" android:label="@string/app_name"
 			android:windowSoftInputMode="stateAlwaysHidden">
 			<intent-filter>

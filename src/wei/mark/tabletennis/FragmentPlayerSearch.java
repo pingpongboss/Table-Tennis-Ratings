@@ -1,6 +1,7 @@
 package wei.mark.tabletennis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.AppEngineParser;
@@ -10,8 +11,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,9 +31,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentPlayerSearch extends ListFragment {
 	TableTennisRatings app;
+	Toast mToast;
 
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll;
@@ -154,6 +159,13 @@ public class FragmentPlayerSearch extends ListFragment {
 				&& contentFrame.getVisibility() == View.VISIBLE;
 
 		if (app.DualPane) {
+			if (mToast != null)
+				mToast.cancel();
+			Editor edit = PreferenceManager.getDefaultSharedPreferences(
+					getActivity()).edit();
+			edit.putBoolean("promo_rotate", true);
+			edit.commit();
+
 			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
 			searchInput.setBackgroundResource(R.drawable.white_selector);
@@ -161,6 +173,21 @@ public class FragmentPlayerSearch extends ListFragment {
 
 			getView().findViewById(R.id.logo).setBackgroundResource(
 					R.drawable.logo_small_selector);
+		} else {
+			SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(getActivity());
+			boolean rotated = prefs.getBoolean("promo_rotate", false);
+			if (!rotated && mHistory.size() < 5) {
+				if (mToast != null)
+					mToast.cancel();
+
+				mToast = TableTennisRatings
+						.getToast(getActivity(), R.drawable.promo_rotate,
+								"Rotate your device for more.");
+				mToast.setGravity(Gravity.BOTTOM, 0, 0);
+				mToast.setDuration(Toast.LENGTH_LONG);
+				mToast.show();
+			}
 		}
 
 		if (app.CurrentNavigation == Navigation.LIST || app.DualPane) {
@@ -175,6 +202,9 @@ public class FragmentPlayerSearch extends ListFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
+
+		if (mToast != null)
+			mToast.cancel();
 
 		SharedPreferences prefs = getActivity().getSharedPreferences("search",
 				0);
@@ -216,8 +246,8 @@ public class FragmentPlayerSearch extends ListFragment {
 		}
 
 		if (history.isEmpty()) {
-			history.add("Wei, Mark");
-			history.add("Boll, Timo");
+			history.addAll(Arrays.asList(getResources().getStringArray(
+					R.array.example_searches)));
 		}
 
 		return history;
@@ -260,8 +290,9 @@ public class FragmentPlayerSearch extends ListFragment {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								mHistory.clear();
-								mHistory.add("Wei, Mark");
-								mHistory.add("Boll, Timo");
+								mHistory.addAll(Arrays.asList(getResources()
+										.getStringArray(
+												R.array.example_searches)));
 								((ArrayAdapter<?>) getListAdapter())
 										.notifyDataSetChanged();
 								saveHistory();
@@ -305,6 +336,9 @@ public class FragmentPlayerSearch extends ListFragment {
 			intent.putExtra("user", user);
 			startActivity(intent);
 		}
+
+		if (mToast != null)
+			mToast.cancel();
 
 		if (user)
 			app.CurrentNavigation = Navigation.LIST;

@@ -2,18 +2,19 @@
 <resources>
 	<style name="Theme_Dialog_Translucent" parent="android:Theme.Dialog">
 	</style>
-	<style name="Theme.DarkBlue" parent="android:Theme.NoTitleBar">
+	<style name="Theme.DarkWithOrangeHighlights" parent="android:Theme.NoTitleBar">
+		<item name="android:textColor">@color/primary_text</item>
 	</style>
 	<style name="EditText">
 		<item name="android:background">@drawable/white_selector</item>
-		<item name="android:textColor">@color/edittext_text</item>
-		<item name="android:textColorHint">@color/edittext_hint</item>
+		<item name="android:textColor">@color/secondary_text</item>
+		<item name="android:textColorHint">@color/primary_text</item>
 		<item name="android:textSize">14sp</item>
 		<item name="android:textStyle">bold</item>
 	</style>
 	<style name="Button">
 		<item name="android:background">@drawable/white_selector</item>
-		<item name="android:textColor">@color/button_text</item>
+		<item name="android:textColor">@color/secondary_text</item>
 		<item name="android:textSize">14sp</item>
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">wrap_content</item>
@@ -42,7 +43,7 @@
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>
 		<item name="android:padding">2dp</item>
-		<item name="android:background">@color/dark_gray</item>
+		<item name="android:background">@color/background_dark_gray</item>
 	</style>
 	<style name="RootLayout.Search">
 		<item name="android:name">wei.mark.tabletennis.FragmentPlayerSearch</item>
@@ -61,7 +62,7 @@
 		<item name="android:layout_height">wrap_content</item>
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:orientation">horizontal</item>
-		<item name="android:background">@color/dark_gray</item>
+		<item name="android:background">@color/background_dark_gray</item>
 	</style>
 	<style name="ActionBarItem">
 		<item name="android:layout_height">wrap_content</item>
@@ -77,7 +78,7 @@
 	</style>
 	<style name="ActionBarItem.ProviderLogo">
 		<item name="android:layout_gravity">center</item>
-		<item name="android:background">@color/dark_gray</item>
+		<item name="android:background">@color/background_dark_gray</item>
 	</style>
 	<style name="ActionBarItem.Text">
 		<item name="android:textColor">#ffffff</item>
@@ -87,7 +88,7 @@
 	<style name="ListView">
 		<item name="android:layout_width">fill_parent</item>
 		<item name="android:layout_height">fill_parent</item>
-		<item name="android:cacheColorHint">@color/dark_gray</item>
+		<item name="android:cacheColorHint">@color/background_dark_gray</item>
 		<item name="android:fastScrollEnabled">true</item>
 	</style>
 	<style name="ListViewItem">
@@ -116,5 +117,21 @@
 		<item name="android:layout_width">wrap_content</item>
 		<item name="android:layout_height">0dp</item>
 		<item name="android:layout_weight">1</item>
+	</style>
+	<style name="ToastLayout">
+		<item name="android:background">@drawable/toast_frame</item>
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:gravity">center_vertical</item>
+	</style>
+	<style name="ToastImage">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+	</style>
+	<style name="ToastText">
+		<item name="android:layout_width">wrap_content</item>
+		<item name="android:layout_height">wrap_content</item>
+		<item name="android:textColor">@color/secondary_text</item>
+		<item name="android:gravity">center_horizontal</item>
 	</style>
 </resources>

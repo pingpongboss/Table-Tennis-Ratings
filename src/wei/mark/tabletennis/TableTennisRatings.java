@@ -3,7 +3,11 @@ package wei.mark.tabletennis;
 import wei.mark.tabletennis.util.SearchTask;
 import android.app.Application;
 import android.content.Context;
-import android.telephony.TelephonyManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class TableTennisRatings extends Application {
 	public Navigation CurrentNavigation;
@@ -33,13 +37,38 @@ public class TableTennisRatings extends Application {
 		CurrentDebugMessage = "";
 	}
 
-	public String getDeviceId() {
-		TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		String id = manager.getDeviceId();
+	public static String getDeviceId() {
+		return "test";
+	}
 
-		if (id == null || id.equals("")) {
-			id = "unknown";
+	public static Toast getToast(Context context, int imageResourceId,
+			String message) {
+		View view = getToastView(context, imageResourceId, message);
+
+		Toast toast = new Toast(context);
+		toast.setView(view);
+		return toast;
+	}
+
+	public static View getToastView(Context context, int imageResourceId,
+			String message) {
+		LayoutInflater inflator = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflator.inflate(R.layout.toast, null);
+
+		ImageView image = (ImageView) view.findViewById(R.id.image);
+		TextView text = (TextView) view.findViewById(R.id.text);
+
+		if (imageResourceId != 0) {
+			image.setImageResource(imageResourceId);
+			image.setPadding(0, 0, 10, 0);
+		} else {
+			image.setPadding(0, 0, 0, 0);
 		}
-		return id;
+
+		if (message != null && !message.equals(""))
+			text.setText(message);
+
+		return view;
 	}
 }
