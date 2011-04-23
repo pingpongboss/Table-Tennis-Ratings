@@ -14,7 +14,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -23,19 +22,20 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class FragmentPlayerSearch extends ListFragment {
 	TableTennisRatings app;
-	Toast mToast;
 
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll;
@@ -159,34 +159,70 @@ public class FragmentPlayerSearch extends ListFragment {
 				&& contentFrame.getVisibility() == View.VISIBLE;
 
 		if (app.DualPane) {
-			if (mToast != null)
-				mToast.cancel();
+			// hide promo rotate
 			Editor edit = PreferenceManager.getDefaultSharedPreferences(
 					getActivity()).edit();
 			edit.putBoolean("promo_rotate", true);
 			edit.commit();
 
+			// set list properties
 			getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
+			// tweak search input for narrow column
 			searchInput.setBackgroundResource(R.drawable.white_selector);
 			searchButton.setVisibility(View.GONE);
-
 			getView().findViewById(R.id.logo).setBackgroundResource(
 					R.drawable.logo_small_selector);
+
+			ViewStub input_stub = (ViewStub) getActivity().findViewById(
+					R.id.promo_search_stub_input);
+			if (input_stub != null) {
+				// show promo search
+				View input_view = input_stub.inflate();
+				input_view
+						.setBackgroundResource(R.drawable.toast_frame_left_tip);
+				ViewStub history_stub = (ViewStub) getActivity().findViewById(
+						R.id.promo_search_stub_history);
+				View history_view = history_stub.inflate();
+				history_view
+						.setBackgroundResource(R.drawable.toast_frame_left_tip);
+
+				int top_input = getResources().getDrawable(
+						R.drawable.logo_small_selector).getIntrinsicHeight();
+				RelativeLayout.LayoutParams params_input = new RelativeLayout.LayoutParams(
+						RelativeLayout.LayoutParams.WRAP_CONTENT,
+						RelativeLayout.LayoutParams.WRAP_CONTENT);
+				params_input.setMargins(0, top_input, 0, 0);
+				input_view.setLayoutParams(params_input);
+
+				RelativeLayout.LayoutParams params_history = new RelativeLayout.LayoutParams(
+						RelativeLayout.LayoutParams.WRAP_CONTENT,
+						RelativeLayout.LayoutParams.WRAP_CONTENT);
+				params_history.addRule(RelativeLayout.BELOW,
+						R.id.promo_search_input);
+				history_view.setLayoutParams(params_history);
+
+				((TextView) input_view.findViewById(R.id.text))
+						.setText(R.string.promo_search_input);
+				((TextView) history_view.findViewById(R.id.text))
+						.setText(R.string.promo_search_history);
+			}
 		} else {
 			SharedPreferences prefs = PreferenceManager
 					.getDefaultSharedPreferences(getActivity());
 			boolean rotated = prefs.getBoolean("promo_rotate", false);
 			if (!rotated && mHistory.size() < 5) {
-				if (mToast != null)
-					mToast.cancel();
 
-				mToast = TableTennisRatings
-						.getToast(getActivity(), R.drawable.promo_rotate,
-								"Rotate your device for more.");
-				mToast.setGravity(Gravity.BOTTOM, 0, 0);
-				mToast.setDuration(Toast.LENGTH_LONG);
-				mToast.show();
+				ViewStub stub = (ViewStub) getView().findViewById(
+						R.id.promo_rotate_stub);
+				if (stub != null) {
+					View view = stub.inflate();
+					((ImageView) view.findViewById(R.id.image))
+							.setImageResource(R.drawable.promo_rotate);
+					((TextView) view.findViewById(R.id.text))
+							.setText(getResources().getString(
+									R.string.promo_rotate));
+				}
 			}
 		}
 
@@ -202,9 +238,6 @@ public class FragmentPlayerSearch extends ListFragment {
 	@Override
 	public void onPause() {
 		super.onPause();
-
-		if (mToast != null)
-			mToast.cancel();
 
 		SharedPreferences prefs = getActivity().getSharedPreferences("search",
 				0);
@@ -325,8 +358,8 @@ public class FragmentPlayerSearch extends ListFragment {
 					"rc", query, user);
 
 			getFragmentManager().beginTransaction()
-					.replace(R.id.content_usatt, usattFragment)
-					.replace(R.id.content_rc, rcFragment)
+					.replace(R.id.content_usatt, usattFragment, "usatt")
+					.replace(R.id.content_rc, rcFragment, "rc")
 					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
 					.commit();
 		} else {
@@ -336,9 +369,6 @@ public class FragmentPlayerSearch extends ListFragment {
 			intent.putExtra("user", user);
 			startActivity(intent);
 		}
-
-		if (mToast != null)
-			mToast.cancel();
 
 		if (user)
 			app.CurrentNavigation = Navigation.LIST;

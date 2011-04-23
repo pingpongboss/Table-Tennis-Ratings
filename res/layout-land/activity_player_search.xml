@@ -2,15 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/RootLayout" android:orientation="horizontal">
 	<fragment style="@style/RootLayout.Search.Landscape"></fragment>
-
-	<LinearLayout android:layout_height="fill_parent"
-		android:layout_width="fill_parent" android:background="@drawable/empty_content"
-		android:id="@+id/content">
-		<FrameLayout android:layout_height="fill_parent"
-			android:id="@+id/content_usatt" android:layout_weight="1"
-			android:layout_width="0dp"></FrameLayout>
-		<FrameLayout android:id="@+id/content_rc"
-			android:layout_height="fill_parent" android:layout_width="0dp"
-			android:layout_weight="1"></FrameLayout>
-	</LinearLayout>
+	<RelativeLayout android:layout_height="fill_parent"
+		android:layout_width="fill_parent" android:id="@+id/content">
+		<ViewStub android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout="@layout/toast"
+			android:id="@+id/promo_search_stub_input" android:inflatedId="@+id/promo_search_input"></ViewStub>
+		<ViewStub android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout="@layout/toast"
+			android:id="@+id/promo_search_stub_history" android:inflatedId="@+id/promo_search_history"></ViewStub>
+		<LinearLayout android:layout_height="fill_parent"
+			android:layout_width="fill_parent">
+			<FrameLayout android:id="@+id/content_usatt"
+				android:layout_weight="1" android:layout_height="fill_parent"
+				android:layout_width="0dp"></FrameLayout>
+			<FrameLayout android:id="@+id/content_rc"
+				android:layout_weight="1" android:layout_height="fill_parent"
+				android:layout_width="0dp"></FrameLayout>
+		</LinearLayout>
+	</RelativeLayout>
 </LinearLayout>
