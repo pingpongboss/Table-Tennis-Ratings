@@ -4,9 +4,8 @@
     <string name="app_name">Table Tennis Ratings</string>
     <string-array name="example_searches">
         <item>Wei, Mark</item>
-        <item>Ma, Lin</item>
-        <item>Wei</item>
-        <item>Ma</item>
+        <item>Boll, Timo</item>
+        <item>Boll</item>
     </string-array>
     <string name="promo_rotate">Rotate your device for more.</string>
     <string name="promo_search_input">Start a new search...</string>
