@@ -7,7 +7,7 @@
         <item>Boll, Timo</item>
         <item>Boll</item>
     </string-array>
-    <string name="promo_rotate">Rotate your device for more.</string>
+    <string name="promo_rotate">Rotate your device to begin.</string>
     <string name="promo_search_input">Start a new search...</string>
-    <string name="promo_search_history">... or select an item from your search history.</string>
+    <string name="promo_search_history">... or select an item from your search history.\nLong click an entry to remove it from your history.</string>
 </resources>

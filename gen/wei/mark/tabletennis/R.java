@@ -38,21 +38,22 @@ public final class R {
         public static final int search=0x7f02000f;
         public static final int toast_frame=0x7f020010;
         public static final int toast_frame_left_tip=0x7f020011;
-        public static final int usatt=0x7f020012;
-        public static final int usatt_glow=0x7f020013;
-        public static final int usatt_selector=0x7f020014;
-        public static final int white=0x7f020015;
-        public static final int white_border=0x7f020016;
-        public static final int white_border_fill=0x7f020017;
-        public static final int white_left=0x7f020018;
-        public static final int white_left_border=0x7f020019;
-        public static final int white_left_border_fill=0x7f02001a;
-        public static final int white_left_selector=0x7f02001b;
-        public static final int white_right=0x7f02001c;
-        public static final int white_right_border=0x7f02001d;
-        public static final int white_right_border_fill=0x7f02001e;
-        public static final int white_right_selector=0x7f02001f;
-        public static final int white_selector=0x7f020020;
+        public static final int toast_frame_top_tip=0x7f020012;
+        public static final int usatt=0x7f020013;
+        public static final int usatt_glow=0x7f020014;
+        public static final int usatt_selector=0x7f020015;
+        public static final int white=0x7f020016;
+        public static final int white_border=0x7f020017;
+        public static final int white_border_fill=0x7f020018;
+        public static final int white_left=0x7f020019;
+        public static final int white_left_border=0x7f02001a;
+        public static final int white_left_border_fill=0x7f02001b;
+        public static final int white_left_selector=0x7f02001c;
+        public static final int white_right=0x7f02001d;
+        public static final int white_right_border=0x7f02001e;
+        public static final int white_right_border_fill=0x7f02001f;
+        public static final int white_right_selector=0x7f020020;
+        public static final int white_selector=0x7f020021;
     }
     public static final class id {
         public static final int action_bar=0x7f08000a;

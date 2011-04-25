@@ -210,15 +210,18 @@ public class FragmentPlayerSearch extends ListFragment {
 		} else {
 			SharedPreferences prefs = PreferenceManager
 					.getDefaultSharedPreferences(getActivity());
-			boolean rotated = prefs.getBoolean("promo_rotate", false);
-			if (!rotated && mHistory.size() < 5) {
 
+			// show promo_rotate below list
+			boolean rotated = prefs.getBoolean("promo_rotate", false);
+			int newHistoryCount = getNewHistoryCount();
+			if (!rotated && newHistoryCount <= 2) {
 				ViewStub stub = (ViewStub) getView().findViewById(
 						R.id.promo_rotate_stub);
 				if (stub != null) {
 					View view = stub.inflate();
-					((ImageView) view.findViewById(R.id.image))
-							.setImageResource(R.drawable.promo_rotate);
+					ImageView image = (ImageView) view.findViewById(R.id.image);
+					image.setImageResource(R.drawable.promo_rotate);
+					image.setPadding(0, 0, 10, 0);
 					((TextView) view.findViewById(R.id.text))
 							.setText(getResources().getString(
 									R.string.promo_rotate));
@@ -331,6 +334,16 @@ public class FragmentPlayerSearch extends ListFragment {
 								saveHistory();
 							}
 						}).setNegativeButton("Cancel", null).show();
+	}
+
+	private int getNewHistoryCount() {
+		int counter = 0;
+		for (String example_history : getResources().getStringArray(
+				R.array.example_searches)) {
+			if (mHistory.contains(example_history))
+				counter++;
+		}
+		return mHistory.size() - counter;
 	}
 
 	protected void search(String query, boolean user) {
