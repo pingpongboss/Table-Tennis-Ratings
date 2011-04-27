@@ -353,6 +353,10 @@ public class FragmentPlayerSearch extends ListFragment {
 			return;
 		}
 
+		if (!mHistory.contains(query)) {
+			mHistory.add(0, query);
+			saveHistory();
+		}
 		int position = mHistory.indexOf(mQuery);
 		getListView().setItemChecked(position, true);
 
