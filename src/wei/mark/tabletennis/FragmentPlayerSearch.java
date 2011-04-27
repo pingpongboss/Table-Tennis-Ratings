@@ -60,8 +60,8 @@ public class FragmentPlayerSearch extends ListFragment {
 		mListIndex = prefs.getInt("listIndex", 0);
 		mListTop = prefs.getInt("listTop", 0);
 
-		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				R.layout.item_player_search, mHistory));
+		setListAdapter(new StringArrayAdapter(getActivity(),
+				R.layout.item_player_search, mHistory, this));
 	}
 
 	@Override
@@ -353,16 +353,8 @@ public class FragmentPlayerSearch extends ListFragment {
 			return;
 		}
 
-		if (user) {
-			mHistory.remove(mQuery);
-			mHistory.add(0, mQuery);
-			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-
-			saveHistory();
-
-			int position = mHistory.indexOf(mQuery);
-			getListView().setItemChecked(position, true);
-		}
+		int position = mHistory.indexOf(mQuery);
+		getListView().setItemChecked(position, true);
 
 		if (app.DualPane) {
 			FragmentPlayerList usattFragment = FragmentPlayerList.getInstance(
