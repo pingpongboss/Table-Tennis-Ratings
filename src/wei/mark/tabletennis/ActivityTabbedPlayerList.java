@@ -58,12 +58,10 @@ public class ActivityTabbedPlayerList extends TabActivity {
 		});
 
 		switch (app.CurrentListNavigation) {
-		case USATT:
-			tabHost.setCurrentTab(0);
-			break;
 		case RC:
 			tabHost.setCurrentTab(1);
 			break;
+		case USATT:
 		default:
 			tabHost.setCurrentTab(0);
 			break;
