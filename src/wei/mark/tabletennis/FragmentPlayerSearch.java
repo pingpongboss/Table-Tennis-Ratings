@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.AppEngineParser;
+import wei.mark.tabletennis.util.StringAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,7 +61,7 @@ public class FragmentPlayerSearch extends ListFragment {
 		mListIndex = prefs.getInt("listIndex", 0);
 		mListTop = prefs.getInt("listTop", 0);
 
-		setListAdapter(new StringArrayAdapter(getActivity(),
+		setListAdapter(new StringAdapter(getActivity(),
 				R.layout.item_player_search, mHistory, this));
 	}
 
