@@ -8,7 +8,7 @@
 	<LinearLayout android:orientation="vertical" style="@style/EmptyListIndicator">
 		<ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/progress"></ProgressBar>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/emptyListText"
-			style="@style/EmptyListIndicator" android:text="Searching..."></TextView>
+			style="@style/EmptyListIndicator" android:text="Searching"></TextView>
 		<Button android:layout_width="wrap_content" android:visibility="gone" android:layout_height="wrap_content" android:text="Retry" style="@style/Button" android:id="@+id/retry"></Button>
 	</LinearLayout>
 	</FrameLayout>
