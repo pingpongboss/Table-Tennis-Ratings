@@ -360,6 +360,15 @@ public class FragmentPlayerSearch extends ListFragment {
 		}
 		int position = mHistory.indexOf(mQuery);
 		getListView().setItemChecked(position, true);
+		
+		// make sure the list item is visible
+		if (position < getListView().getFirstVisiblePosition())
+			getListView().setSelection(position);
+		else if (position > getListView().getLastVisiblePosition())
+			getListView().setSelectionFromTop(
+					getListView().getFirstVisiblePosition()
+							+ (position - getListView()
+									.getLastVisiblePosition()), 0);
 
 		if (app.DualPane) {
 			FragmentPlayerList usattFragment = FragmentPlayerList.getInstance(
