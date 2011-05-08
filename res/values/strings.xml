@@ -10,4 +10,5 @@
     <string name="promo_rotate">Rotate your device to begin.</string>
     <string name="promo_search_input">Start a new search...</string>
     <string name="promo_search_history">... or select an item from your search history.\nLong click an entry to remove it from your history.</string>
+    <string name="searching">Searching</string>
 </resources>

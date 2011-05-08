@@ -104,6 +104,7 @@ public final class R {
         public static final int promo_rotate=0x7f050002;
         public static final int promo_search_history=0x7f050004;
         public static final int promo_search_input=0x7f050003;
+        public static final int searching=0x7f050005;
     }
     public static final class style {
         public static final int ActionBar=0x7f07000d;
