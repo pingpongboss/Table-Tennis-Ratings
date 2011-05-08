@@ -25,7 +25,7 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 
 			AppEngineParser parser = AppEngineParser.getParser();
 
-			return parser.execute(id, provider, query);
+			return parser.search(id, provider, query);
 		} catch (Exception ex) {
 			return null;
 		}

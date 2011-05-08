@@ -71,5 +71,7 @@ public class StringAdapter extends ArrayAdapter<String> {
 
 	static class ViewHolder {
 		CheckedTextView name;
+		
+		String string;
 	}
 }

@@ -43,20 +43,21 @@ public class AppEngineParser {
 
 	public String ping(boolean sync) {
 		if (sync) {
-			return pingSync();
+			return ping();
 		} else {
 			new Thread(new Runnable() {
 
 				@Override
 				public void run() {
-					pingSync();
+					ping();
 				}
 			}).start();
 			return null;
 		}
 	}
 
-	private String pingSync() {
+	// synchronous ping
+	private String ping() {
 		HttpURLConnection connection = null;
 		try {
 			String uri = "http://ttratings.appspot.com/statuscheck_server";
@@ -80,12 +81,12 @@ public class AppEngineParser {
 		}
 	}
 
-	public ArrayList<PlayerModel> execute(String id, String provider,
+	public ArrayList<PlayerModel> search(String id, String provider,
 			String query) {
-		return execute(id, provider, query, false);
+		return search(id, provider, query, false);
 	}
 
-	public ArrayList<PlayerModel> execute(String id, String provider,
+	public ArrayList<PlayerModel> search(String id, String provider,
 			String query, boolean fresh) {
 		ArrayList<PlayerModel> players;
 
@@ -98,7 +99,7 @@ public class AppEngineParser {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?id=%s&provider=%s&query=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=search&id=%s&provider=%s&query=%s",
 							URLEncoder.encode(id, "iso-8859-1"),
 							URLEncoder.encode(provider, "iso-8859-1"),
 							URLEncoder.encode(query, "iso-8859-1"));
@@ -134,6 +135,43 @@ public class AppEngineParser {
 			if (connection != null)
 				connection.disconnect();
 		}
+	}
+
+	// asynchronously alert server
+	public void open(final String id, final PlayerModel player) {
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				HttpURLConnection connection = null;
+				try {
+					String uri = String
+							.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=open&id=%s&provider=%s&query=%s",
+									URLEncoder.encode(id, "iso-8859-1"),
+									URLEncoder.encode(player.getProvider(),
+											"iso-8859-1"), URLEncoder.encode(
+											player.getId(), "iso-8859-1"));
+
+					URL url = new URL(uri);
+					connection = (HttpURLConnection) url.openConnection();
+
+					BufferedReader rd = new BufferedReader(
+							new InputStreamReader(connection.getInputStream(),
+									"iso-8859-1"));
+
+					StringBuilder sb = new StringBuilder();
+					String line;
+					while ((line = rd.readLine()) != null) {
+						sb.append(line);
+					}
+					rd.close();
+				} catch (Exception ex) {
+				} finally {
+					if (connection != null)
+						connection.disconnect();
+				}
+			}
+		}).start();
 	}
 
 	private String getCacheKey(String provider, String query) {

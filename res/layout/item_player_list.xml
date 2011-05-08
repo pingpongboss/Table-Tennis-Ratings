@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	style="@style/ListViewItem">
+	style="@style/ListViewItem" android:padding="5dp">
 	<TextView android:id="@+id/name" android:layout_height="wrap_content"
-		android:layout_centerVertical="true" android:text="name" android:layout_width="fill_parent" android:layout_toLeftOf="@+id/rating" android:textColor="@color/secondary_text">
+		android:text="name" android:layout_width="fill_parent" android:layout_toLeftOf="@+id/rating" android:textColor="@color/secondary_text">
 	</TextView>
 	<TextView android:id="@+id/rating" android:layout_height="wrap_content"
 		android:layout_width="wrap_content" android:text="rating" android:layout_alignParentRight="true" android:textColor="@color/primary_text">
 	</TextView>
+	<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_below="@+id/name" android:text="subtext" style="@style/SubText" android:id="@+id/subtext"></TextView>
 </RelativeLayout>

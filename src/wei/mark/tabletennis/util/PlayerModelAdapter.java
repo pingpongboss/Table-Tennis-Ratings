@@ -12,12 +12,14 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
+	Context context;
 	ViewHolder holder;
 	List<PlayerModel> players;
 
 	public PlayerModelAdapter(Context context, int textViewResourceId,
 			List<PlayerModel> objects) {
 		super(context, textViewResourceId, objects);
+		this.context = context;
 		players = objects;
 	}
 
@@ -34,6 +36,7 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 			holder = new ViewHolder();
 			holder.name = (TextView) convertView.findViewById(R.id.name);
 			holder.rating = (TextView) convertView.findViewById(R.id.rating);
+			holder.subtext = (TextView) convertView.findViewById(R.id.subtext);
 
 			convertView.setTag(holder);
 		} else {
@@ -44,7 +47,12 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 		PlayerModel player = players.get(position);
 		if (player != null) {
 			holder.name.setText(player.getName());
+			if (player.getSearchHistory() != null
+					&& player.getSearchHistory().size() > 5)
+				holder.name.setTextColor(context.getResources().getColor(
+						R.color.tertiary_text));
 			holder.rating.setText(player.getBaseRating());
+			holder.subtext.setText(player.toSubtextString());
 		}
 		return convertView;
 	}
@@ -57,5 +65,6 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 	static class ViewHolder {
 		TextView name;
 		TextView rating;
+		TextView subtext;
 	}
 }

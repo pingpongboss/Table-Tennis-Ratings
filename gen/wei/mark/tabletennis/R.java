@@ -64,7 +64,7 @@ public final class R {
         public static final int content_rc=0x7f080009;
         public static final int content_usatt=0x7f080008;
         public static final int emptyListText=0x7f08000c;
-        public static final int image=0x7f080017;
+        public static final int image=0x7f080018;
         public static final int logo=0x7f080000;
         public static final int message=0x7f080013;
         public static final int name=0x7f080014;
@@ -81,9 +81,10 @@ public final class R {
         public static final int searchButton=0x7f080010;
         public static final int searchEditText=0x7f08000f;
         public static final int searchLinearLayout=0x7f08000e;
-        public static final int text=0x7f080018;
+        public static final int subtext=0x7f080016;
+        public static final int text=0x7f080019;
         public static final int title=0x7f080002;
-        public static final int toast_root=0x7f080016;
+        public static final int toast_root=0x7f080017;
     }
     public static final class layout {
         public static final int action_bar=0x7f030000;
@@ -127,6 +128,7 @@ public final class R {
         public static final int RootLayout_List_Landscape=0x7f07000c;
         public static final int RootLayout_Search=0x7f070009;
         public static final int RootLayout_Search_Landscape=0x7f07000a;
+        public static final int SubText=0x7f07001c;
         public static final int Theme_DarkWithOrangeHighlights=0x7f070001;
         public static final int Theme_Dialog_Translucent=0x7f070000;
         public static final int ToastImage=0x7f07001a;

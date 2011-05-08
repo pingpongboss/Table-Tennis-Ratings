@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import wei.mark.tabletennis.TableTennisRatings.ListNavigation;
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.tabletennis.util.AppEngineParser;
 import wei.mark.tabletennis.util.PlayerModelAdapter;
 import wei.mark.tabletennis.util.SearchCallback;
 import wei.mark.tabletennis.util.SearchTask;
@@ -199,9 +200,14 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+		final PlayerModel player = mPlayers.get(position);
+
+		AppEngineParser.getParser().open(TableTennisRatings.getDeviceId(),
+				player);
+
 		// TODO
 		TableTennisRatings.getToast(getActivity(), 0,
-				String.format("Clicked %s", mPlayers.get(position))).show();
+				String.format("Clicked %s", player)).show();
 	}
 
 	private void updateCurrentNavigation() {
