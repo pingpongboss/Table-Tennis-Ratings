@@ -17,7 +17,7 @@ public class TableTennisRatings extends Application {
 	public String CurrentDebugMessage;
 
 	public enum Navigation {
-		IDLE, LIST
+		IDLE, LIST, DETAILS
 	}
 
 	public enum ListNavigation {
