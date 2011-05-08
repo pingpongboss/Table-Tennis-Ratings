@@ -217,8 +217,8 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		TextView text = null;
 		try {
 			text = (TextView) getView().findViewById(R.id.emptyListText);
-			text.setVisibility(View.GONE);
-			text.setText("No search results");
+			text.setVisibility(View.VISIBLE);
+			text.setText("Searching...");
 			getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.retry).setVisibility(View.GONE);
 		} catch (Exception ex) {
@@ -259,18 +259,15 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			app.rcSearchTask = null;
 		}
 
-		TextView text = null;
-		try {
-			text = (TextView) getView().findViewById(R.id.emptyListText);
-			text.setVisibility(View.VISIBLE);
-			getView().findViewById(R.id.progress).setVisibility(View.GONE);
-		} catch (Exception ex) {
-		}
+		TextView text = (TextView) getView().findViewById(R.id.emptyListText);
+		getView().findViewById(R.id.progress).setVisibility(View.GONE);
 
-		if (players != null)
+		if (players != null) {
 			mPlayers.addAll(players);
-		else if (text != null) {
+			text.setText("No search results");
+		} else {
 			text.setText("An error occurred");
+			text.setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.retry).setVisibility(View.VISIBLE);
 		}
 

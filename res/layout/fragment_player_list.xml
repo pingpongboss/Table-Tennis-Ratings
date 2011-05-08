@@ -5,20 +5,11 @@
 		android:layout_height="wrap_content" android:layout_width="fill_parent"></include>
 	<ListView style="@style/ListView" android:id="@id/android:list"></ListView>
 	<FrameLayout style="@style/EmptyListLayout">
-	<LinearLayout android:id="@+id/progress" style="@style/EmptyListIndicator"
-		android:orientation="vertical">
-		<ProgressBar style="@style/EmptyListIndicator"
-			android:layout_width="wrap_content" android:layout_height="wrap_content"></ProgressBar>
-		<TextView android:layout_height="wrap_content" android:text="Searching" android:layout_width="wrap_content" android:id="@+id/progress_text"></TextView>
+	<LinearLayout android:orientation="vertical" style="@style/EmptyListIndicator">
+		<ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content" android:id="@+id/progress"></ProgressBar>
+		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/emptyListText"
+			style="@style/EmptyListIndicator" android:text="Searching..."></TextView>
+		<Button android:layout_width="wrap_content" android:visibility="gone" android:layout_height="wrap_content" android:text="Retry" style="@style/Button" android:id="@+id/retry"></Button>
 	</LinearLayout>
-		<LinearLayout android:orientation="vertical"
-			style="@style/EmptyListIndicator">
-			<TextView android:layout_width="wrap_content" android:text="No search results"
-				android:layout_height="wrap_content" android:id="@+id/emptyListText"
-				style="@style/EmptyListIndicator" android:visibility="gone"></TextView>
-			<Button android:layout_width="wrap_content"
-				android:visibility="gone" android:layout_height="wrap_content"
-				android:text="Retry" style="@style/Button" android:id="@+id/retry"></Button>
-		</LinearLayout>
 	</FrameLayout>
 </LinearLayout>

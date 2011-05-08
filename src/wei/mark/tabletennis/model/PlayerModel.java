@@ -2,68 +2,46 @@ package wei.mark.tabletennis.model;
 
 import java.util.Date;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+//import javax.persistence.Id;
 
-public class PlayerModel implements Parcelable {
+import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
+
+//import com.googlecode.objectify.annotation.Cached;
+//import com.googlecode.objectify.annotation.Unindexed;
+
+//@Cached
+public class PlayerModel {
+//	@Id
 	Long key;
 
 	String provider;
 	String id;
+	String lastName;
+	String firstName;
 
+//	@Unindexed
 	String rating;
-	String name;
+//	@Unindexed
 	String[] clubs;
+//	@Unindexed
 	String state;
+//	@Unindexed
 	String country;
+//	@Unindexed
 	String lastPlayed;
+//	@Unindexed
 	String expires;
+//	@Unindexed
 	Date refreshed;
+//	@Unindexed
+	String[] searchHistory;
 
 	public PlayerModel() {
 	}
 
-	public PlayerModel(Parcel in) {
-		readFromParcel(in);
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel dest, int flags) {
-		dest.writeLong(key);
-		dest.writeString(provider);
-		dest.writeString(id);
-		dest.writeString(rating);
-		dest.writeString(name);
-		dest.writeStringArray(clubs);
-		dest.writeString(state);
-		dest.writeString(country);
-		dest.writeString(lastPlayed);
-		dest.writeString(expires);
-		dest.writeSerializable(refreshed);
-	}
-
-	private void readFromParcel(Parcel in) {
-		key = in.readLong();
-		provider = in.readString();
-		id = in.readString();
-		rating = in.readString();
-		name = in.readString();
-		clubs = in.createStringArray();
-		state = in.readString();
-		country = in.readString();
-		lastPlayed = in.readString();
-		expires = in.readString();
-		refreshed = (Date) in.readSerializable();
-	}
-
 	@Override
 	public String toString() {
-		return String.format("%s (%s)", name, rating);
+		return String.format("%s, %s (%s)", lastName, firstName, rating);
 	}
 
 	public String toDetailedString() {
@@ -81,8 +59,9 @@ public class PlayerModel implements Parcelable {
 			clubsString = sb.toString();
 		}
 
-		return String.format("%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s\t", id, expires,
-				name, rating, clubsString, state, country, lastPlayed);
+		return String.format("%s\t%s\t%s, %s\t%s\t%s\t%s\t%s\t%s\t", id,
+				expires, lastName, firstName, rating, clubsString, state,
+				country, lastPlayed);
 	}
 
 	public String getBaseRating() {
@@ -114,14 +93,6 @@ public class PlayerModel implements Parcelable {
 		this.provider = provider;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
 	public String getRating() {
 		return rating;
 	}
@@ -131,11 +102,39 @@ public class PlayerModel implements Parcelable {
 	}
 
 	public String getName() {
-		return name;
+		if (firstName == null)
+			return lastName;
+		else
+			return String.format("%s, %s", lastName, firstName);
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.lastName = ParserUtils.getLastName(name);
+		this.firstName = ParserUtils.getFirstName(name);
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String[] getClubs() {
@@ -186,17 +185,11 @@ public class PlayerModel implements Parcelable {
 		this.refreshed = refreshed;
 	}
 
-	public static Parcelable.Creator<PlayerModel> getCreator() {
-		return CREATOR;
+	public String[] getSearchHistory() {
+		return searchHistory;
 	}
 
-	public static final Parcelable.Creator<PlayerModel> CREATOR = new Parcelable.Creator<PlayerModel>() {
-		public PlayerModel createFromParcel(Parcel in) {
-			return new PlayerModel(in);
-		}
-
-		public PlayerModel[] newArray(int size) {
-			return new PlayerModel[size];
-		}
-	};
+	public void setSearchHistory(String[] searchHistory) {
+		this.searchHistory = searchHistory;
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.util.AppEngineParser;
+import wei.mark.tabletennis.util.StringAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,8 +61,8 @@ public class FragmentPlayerSearch extends ListFragment {
 		mListIndex = prefs.getInt("listIndex", 0);
 		mListTop = prefs.getInt("listTop", 0);
 
-		setListAdapter(new ArrayAdapter<String>(getActivity(),
-				R.layout.item_player_search, mHistory));
+		setListAdapter(new StringAdapter(getActivity(),
+				R.layout.item_player_search, mHistory, this));
 	}
 
 	@Override
@@ -353,16 +354,21 @@ public class FragmentPlayerSearch extends ListFragment {
 			return;
 		}
 
-		if (user) {
-			mHistory.remove(mQuery);
-			mHistory.add(0, mQuery);
-			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-
+		if (!mHistory.contains(query)) {
+			mHistory.add(0, query);
 			saveHistory();
-
-			int position = mHistory.indexOf(mQuery);
-			getListView().setItemChecked(position, true);
 		}
+		int position = mHistory.indexOf(mQuery);
+		getListView().setItemChecked(position, true);
+		
+		// make sure the list item is visible
+		if (position < getListView().getFirstVisiblePosition())
+			getListView().setSelection(position);
+		else if (position > getListView().getLastVisiblePosition())
+			getListView().setSelectionFromTop(
+					getListView().getFirstVisiblePosition()
+							+ (position - getListView()
+									.getLastVisiblePosition()), 0);
 
 		if (app.DualPane) {
 			FragmentPlayerList usattFragment = FragmentPlayerList.getInstance(
