@@ -91,12 +91,13 @@ public final class R {
         public static final int activity_player_list=0x7f030001;
         public static final int activity_player_search=0x7f030002;
         public static final int activity_tabbed_player_list=0x7f030003;
-        public static final int fragment_player_list=0x7f030004;
-        public static final int fragment_player_search=0x7f030005;
-        public static final int fragment_progress_bar=0x7f030006;
-        public static final int item_player_list=0x7f030007;
-        public static final int item_player_search=0x7f030008;
-        public static final int toast=0x7f030009;
+        public static final int fragment_player_details=0x7f030004;
+        public static final int fragment_player_list=0x7f030005;
+        public static final int fragment_player_search=0x7f030006;
+        public static final int fragment_progress_bar=0x7f030007;
+        public static final int item_player_list=0x7f030008;
+        public static final int item_player_search=0x7f030009;
+        public static final int toast=0x7f03000a;
     }
     public static final class string {
         public static final int app_name=0x7f050001;

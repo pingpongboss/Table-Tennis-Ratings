@@ -5,6 +5,7 @@ import java.util.List;
 import wei.mark.tabletennis.R;
 import wei.mark.tabletennis.model.PlayerModel;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,14 +49,23 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 		if (player != null) {
 			holder.name.setText(player.getName());
 			if (player.getSearchHistory() != null
-					&& player.getSearchHistory().size() > 5)
+					&& player.getSearchHistory().size() > 50) {
 				holder.name.setTextColor(context.getResources().getColor(
 						R.color.tertiary_text));
-			else
+				holder.name.setTypeface(null, Typeface.BOLD);
+			} else if (player.getSearchHistory() != null
+					&& player.getSearchHistory().size() > 5) {
 				holder.name.setTextColor(context.getResources().getColor(
 						R.color.secondary_text));
+				holder.name.setTypeface(null, Typeface.BOLD);
+			} else {
+				holder.name.setTextColor(context.getResources().getColor(
+						R.color.primary_text));
+				holder.name.setTypeface(null, Typeface.NORMAL);
+			}
 			holder.rating.setText(player.getBaseRating());
 			holder.subtext.setText(player.toSubtextString());
+
 		}
 		return convertView;
 	}
