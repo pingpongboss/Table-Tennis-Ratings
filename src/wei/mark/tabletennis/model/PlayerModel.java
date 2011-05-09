@@ -34,6 +34,8 @@ public class PlayerModel {
 	Date refreshed;
 	// @Unindexed
 	List<String> searchHistory;
+	// @Unindexed
+	String playerId;
 
 	public PlayerModel() {
 	}
@@ -205,5 +207,13 @@ public class PlayerModel {
 
 	public void setSearchHistory(List<String> searchHistory) {
 		this.searchHistory = searchHistory;
+	}
+
+	public String getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(String playerId) {
+		this.playerId = playerId;
 	}
 }
