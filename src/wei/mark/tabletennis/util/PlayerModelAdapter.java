@@ -51,6 +51,9 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 					&& player.getSearchHistory().size() > 5)
 				holder.name.setTextColor(context.getResources().getColor(
 						R.color.tertiary_text));
+			else
+				holder.name.setTextColor(context.getResources().getColor(
+						R.color.secondary_text));
 			holder.rating.setText(player.getBaseRating());
 			holder.subtext.setText(player.toSubtextString());
 		}
