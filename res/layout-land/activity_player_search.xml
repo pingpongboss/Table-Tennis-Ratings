@@ -12,12 +12,10 @@
 			android:id="@+id/promo_search_stub_history" android:inflatedId="@+id/promo_search_history"></ViewStub>
 		<LinearLayout android:layout_height="fill_parent"
 			android:layout_width="fill_parent">
-			<FrameLayout android:id="@+id/content_usatt"
-				android:layout_weight="1" android:layout_height="fill_parent"
-				android:layout_width="0dp"></FrameLayout>
-			<FrameLayout android:id="@+id/content_rc"
-				android:layout_weight="1" android:layout_height="fill_parent"
-				android:layout_width="0dp"></FrameLayout>
+			<FrameLayout android:layout_weight="1" android:layout_height="fill_parent"
+				android:layout_width="0dp" android:id="@+id/usatt"></FrameLayout>
+			<FrameLayout android:layout_weight="1" android:layout_height="fill_parent"
+				android:layout_width="0dp" android:id="@+id/rc"></FrameLayout>
 		</LinearLayout>
 	</RelativeLayout>
 </LinearLayout>

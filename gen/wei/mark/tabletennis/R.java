@@ -59,56 +59,57 @@ public final class R {
         public static final int white_selector=0x7f020024;
     }
     public static final class id {
-        public static final int action_bar=0x7f08000c;
+        public static final int action_bar=0x7f08000a;
+        public static final int badge=0x7f08000c;
         public static final int content=0x7f080005;
-        public static final int content_rc=0x7f08000b;
-        public static final int content_usatt=0x7f08000a;
-        public static final int emptyListText=0x7f08000e;
-        public static final int image=0x7f08001a;
+        public static final int emptyListText=0x7f080011;
+        public static final int favorite=0x7f08000b;
+        public static final int id=0x7f08000f;
+        public static final int image=0x7f08001b;
         public static final int logo=0x7f080000;
-        public static final int message=0x7f080015;
-        public static final int name=0x7f080016;
-        public static final int progress=0x7f08000d;
-        public static final int promo_rotate=0x7f080014;
-        public static final int promo_rotate_stub=0x7f080013;
+        public static final int message=0x7f080018;
+        public static final int name=0x7f08000d;
+        public static final int progress=0x7f080010;
+        public static final int promo_rotate=0x7f080017;
+        public static final int promo_rotate_stub=0x7f080016;
         public static final int promo_search_history=0x7f080009;
         public static final int promo_search_input=0x7f080007;
         public static final int promo_search_stub_history=0x7f080008;
         public static final int promo_search_stub_input=0x7f080006;
         public static final int provider_logo=0x7f080001;
-        public static final int rating=0x7f080017;
+        public static final int rating=0x7f08000e;
         public static final int rc=0x7f080004;
-        public static final int retry=0x7f08000f;
-        public static final int searchButton=0x7f080012;
-        public static final int searchEditText=0x7f080011;
-        public static final int searchLinearLayout=0x7f080010;
-        public static final int subtext=0x7f080018;
-        public static final int text=0x7f08001b;
+        public static final int retry=0x7f080012;
+        public static final int searchButton=0x7f080015;
+        public static final int searchEditText=0x7f080014;
+        public static final int searchLinearLayout=0x7f080013;
+        public static final int subtext=0x7f080019;
+        public static final int text=0x7f08001c;
         public static final int title=0x7f080002;
-        public static final int toast_root=0x7f080019;
+        public static final int toast_root=0x7f08001a;
         public static final int usatt=0x7f080003;
     }
     public static final class layout {
         public static final int action_bar=0x7f030000;
         public static final int activity_dual_player_list=0x7f030001;
-        public static final int activity_player_list=0x7f030002;
-        public static final int activity_player_search=0x7f030003;
-        public static final int activity_tabbed_player_list=0x7f030004;
-        public static final int fragment_player_details=0x7f030005;
-        public static final int fragment_player_list=0x7f030006;
-        public static final int fragment_player_search=0x7f030007;
-        public static final int fragment_progress_bar=0x7f030008;
-        public static final int item_player_list=0x7f030009;
-        public static final int item_player_search=0x7f03000a;
-        public static final int toast=0x7f03000b;
+        public static final int activity_player_details=0x7f030002;
+        public static final int activity_player_list=0x7f030003;
+        public static final int activity_player_search=0x7f030004;
+        public static final int activity_tabbed_player_list=0x7f030005;
+        public static final int fragment_player_details=0x7f030006;
+        public static final int fragment_player_list=0x7f030007;
+        public static final int fragment_player_search=0x7f030008;
+        public static final int fragment_progress_bar=0x7f030009;
+        public static final int item_player_list=0x7f03000a;
+        public static final int item_player_search=0x7f03000b;
+        public static final int toast=0x7f03000c;
     }
     public static final class string {
-        public static final int app_name=0x7f050001;
-        public static final int hello=0x7f050000;
-        public static final int promo_rotate=0x7f050002;
-        public static final int promo_search_history=0x7f050004;
-        public static final int promo_search_input=0x7f050003;
-        public static final int searching=0x7f050005;
+        public static final int app_name=0x7f050000;
+        public static final int promo_rotate=0x7f050001;
+        public static final int promo_search_history=0x7f050003;
+        public static final int promo_search_input=0x7f050002;
+        public static final int searching=0x7f050004;
     }
     public static final class style {
         public static final int ActionBar=0x7f07000d;
@@ -126,8 +127,12 @@ public final class R {
         public static final int EmptyListIndicator=0x7f070016;
         public static final int EmptyListLayout=0x7f070015;
         public static final int HorizontalSpacer=0x7f070017;
+        public static final int IdDetailText=0x7f07001e;
+        public static final int LabelDetailText=0x7f070020;
         public static final int ListView=0x7f070013;
         public static final int ListViewItem=0x7f070014;
+        public static final int NameDetailText=0x7f07001d;
+        public static final int RatingDetailText=0x7f07001f;
         public static final int RootLayout=0x7f070008;
         public static final int RootLayout_List=0x7f07000b;
         public static final int RootLayout_List_Landscape=0x7f07000c;

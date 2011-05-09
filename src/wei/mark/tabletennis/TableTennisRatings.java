@@ -1,5 +1,6 @@
 package wei.mark.tabletennis;
 
+import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.SearchTask;
 import android.app.Application;
 import android.content.Context;
@@ -11,9 +12,9 @@ import android.widget.Toast;
 
 public class TableTennisRatings extends Application {
 	public Navigation CurrentNavigation;
+	public PlayerModel CurrentPlayerModel;
 	public boolean DualPane;
 	public SearchTask usattSearchTask, rcSearchTask;
-	public String CurrentDebugMessage;
 
 	public enum Navigation {
 		IDLE, LIST, DETAILS
@@ -28,7 +29,7 @@ public class TableTennisRatings extends Application {
 		getSharedPreferences("search", 0).edit().clear().commit();
 
 		CurrentNavigation = Navigation.IDLE;
-		CurrentDebugMessage = "";
+		CurrentPlayerModel = null;
 	}
 
 	public static String getDeviceId() {

@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.KeyEvent;
@@ -71,8 +72,7 @@ public class FragmentPlayerSearch extends ListFragment {
 		View view = inflater.inflate(R.layout.fragment_player_search, null,
 				false);
 
-		((TextView) view.findViewById(R.id.title))
-				.setText("Table Tennis Ratings");
+		((TextView) view.findViewById(R.id.title)).setText("pingpongboss");
 		view.findViewById(R.id.provider_logo).setVisibility(View.GONE);
 
 		searchInput = (EditText) view.findViewById(R.id.searchEditText);
@@ -230,10 +230,12 @@ public class FragmentPlayerSearch extends ListFragment {
 			}
 		}
 
-		if (app.CurrentNavigation == Navigation.LIST || app.DualPane) {
+		if (app.CurrentNavigation == Navigation.LIST
+				|| app.CurrentNavigation == Navigation.DETAILS || app.DualPane) {
 			boolean screenOrientationChange = app.DualPane
 					&& app.CurrentNavigation != Navigation.LIST;
-			search(mQuery, !screenOrientationChange);
+			// search(mQuery, !screenOrientationChange);
+			search(mQuery, false);
 		}
 
 		searchInput.requestFocus();
@@ -347,6 +349,14 @@ public class FragmentPlayerSearch extends ListFragment {
 		return mHistory.size() - counter;
 	}
 
+	public void clearQuery() {
+		mQuery = null;
+	}
+
+	private void updateCurrentNavigation() {
+		app.CurrentNavigation = Navigation.IDLE;
+	}
+
 	protected void search(String query, boolean user) {
 		mQuery = query;
 
@@ -360,7 +370,7 @@ public class FragmentPlayerSearch extends ListFragment {
 		}
 		int position = mHistory.indexOf(mQuery);
 		getListView().setItemChecked(position, true);
-		
+
 		// make sure the list item is visible
 		if (position < getListView().getFirstVisiblePosition())
 			getListView().setSelection(position);
@@ -376,11 +386,20 @@ public class FragmentPlayerSearch extends ListFragment {
 			FragmentPlayerList rcFragment = FragmentPlayerList.getInstance(
 					"rc", query, user);
 
-			getFragmentManager().beginTransaction()
-					.replace(R.id.content_usatt, usattFragment, "usatt")
-					.replace(R.id.content_rc, rcFragment, "rc")
-					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-					.commit();
+			FragmentTransaction txn = getFragmentManager().beginTransaction()
+					.replace(R.id.usatt, usattFragment, "usatt")
+					.replace(R.id.rc, rcFragment, "rc")
+					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+			Fragment details = getFragmentManager()
+					.findFragmentByTag("details");
+			if (details != null) {
+				try {
+					txn.remove(details);
+				} catch (Exception ex) {
+					// catch the Illegal State Exception: Fragment not added bug
+				}
+			}
+			txn.commit();
 		} else {
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), ActivityDualPlayerList.class);
@@ -391,13 +410,5 @@ public class FragmentPlayerSearch extends ListFragment {
 
 		if (user)
 			app.CurrentNavigation = Navigation.LIST;
-	}
-
-	public void clearQuery() {
-		mQuery = null;
-	}
-
-	private void updateCurrentNavigation() {
-		app.CurrentNavigation = Navigation.IDLE;
 	}
 }

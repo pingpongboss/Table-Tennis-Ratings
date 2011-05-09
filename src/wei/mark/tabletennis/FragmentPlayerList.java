@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import wei.mark.tabletennis.TableTennisRatings.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
-import wei.mark.tabletennis.util.AppEngineParser;
 import wei.mark.tabletennis.util.PlayerModelAdapter;
 import wei.mark.tabletennis.util.SearchCallback;
 import wei.mark.tabletennis.util.SearchTask;
@@ -14,6 +13,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -144,6 +144,12 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		if (app.CurrentNavigation == Navigation.DETAILS
+				&& mProvider.equals(app.CurrentPlayerModel.getProvider())) {
+			showDetails(app.CurrentPlayerModel);
+			return;
+		}
+
 		startSearch();
 
 		if (mQuery.equals(mListQuery))
@@ -190,18 +196,6 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		}
 
 		editor.commit();
-	}
-
-	@Override
-	public void onListItemClick(ListView l, View v, int position, long id) {
-		final PlayerModel player = mPlayers.get(position);
-
-		AppEngineParser.getParser().open(TableTennisRatings.getDeviceId(),
-				player);
-
-		// TODO
-		TableTennisRatings.getToast(getActivity(), 0,
-				String.format("Clicked %s", player)).show();
 	}
 
 	private void updateCurrentNavigation() {
@@ -267,5 +261,34 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		}
 
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		PlayerModel player = mPlayers.get(position);
+
+		showDetails(player);
+	}
+
+	private void showDetails(PlayerModel player) {
+		if (player == null)
+			return;
+
+		if (app.DualPane) {
+			FragmentPlayerDetails fragment = FragmentPlayerDetails
+					.getInstance(player);
+			getFragmentManager().beginTransaction()
+					.replace(R.id.content, fragment, "details")
+					.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+					.addToBackStack("details").commit();
+		} else {
+			Intent intent = new Intent();
+			intent.setClass(getActivity(), ActivityPlayerDetails.class);
+			intent.putExtra("player", player);
+			startActivity(intent);
+		}
+
+		app.CurrentNavigation = Navigation.DETAILS;
+		app.CurrentPlayerModel = player;
 	}
 }

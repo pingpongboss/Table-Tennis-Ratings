@@ -7,6 +7,5 @@
 			android:layout_width="wrap_content" style="@style/ActionBarItem.ProviderLogo"
 			android:id="@+id/provider_logo"></Button>
 	</FrameLayout>
-	<TextView android:id="@+id/title" android:text="Table Tennis Ratings"
-		style="@style/ActionBarItem.Text"></TextView>
+	<TextView android:id="@+id/title" style="@style/ActionBarItem.Text" android:text="pingpongboss"></TextView>
 </LinearLayout>

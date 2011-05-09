@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, TableTennisRatingsActivity!</string>
-    <string name="app_name">Table Tennis Ratings</string>
+    <string name="app_name">Boss</string>
     <string-array name="example_searches">
         <item>Wei, Mark</item>
         <item>Boll, Timo</item>
