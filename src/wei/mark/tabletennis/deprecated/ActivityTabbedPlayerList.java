@@ -1,13 +1,14 @@
-package wei.mark.tabletennis;
+package wei.mark.tabletennis.deprecated;
 
-import wei.mark.tabletennis.TableTennisRatings.ListNavigation;
+import wei.mark.tabletennis.R;
+import wei.mark.tabletennis.TableTennisRatings;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 
+@Deprecated
 public class ActivityTabbedPlayerList extends TabActivity {
 	TableTennisRatings app;
 
@@ -46,25 +47,6 @@ public class ActivityTabbedPlayerList extends TabActivity {
 				.setContent(intent);
 		tabHost.addTab(spec);
 
-		tabHost.setOnTabChangedListener(new OnTabChangeListener() {
-
-			@Override
-			public void onTabChanged(String tabId) {
-				if ("usatt".equals(tabId))
-					app.CurrentListNavigation = ListNavigation.USATT;
-				else if ("rc".equals(tabId))
-					app.CurrentListNavigation = ListNavigation.RC;
-			}
-		});
-
-		switch (app.CurrentListNavigation) {
-		case RC:
-			tabHost.setCurrentTab(1);
-			break;
-		case USATT:
-		default:
-			tabHost.setCurrentTab(0);
-			break;
-		}
+		tabHost.setCurrentTab(0);
 	}
 }

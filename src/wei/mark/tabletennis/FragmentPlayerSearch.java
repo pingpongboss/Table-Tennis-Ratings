@@ -383,7 +383,7 @@ public class FragmentPlayerSearch extends ListFragment {
 					.commit();
 		} else {
 			Intent intent = new Intent();
-			intent.setClass(getActivity(), ActivityTabbedPlayerList.class);
+			intent.setClass(getActivity(), ActivityDualPlayerList.class);
 			intent.putExtra("query", query);
 			intent.putExtra("user", user);
 			startActivity(intent);

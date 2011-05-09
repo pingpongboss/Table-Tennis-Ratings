@@ -11,17 +11,12 @@ import android.widget.Toast;
 
 public class TableTennisRatings extends Application {
 	public Navigation CurrentNavigation;
-	public ListNavigation CurrentListNavigation;
 	public boolean DualPane;
 	public SearchTask usattSearchTask, rcSearchTask;
 	public String CurrentDebugMessage;
 
 	public enum Navigation {
 		IDLE, LIST, DETAILS
-	}
-
-	public enum ListNavigation {
-		USATT, RC
 	}
 
 	@Override
@@ -33,7 +28,6 @@ public class TableTennisRatings extends Application {
 		getSharedPreferences("search", 0).edit().clear().commit();
 
 		CurrentNavigation = Navigation.IDLE;
-		CurrentListNavigation = ListNavigation.USATT;
 		CurrentDebugMessage = "";
 	}
 
