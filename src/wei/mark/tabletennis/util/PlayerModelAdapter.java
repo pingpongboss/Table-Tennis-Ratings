@@ -65,7 +65,6 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 			}
 			holder.rating.setText(player.getBaseRating());
 			holder.subtext.setText(player.toSubtextString());
-
 		}
 		return convertView;
 	}
