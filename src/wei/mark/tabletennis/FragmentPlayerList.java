@@ -9,6 +9,7 @@ import wei.mark.tabletennis.util.AppEngineParser;
 import wei.mark.tabletennis.util.PlayerModelAdapter;
 import wei.mark.tabletennis.util.SearchCallback;
 import wei.mark.tabletennis.util.SearchTask;
+import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -98,28 +99,28 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		Button providerLogoButton = (Button) v.findViewById(R.id.provider_logo);
 		if (!app.DualPane) {
 			providerLogoButton.setVisibility(View.GONE);
-		} else if ("usatt".equals(mProvider)) {
-			providerLogoButton.setBackgroundResource(R.drawable.usatt_selector);
-			providerLogoButton.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri
-							.parse("http://www.usatt.org/")));
-				}
-			});
-		} else if ("rc".equals(mProvider)) {
-			providerLogoButton.setBackgroundResource(R.drawable.rc_selector);
-			providerLogoButton.setOnClickListener(new OnClickListener() {
-
-				@Override
-				public void onClick(View v) {
-					startActivity(new Intent(Intent.ACTION_VIEW, Uri
-							.parse("http://www.ratingscentral.com/")));
-				}
-			});
 		} else {
-			providerLogoButton.setVisibility(View.GONE);
+			if ("usatt".equals(mProvider)) {
+				providerLogoButton
+						.setBackgroundResource(R.drawable.usatt_selector);
+			} else if ("rc".equals(mProvider)) {
+				providerLogoButton
+						.setBackgroundResource(R.drawable.rc_selector);
+			} else {
+				providerLogoButton.setVisibility(View.GONE);
+			}
+			providerLogoButton.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					try {
+						startActivity(new Intent(Intent.ACTION_VIEW, Uri
+								.parse(ParserUtils.getSearchUrl(mProvider,
+										mQuery))));
+					} catch (Exception ex) {
+					}
+				}
+			});
 		}
 
 		Button retryButton = (Button) v.findViewById(R.id.retry);
