@@ -102,14 +102,13 @@ public class FragmentPlayerDetails extends ListFragment {
 		fetchDetails();
 	}
 
-	private void fetchDetails() {
-
-		AppEngineParser.getParser().open(PingPongBoss.getDeviceId(),
-				mPlayer);
-		// TODO Auto-generated method stub
-	}
-
 	private void updateCurrentNavigation() {
 		app.CurrentNavigation = Navigation.DETAILS;
+	}
+
+	private void fetchDetails() {
+
+		AppEngineParser.getParser().open(app.getDeviceId(), mPlayer);
+		// TODO Auto-generated method stub
 	}
 }

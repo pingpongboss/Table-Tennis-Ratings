@@ -1,6 +1,7 @@
 package wei.mark.tabletennis;
 
 import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.tabletennis.util.Installation;
 import wei.mark.tabletennis.util.SearchTask;
 import android.app.Application;
 import android.content.Context;
@@ -32,8 +33,8 @@ public class PingPongBoss extends Application {
 		CurrentPlayerModel = null;
 	}
 
-	public static String getDeviceId() {
-		return "test";
+	public String getDeviceId() {
+		return Installation.id(this);
 	}
 
 	public static Toast getToast(Context context, int imageResourceId,

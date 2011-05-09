@@ -220,25 +220,25 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		if ("usatt".equals(mProvider)) {
 			if (app.usattSearchTask == null) {
 				app.usattSearchTask = new SearchTask(this);
-				app.usattSearchTask.execute(PingPongBoss.getDeviceId(),
-						mProvider, mQuery, String.valueOf(mUser));
+				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
+						mQuery, String.valueOf(mUser));
 			} else if (app.usattSearchTask.getQuery() != mQuery) {
 				app.usattSearchTask.cancel(true);
 				app.usattSearchTask = new SearchTask(this);
-				app.usattSearchTask.execute(PingPongBoss.getDeviceId(),
-						mProvider, mQuery, String.valueOf(mUser));
+				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
+						mQuery, String.valueOf(mUser));
 			}
 			app.usattSearchTask.setSearchCallback(this);
 		} else if ("rc".equals(mProvider)) {
 			if (app.rcSearchTask == null) {
 				app.rcSearchTask = new SearchTask(this);
-				app.rcSearchTask.execute(PingPongBoss.getDeviceId(),
-						mProvider, mQuery, String.valueOf(mUser));
+				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
+						String.valueOf(mUser));
 			} else if (app.rcSearchTask.getQuery() != mQuery) {
 				app.rcSearchTask.cancel(true);
 				app.rcSearchTask = new SearchTask(this);
-				app.rcSearchTask.execute(PingPongBoss.getDeviceId(),
-						mProvider, mQuery, String.valueOf(mUser));
+				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
+						String.valueOf(mUser));
 			}
 			app.rcSearchTask.setSearchCallback(this);
 		}
