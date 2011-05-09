@@ -232,9 +232,6 @@ public class FragmentPlayerSearch extends ListFragment {
 
 		if (app.CurrentNavigation == Navigation.LIST
 				|| app.CurrentNavigation == Navigation.DETAILS || app.DualPane) {
-			boolean screenOrientationChange = app.DualPane
-					&& app.CurrentNavigation != Navigation.LIST;
-			// search(mQuery, !screenOrientationChange);
 			search(mQuery, false);
 		}
 

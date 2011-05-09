@@ -147,8 +147,12 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		if (app.CurrentNavigation == Navigation.DETAILS
 				&& mProvider.equals(app.CurrentPlayerModel.getProvider())) {
 			showDetails(app.CurrentPlayerModel);
-			return;
 		}
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
 
 		startSearch();
 

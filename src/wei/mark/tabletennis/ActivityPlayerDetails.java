@@ -34,6 +34,8 @@ public class ActivityPlayerDetails extends FragmentActivity {
 	public void onBackPressed() {
 		super.onBackPressed();
 		app.CurrentNavigation = Navigation.LIST;
+		startActivity(new Intent().setClass(this, ActivityPlayerSearch.class)
+				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 
 }

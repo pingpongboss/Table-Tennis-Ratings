@@ -5,7 +5,7 @@
 	<RelativeLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:paddingBottom="5dp">
 		<include layout="@layout/action_bar" android:id="@+id/action_bar"
-			android:layout_height="wrap_content" android:layout_width="wrap_content"></include>
+			android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerHorizontal="true"></include>
 		<Button android:layout_width="wrap_content"
 			android:layout_toRightOf="@+id/action_bar" android:layout_height="wrap_content"
 			android:id="@+id/favorite" android:background="@android:color/transparent"></Button>
@@ -14,18 +14,14 @@
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/name"
 			android:text="name" style="@style/NameDetailText"
-			android:layout_alignBaseline="@+id/rating"
-			android:layout_alignParentLeft="true" android:layout_toLeftOf="@+id/rating"></TextView>
+			android:layout_alignParentLeft="true" android:layout_below="@+id/action_bar"></TextView>
+		<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" style="@style/RatingDetailText" android:text="rating" android:id="@+id/rating" android:layout_alignParentRight="true" android:layout_alignBottom="@+id/name"></TextView>
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/id"
-			android:layout_below="@+id/action_bar"
-			android:layout_alignParentRight="true" style="@style/IdDetailText"
-			android:text="#id"></TextView>
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/rating"
-			android:text="rating" android:layout_alignParentRight="true"
-			style="@style/RatingDetailText" android:layout_below="@+id/id"></TextView>
+			style="@style/IdDetailText"
+			android:text="#id" android:layout_alignParentRight="true" android:layout_above="@+id/rating"></TextView>
 	</RelativeLayout>
 	<ListView android:layout_width="fill_parent" android:id="@android:id/list"
 		android:layout_height="wrap_content"></ListView>
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More player details coming soon!" android:layout_gravity="center"></TextView>
 </LinearLayout>
