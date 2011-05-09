@@ -1,7 +1,7 @@
 package wei.mark.tabletennis.deprecated;
 
 import wei.mark.tabletennis.R;
-import wei.mark.tabletennis.TableTennisRatings;
+import wei.mark.tabletennis.PingPongBoss;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -10,12 +10,12 @@ import android.widget.TabHost;
 
 @Deprecated
 public class ActivityTabbedPlayerList extends TabActivity {
-	TableTennisRatings app;
+	PingPongBoss app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (TableTennisRatings) getApplication();
+		app = (PingPongBoss) getApplication();
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			finish();

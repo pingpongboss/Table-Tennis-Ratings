@@ -1,6 +1,6 @@
 package wei.mark.tabletennis;
 
-import wei.mark.tabletennis.TableTennisRatings.Navigation;
+import wei.mark.tabletennis.PingPongBoss.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.AppEngineParser;
 import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class FragmentPlayerDetails extends ListFragment {
-	TableTennisRatings app;
+	PingPongBoss app;
 	PlayerModel mPlayer;
 
 	public static FragmentPlayerDetails getInstance(PlayerModel player) {
@@ -33,7 +33,7 @@ public class FragmentPlayerDetails extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (TableTennisRatings) getActivity().getApplication();
+		app = (PingPongBoss) getActivity().getApplication();
 
 		mPlayer = getArguments().getParcelable("player");
 	}
@@ -104,7 +104,7 @@ public class FragmentPlayerDetails extends ListFragment {
 
 	private void fetchDetails() {
 
-		AppEngineParser.getParser().open(TableTennisRatings.getDeviceId(),
+		AppEngineParser.getParser().open(PingPongBoss.getDeviceId(),
 				mPlayer);
 		// TODO Auto-generated method stub
 	}

@@ -1,18 +1,18 @@
 package wei.mark.tabletennis;
 
-import wei.mark.tabletennis.TableTennisRatings.Navigation;
+import wei.mark.tabletennis.PingPongBoss.Navigation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 public class ActivityPlayerSearch extends FragmentActivity {
-	TableTennisRatings app;
+	PingPongBoss app;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (TableTennisRatings) getApplication();
+		app = (PingPongBoss) getApplication();
 
 		setContentView(R.layout.activity_player_search);
 	}

@@ -2,7 +2,7 @@ package wei.mark.tabletennis;
 
 import java.util.ArrayList;
 
-import wei.mark.tabletennis.TableTennisRatings.Navigation;
+import wei.mark.tabletennis.PingPongBoss.Navigation;
 import wei.mark.tabletennis.model.PlayerModel;
 import wei.mark.tabletennis.util.PlayerModelAdapter;
 import wei.mark.tabletennis.util.SearchCallback;
@@ -27,7 +27,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class FragmentPlayerList extends ListFragment implements SearchCallback {
-	TableTennisRatings app;
+	PingPongBoss app;
 	ArrayList<PlayerModel> mPlayers;
 	String mProvider, mQuery, mListQuery;
 	int mListIndex, mListTop;
@@ -59,7 +59,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (TableTennisRatings) getActivity().getApplication();
+		app = (PingPongBoss) getActivity().getApplication();
 
 		Bundle b = getArguments();
 
@@ -220,24 +220,24 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		if ("usatt".equals(mProvider)) {
 			if (app.usattSearchTask == null) {
 				app.usattSearchTask = new SearchTask(this);
-				app.usattSearchTask.execute(TableTennisRatings.getDeviceId(),
+				app.usattSearchTask.execute(PingPongBoss.getDeviceId(),
 						mProvider, mQuery, String.valueOf(mUser));
 			} else if (app.usattSearchTask.getQuery() != mQuery) {
 				app.usattSearchTask.cancel(true);
 				app.usattSearchTask = new SearchTask(this);
-				app.usattSearchTask.execute(TableTennisRatings.getDeviceId(),
+				app.usattSearchTask.execute(PingPongBoss.getDeviceId(),
 						mProvider, mQuery, String.valueOf(mUser));
 			}
 			app.usattSearchTask.setSearchCallback(this);
 		} else if ("rc".equals(mProvider)) {
 			if (app.rcSearchTask == null) {
 				app.rcSearchTask = new SearchTask(this);
-				app.rcSearchTask.execute(TableTennisRatings.getDeviceId(),
+				app.rcSearchTask.execute(PingPongBoss.getDeviceId(),
 						mProvider, mQuery, String.valueOf(mUser));
 			} else if (app.rcSearchTask.getQuery() != mQuery) {
 				app.rcSearchTask.cancel(true);
 				app.rcSearchTask = new SearchTask(this);
-				app.rcSearchTask.execute(TableTennisRatings.getDeviceId(),
+				app.rcSearchTask.execute(PingPongBoss.getDeviceId(),
 						mProvider, mQuery, String.valueOf(mUser));
 			}
 			app.rcSearchTask.setSearchCallback(this);

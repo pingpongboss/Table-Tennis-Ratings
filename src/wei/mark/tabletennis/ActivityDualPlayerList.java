@@ -1,18 +1,18 @@
 package wei.mark.tabletennis;
 
-import wei.mark.tabletennis.TableTennisRatings.Navigation;
+import wei.mark.tabletennis.PingPongBoss.Navigation;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 public class ActivityDualPlayerList extends FragmentActivity {
-	TableTennisRatings app;
+	PingPongBoss app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (TableTennisRatings) getApplication();
+		app = (PingPongBoss) getApplication();
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			finish();

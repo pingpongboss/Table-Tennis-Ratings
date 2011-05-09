@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TableTennisRatings extends Application {
+public class PingPongBoss extends Application {
 	public Navigation CurrentNavigation;
 	public PlayerModel CurrentPlayerModel;
 	public boolean DualPane;
