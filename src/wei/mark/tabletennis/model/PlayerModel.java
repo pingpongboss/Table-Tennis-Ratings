@@ -30,6 +30,7 @@ public class PlayerModel implements Parcelable {
 	String id;
 	String lastName;
 	String firstName;
+	long popularity;
 
 	// @Unindexed
 	String rating;
@@ -51,6 +52,46 @@ public class PlayerModel implements Parcelable {
 	String playerId;
 
 	public PlayerModel() {
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeLong(key);
+		out.writeString(provider);
+		out.writeString(id);
+		out.writeString(lastName);
+		out.writeString(firstName);
+		out.writeString(rating);
+		out.writeStringArray(clubs);
+		out.writeString(state);
+		out.writeString(country);
+		out.writeString(lastPlayed);
+		out.writeString(expires);
+		out.writeSerializable(refreshed);
+		out.writeStringList(searchHistory);
+		out.writeString(playerId);
+	}
+
+	private PlayerModel(Parcel in) {
+		key = in.readLong();
+		provider = in.readString();
+		id = in.readString();
+		lastName = in.readString();
+		firstName = in.readString();
+		rating = in.readString();
+		clubs = in.createStringArray();
+		state = in.readString();
+		country = in.readString();
+		lastPlayed = in.readString();
+		expires = in.readString();
+		refreshed = (Date) in.readSerializable();
+		searchHistory = in.createStringArrayList();
+		playerId = in.readString();
 	}
 
 	@Override
@@ -127,46 +168,6 @@ public class PlayerModel implements Parcelable {
 			return null;
 	}
 
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel out, int flags) {
-		out.writeLong(key);
-		out.writeString(provider);
-		out.writeString(id);
-		out.writeString(lastName);
-		out.writeString(firstName);
-		out.writeString(rating);
-		out.writeStringArray(clubs);
-		out.writeString(state);
-		out.writeString(country);
-		out.writeString(lastPlayed);
-		out.writeString(expires);
-		out.writeSerializable(refreshed);
-		out.writeStringList(searchHistory);
-		out.writeString(playerId);
-	}
-
-	private PlayerModel(Parcel in) {
-		key = in.readLong();
-		provider = in.readString();
-		id = in.readString();
-		lastName = in.readString();
-		firstName = in.readString();
-		rating = in.readString();
-		clubs = in.createStringArray();
-		state = in.readString();
-		country = in.readString();
-		lastPlayed = in.readString();
-		expires = in.readString();
-		refreshed = (Date) in.readSerializable();
-		searchHistory = in.createStringArrayList();
-		playerId = in.readString();
-	}
-
 	public Long getKey() {
 		return key;
 	}
@@ -205,6 +206,14 @@ public class PlayerModel implements Parcelable {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+
+	public long getPopularity() {
+		return popularity;
+	}
+
+	public void setPopularity(long popularity) {
+		this.popularity = popularity;
 	}
 
 	public String getId() {
@@ -269,6 +278,10 @@ public class PlayerModel implements Parcelable {
 
 	public void setSearchHistory(List<String> searchHistory) {
 		this.searchHistory = searchHistory;
+		if (searchHistory == null)
+			setPopularity(0);
+		else
+			setPopularity(searchHistory.size());
 	}
 
 	public String getPlayerId() {

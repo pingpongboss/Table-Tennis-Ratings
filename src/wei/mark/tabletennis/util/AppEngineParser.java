@@ -137,8 +137,8 @@ public class AppEngineParser {
 		}
 	}
 
-	// asynchronously alert server
-	public void open(final String id, final PlayerModel player) {
+	// asynchronously alert server for now. Later, fetch player details
+	public void details(final String id, final PlayerModel player) {
 		new Thread(new Runnable() {
 
 			@Override
@@ -146,7 +146,7 @@ public class AppEngineParser {
 				HttpURLConnection connection = null;
 				try {
 					String uri = String
-							.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=open&id=%s&provider=%s&query=%s",
+							.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=details&id=%s&provider=%s&query=%s",
 									URLEncoder.encode(id, "iso-8859-1"),
 									URLEncoder.encode(player.getProvider(),
 											"iso-8859-1"), URLEncoder.encode(

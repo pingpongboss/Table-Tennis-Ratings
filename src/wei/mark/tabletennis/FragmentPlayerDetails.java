@@ -108,7 +108,7 @@ public class FragmentPlayerDetails extends ListFragment {
 
 	private void fetchDetails() {
 
-		AppEngineParser.getParser().open(app.getDeviceId(), mPlayer);
+		AppEngineParser.getParser().details(app.getDeviceId(), mPlayer);
 		// TODO Auto-generated method stub
 	}
 }
