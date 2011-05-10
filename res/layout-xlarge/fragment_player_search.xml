@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	style="@style/RootLayout" android:orientation="vertical">
+	<include layout="@layout/action_bar" android:id="@+id/action_bar"
+		android:layout_height="wrap_content" android:layout_width="fill_parent"></include>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="horizontal"
+		android:id="@+id/searchLinearLayout">
+		<EditText style="@style/EditText.Left.Search" android:hint="Last, First"
+			android:id="@+id/searchEditText" android:textSize="24sp"></EditText>
+		<ImageButton android:id="@+id/searchButton" style="@style/Button.Right.Search"></ImageButton>
+	</LinearLayout>
+	<ListView style="@style/ListView" android:id="@id/android:list"></ListView>
+	<FrameLayout style="@style/EmptyListLayout">
+		<TextView style="@style/EmptyListIndicator" android:text="No history" android:textSize="24sp"></TextView>
+	</FrameLayout>
+	<ViewStub android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:id="@+id/promo_rotate_stub" android:inflatedId="@+id/promo_rotate" android:layout="@layout/toast"></ViewStub>
+</LinearLayout>

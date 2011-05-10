@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -172,8 +173,13 @@ public class FragmentPlayerSearch extends ListFragment {
 			// tweak search input for narrow column
 			searchInput.setBackgroundResource(R.drawable.white_selector);
 			searchButton.setVisibility(View.GONE);
-			getView().findViewById(R.id.logo).setBackgroundResource(
-					R.drawable.logo_small_selector);
+			getResources().getConfiguration();
+			int size = getResources().getConfiguration().screenLayout
+					& Configuration.SCREENLAYOUT_SIZE_MASK;
+			getResources().getConfiguration();
+			if (size < Configuration.SCREENLAYOUT_SIZE_LARGE)
+				getView().findViewById(R.id.logo).setBackgroundResource(
+						R.drawable.logo_small_selector);
 
 			ViewStub input_stub = (ViewStub) getActivity().findViewById(
 					R.id.promo_search_stub_input);
