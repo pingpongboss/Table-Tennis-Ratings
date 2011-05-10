@@ -177,7 +177,8 @@ public class FragmentPlayerSearch extends ListFragment {
 			int size = getResources().getConfiguration().screenLayout
 					& Configuration.SCREENLAYOUT_SIZE_MASK;
 			getResources().getConfiguration();
-			if (size < Configuration.SCREENLAYOUT_SIZE_LARGE)
+			if (size < Configuration.SCREENLAYOUT_SIZE_LARGE
+					|| getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
 				getView().findViewById(R.id.logo).setBackgroundResource(
 						R.drawable.logo_small_selector);
 
