@@ -137,19 +137,23 @@
 		<item name="android:textColor">@color/primary_text</item>
 		<item name="android:maxLines">2</item>
 	</style>
-	<style name="NameDetailText">
+	<style name="NameDetailsText">
 		<item name="android:textSize">40sp</item>
 		<item name="android:textColor">@color/tertiary_text</item>
 	</style>
-	<style name="IdDetailText">
+	<style name="IdDetailsText">
 		<item name="android:textSize">20sp</item>
 		<item name="android:textColor">@color/primary_text</item>
 	</style>
-	<style name="RatingDetailText">
+	<style name="RatingDetailsText">
 		<item name="android:textSize">20sp</item>
 		<item name="android:textColor">@color/secondary_text</item>
 	</style>
-	<style name="LabelDetailText">
+	<style name="FromDetailsText">
+		<item name="android:textSize">20sp</item>
+		<item name="android:textColor">@color/primary_text</item>
+	</style>
+	<style name="LabelDetailsText">
 		<item name="android:textSize">20sp</item>
 		<item name="android:textColor">@color/primary_text</item>
 	</style>

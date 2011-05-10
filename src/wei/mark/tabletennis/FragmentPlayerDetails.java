@@ -91,6 +91,12 @@ public class FragmentPlayerDetails extends ListFragment {
 		ratingTextView.setText(mPlayer.getRating());
 		ratingTextView.setOnTouchListener(l);
 
+		TextView fromTextView = (TextView) v.findViewById(R.id.from);
+		fromTextView.setText(mPlayer.getState() == null
+				|| mPlayer.getState().equals("") ? mPlayer.getCountry()
+				: mPlayer.getState());
+		fromTextView.setOnTouchListener(l);
+
 		v.setOnTouchListener(l);
 		return v;
 	}
