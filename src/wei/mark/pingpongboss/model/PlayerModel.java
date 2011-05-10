@@ -1,4 +1,4 @@
-package wei.mark.tabletennis.model;
+package wei.mark.pingpongboss.model;
 
 import java.util.Date;
 import java.util.List;

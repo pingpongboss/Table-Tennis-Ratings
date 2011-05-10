@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package wei.mark.tabletennis;
+package wei.mark.pingpongboss;
 
 public final class R {
     public static final class array {

@@ -1,9 +1,9 @@
-package wei.mark.tabletennis.util;
+package wei.mark.pingpongboss.util;
 
 import java.util.List;
 
-import wei.mark.tabletennis.R;
-import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

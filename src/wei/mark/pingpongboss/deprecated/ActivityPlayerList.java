@@ -1,10 +1,10 @@
-package wei.mark.tabletennis.deprecated;
+package wei.mark.pingpongboss.deprecated;
 
-import wei.mark.tabletennis.ActivityPlayerSearch;
-import wei.mark.tabletennis.FragmentPlayerList;
-import wei.mark.tabletennis.R;
-import wei.mark.tabletennis.PingPongBoss;
-import wei.mark.tabletennis.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.ActivityPlayerSearch;
+import wei.mark.pingpongboss.FragmentPlayerList;
+import wei.mark.pingpongboss.PingPongBoss;
+import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

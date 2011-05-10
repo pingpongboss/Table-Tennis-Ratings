@@ -1,4 +1,4 @@
-package wei.mark.tabletennis.util;
+package wei.mark.pingpongboss.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.pingpongboss.model.PlayerModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

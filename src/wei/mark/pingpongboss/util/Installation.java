@@ -1,4 +1,4 @@
-package wei.mark.tabletennis.util;
+package wei.mark.pingpongboss.util;
 
 import java.io.File;
 import java.io.FileOutputStream;

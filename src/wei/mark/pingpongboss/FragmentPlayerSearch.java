@@ -1,11 +1,12 @@
-package wei.mark.tabletennis;
+package wei.mark.pingpongboss;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import wei.mark.tabletennis.PingPongBoss.Navigation;
-import wei.mark.tabletennis.util.AppEngineParser;
-import wei.mark.tabletennis.util.StringAdapter;
+import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.util.AppEngineParser;
+import wei.mark.pingpongboss.util.StringAdapter;
+import wei.mark.pingpongboss.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;

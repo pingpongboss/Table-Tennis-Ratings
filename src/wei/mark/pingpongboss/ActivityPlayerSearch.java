@@ -1,6 +1,7 @@
-package wei.mark.tabletennis;
+package wei.mark.pingpongboss;
 
-import wei.mark.tabletennis.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

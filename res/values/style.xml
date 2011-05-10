@@ -45,13 +45,13 @@
 		<item name="android:background">@color/background_dark_gray</item>
 	</style>
 	<style name="RootLayout.Search">
-		<item name="android:name">wei.mark.tabletennis.FragmentPlayerSearch</item>
+		<item name="android:name">wei.mark.pingpongboss.FragmentPlayerSearch</item>
 	</style>
 	<style name="RootLayout.Search.Landscape">
 		<item name="android:layout_width">150dp</item>
 	</style>
 	<style name="RootLayout.List">
-		<item name="android:name">wei.mark.tabletennis.FragmentPlayerList</item>
+		<item name="android:name">wei.mark.pingpongboss.FragmentPlayerList</item>
 	</style>
 	<style name="RootLayout.List.Landscape">
 		<item name="android:layout_width">0dp</item>

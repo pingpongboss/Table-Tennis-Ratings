@@ -1,5 +1,6 @@
-package wei.mark.tabletennis;
+package wei.mark.pingpongboss;
 
+import wei.mark.pingpongboss.R;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;

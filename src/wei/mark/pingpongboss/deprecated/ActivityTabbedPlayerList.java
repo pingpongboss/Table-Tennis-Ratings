@@ -1,7 +1,7 @@
-package wei.mark.tabletennis.deprecated;
+package wei.mark.pingpongboss.deprecated;
 
-import wei.mark.tabletennis.R;
-import wei.mark.tabletennis.PingPongBoss;
+import wei.mark.pingpongboss.PingPongBoss;
+import wei.mark.pingpongboss.R;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Configuration;

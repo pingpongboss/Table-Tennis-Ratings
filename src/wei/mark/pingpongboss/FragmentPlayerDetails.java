@@ -1,8 +1,9 @@
-package wei.mark.tabletennis;
+package wei.mark.pingpongboss;
 
-import wei.mark.tabletennis.PingPongBoss.Navigation;
-import wei.mark.tabletennis.model.PlayerModel;
-import wei.mark.tabletennis.util.AppEngineParser;
+import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.util.AppEngineParser;
+import wei.mark.pingpongboss.R;
 import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
 import android.content.Intent;
 import android.net.Uri;

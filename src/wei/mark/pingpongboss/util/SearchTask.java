@@ -1,8 +1,8 @@
-package wei.mark.tabletennis.util;
+package wei.mark.pingpongboss.util;
 
 import java.util.ArrayList;
 
-import wei.mark.tabletennis.model.PlayerModel;
+import wei.mark.pingpongboss.model.PlayerModel;
 import android.os.AsyncTask;
 
 public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> {
