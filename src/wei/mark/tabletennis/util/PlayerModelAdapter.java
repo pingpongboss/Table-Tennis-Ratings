@@ -47,12 +47,10 @@ public class PlayerModelAdapter extends ArrayAdapter<PlayerModel> {
 		PlayerModel player = players.get(position);
 		if (player != null) {
 			holder.name.setText(player.getName());
-			if (player.getSearchHistory() != null
-					&& player.getSearchHistory().size() > 50) {
+			if (player.getPopularity() > 50) {
 				holder.name.setTextColor(context.getResources().getColor(
 						R.color.tertiary_text));
-			} else if (player.getSearchHistory() != null
-					&& player.getSearchHistory().size() > 5) {
+			} else if (player.getPopularity() > 5) {
 				holder.name.setTextColor(context.getResources().getColor(
 						R.color.secondary_text));
 			} else {
