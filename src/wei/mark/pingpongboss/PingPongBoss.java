@@ -1,6 +1,7 @@
 package wei.mark.pingpongboss;
 
 import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.util.DetailsTask;
 import wei.mark.pingpongboss.util.Installation;
 import wei.mark.pingpongboss.util.SearchTask;
 import wei.mark.pingpongboss.R;
@@ -16,7 +17,9 @@ public class PingPongBoss extends Application {
 	public Navigation CurrentNavigation;
 	public PlayerModel CurrentPlayerModel;
 	public boolean DualPane;
+
 	public SearchTask usattSearchTask, rcSearchTask;
+	public DetailsTask detailsTask;
 
 	public enum Navigation {
 		IDLE, LIST, DETAILS

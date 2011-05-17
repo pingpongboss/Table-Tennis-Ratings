@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.util.PlayerModelAdapter;
-import wei.mark.pingpongboss.util.SearchCallback;
 import wei.mark.pingpongboss.util.SearchTask;
-import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.util.SearchTask.SearchCallback;
 import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,7 +29,9 @@ import android.widget.TextView;
 public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	PingPongBoss app;
 	ArrayList<PlayerModel> mPlayers;
+	
 	String mProvider, mQuery, mListQuery;
+	
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll, mUser;
 
@@ -208,9 +209,9 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	}
 
 	private void startSearch() {
-		TextView text = null;
 		try {
-			text = (TextView) getView().findViewById(R.id.emptyListText);
+			TextView text = (TextView) getView().findViewById(
+					R.id.emptyListText);
 			text.setVisibility(View.VISIBLE);
 			text.setText(R.string.searching);
 			getView().findViewById(R.id.progress).setVisibility(View.VISIBLE);
@@ -256,6 +257,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		TextView text = (TextView) getView().findViewById(R.id.emptyListText);
 		getView().findViewById(R.id.progress).setVisibility(View.GONE);
 
+		mPlayers.clear();
 		if (players != null) {
 			mPlayers.addAll(players);
 			text.setText("No search results");

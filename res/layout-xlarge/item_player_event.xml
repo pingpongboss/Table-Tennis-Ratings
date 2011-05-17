@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" android:padding="5dp">
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/name" style="@style/NameEventText" android:text="name" android:textSize="26sp" android:layout_alignParentLeft="true" android:maxLines="2" android:layout_toLeftOf="@+id/after"></TextView>
+	<TextView android:layout_width="wrap_content" android:id="@+id/date"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/name" style="@style/DateEventText" android:text="date" android:textSize="26sp"></TextView>
+	<TextView android:layout_alignParentRight="true"
+		android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/after" style="@style/AfterEventText" android:text="after" android:textSize="26sp"></TextView>
+	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/change" android:layout_below="@id/after" android:layout_alignParentRight="true" style="@style/ChangeEventText" android:text="change" android:textSize="26sp"></TextView>
+</RelativeLayout>

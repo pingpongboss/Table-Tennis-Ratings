@@ -3,10 +3,9 @@ package wei.mark.pingpongboss.model;
 import java.util.Date;
 import java.util.List;
 
+import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
 
 //import com.googlecode.objectify.annotation.Cached;
 //import com.googlecode.objectify.annotation.Unindexed;
@@ -140,7 +139,9 @@ public class PlayerModel implements Parcelable {
 		else if ("rc".equals(provider)) {
 			try {
 				// get up to the +- symbol
-				return getRating().substring(0, getRating().indexOf(177));
+				String base = getRating()
+						.substring(0, getRating().indexOf(177));
+				return base.equals("") ? getRating() : base;
 			} catch (Exception ex) {
 			}
 		}

@@ -3,9 +3,10 @@
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	style="@style/RootLayout" android:orientation="vertical">
 	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:paddingBottom="5dp">
+		android:layout_height="wrap_content" android:padding="5dp">
 		<include layout="@layout/action_bar" android:id="@+id/action_bar"
-			android:layout_height="wrap_content" android:layout_width="wrap_content" android:layout_centerHorizontal="true"></include>
+			android:layout_height="wrap_content" android:layout_width="wrap_content"
+			android:layout_centerHorizontal="true"></include>
 		<Button android:layout_width="wrap_content"
 			android:layout_toRightOf="@+id/action_bar" android:layout_height="wrap_content"
 			android:id="@+id/favorite" android:background="@android:color/transparent"></Button>
@@ -13,14 +14,36 @@
 			android:layout_height="wrap_content" android:layout_toLeftOf="@+id/action_bar"></ImageView>
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/name"
-			android:text="name" android:layout_alignParentLeft="true" android:layout_below="@+id/action_bar" android:textSize="60sp" android:layout_toLeftOf="@+id/rating" style="@style/NameDetailsText"></TextView>
-		<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="rating" android:id="@+id/rating" android:layout_alignParentRight="true" android:layout_alignBottom="@+id/name" android:textSize="40sp" style="@style/RatingDetailsText"></TextView>
+			android:text="name" android:layout_alignParentLeft="true"
+			android:layout_below="@+id/action_bar" android:textSize="60sp"
+			android:layout_toLeftOf="@+id/rating" style="@style/NameDetailsText"></TextView>
+		<TextView android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:text="rating" android:id="@+id/rating"
+			android:layout_alignParentRight="true" android:layout_alignBottom="@+id/name"
+			android:textSize="40sp" style="@style/RatingDetailsText"></TextView>
 		<TextView android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/id"
-			android:text="#id" android:layout_alignParentRight="true" android:layout_above="@+id/rating" android:textSize="40sp" style="@style/IdDetailsText"></TextView>
-			<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentRight="true" android:layout_below="@+id/rating" android:id="@+id/from" android:text="from" style="@style/FromDetailsText" android:textSize="40sp"></TextView>
+			android:text="#id" android:layout_alignParentRight="true"
+			android:layout_above="@+id/rating" android:textSize="40sp"
+			style="@style/IdDetailsText"></TextView>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentRight="true"
+			android:layout_below="@+id/rating" android:id="@+id/from"
+			android:text="from" style="@style/FromDetailsText" android:textSize="40sp"></TextView>
 	</RelativeLayout>
 	<ListView android:layout_width="fill_parent" android:id="@android:id/list"
-		android:layout_height="wrap_content"></ListView>
-	<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="More player details coming soon!" android:layout_gravity="center" android:textSize="40sp"></TextView>
+		android:layout_height="wrap_content" style="@style/ListView"></ListView>
+	<LinearLayout android:id="@android:id/empty"
+		android:layout_gravity="center" android:layout_width="wrap_content"
+		android:layout_height="fill_parent" android:gravity="center"
+		android:orientation="vertical">
+		<ProgressBar android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/progress"></ProgressBar>
+		<TextView android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/empty_text"
+			android:text="@string/fetching_details" android:textSize="24sp"></TextView>
+		<Button android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/retry" style="@style/Button"
+			android:visibility="gone" android:text="@string/fetching_details" android:textSize="24sp"></Button>
+	</LinearLayout>
 </LinearLayout>

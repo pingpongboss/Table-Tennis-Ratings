@@ -54,4 +54,11 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 	public String getQuery() {
 		return query;
 	}
+
+	public interface SearchCallback {
+
+		void searchCompleted(ArrayList<PlayerModel> players);
+
+	}
+
 }

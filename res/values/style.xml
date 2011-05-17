@@ -85,9 +85,6 @@
 		<item name="android:visibility">gone</item>
 	</style>
 	<style name="ListView">
-		<item name="android:layout_width">fill_parent</item>
-		<item name="android:layout_height">0px</item>
-		<item name="android:layout_weight">1</item>
 		<item name="android:cacheColorHint">@color/background_dark_gray</item>
 		<item name="android:fastScrollEnabled">true</item>
 	</style>
@@ -156,5 +153,23 @@
 	<style name="LabelDetailsText">
 		<item name="android:textSize">20sp</item>
 		<item name="android:textColor">@color/primary_text</item>
+	</style>
+
+	<style name="NameEventText">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/secondary_text</item>
+<!-- 		<item name="android:textStyle">bold</item> -->
+	</style>
+	<style name="DateEventText">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/primary_text</item>
+	</style>
+	<style name="AfterEventText">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/primary_text</item>
+	</style>
+	<style name="ChangeEventText">
+		<item name="android:textSize">16sp</item>
+		<item name="android:textColor">@color/secondary_text</item>
 	</style>
 </resources>
