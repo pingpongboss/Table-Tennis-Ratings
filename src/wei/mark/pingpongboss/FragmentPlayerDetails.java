@@ -10,6 +10,8 @@ import wei.mark.pingpongboss.util.DetailsTask.DetailsCallback;
 import wei.mark.pingpongboss.util.EventModelAdapter;
 import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -30,6 +32,10 @@ public class FragmentPlayerDetails extends ListFragment implements
 
 	PlayerModel mPlayer;
 
+	String mListProvider, mListId;
+	int mListIndex, mListTop;
+	boolean mUserChangedScroll;
+
 	public static FragmentPlayerDetails getInstance(PlayerModel player) {
 		FragmentPlayerDetails fragment = new FragmentPlayerDetails();
 		Bundle b = new Bundle();
@@ -41,6 +47,8 @@ public class FragmentPlayerDetails extends ListFragment implements
 
 	public FragmentPlayerDetails() {
 		mEvents = new ArrayList<EventModel>();
+
+		mListIndex = -1;
 	}
 
 	@Override
@@ -49,6 +57,13 @@ public class FragmentPlayerDetails extends ListFragment implements
 		app = (PingPongBoss) getActivity().getApplication();
 
 		mPlayer = getArguments().getParcelable("player");
+
+		SharedPreferences prefs = getActivity().getSharedPreferences("details",
+				0);
+		mListProvider = prefs.getString("listProvider", null);
+		mListId = prefs.getString("listId", null);
+		mListIndex = prefs.getInt("listIndex", 0);
+		mListTop = prefs.getInt("listTop", 0);
 
 		setListAdapter(new EventModelAdapter(getActivity(),
 				R.layout.item_player_event, mEvents));
@@ -128,6 +143,23 @@ public class FragmentPlayerDetails extends ListFragment implements
 		super.onResume();
 
 		fetchDetails();
+
+		if (mPlayer.getProvider().equals(mListProvider)
+				&& mPlayer.getId().equals(mListId))
+			getListView().setSelectionFromTop(mListIndex, mListTop);
+		else
+			getActivity().getSharedPreferences("details", 0).edit().clear()
+					.commit();
+
+		getListView().setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				mUserChangedScroll = true;
+				updateCurrentNavigation();
+				return false;
+			}
+		});
 	}
 
 	@Override
@@ -137,6 +169,21 @@ public class FragmentPlayerDetails extends ListFragment implements
 		if (app.detailsTask != null) {
 			app.detailsTask.setDetailsCallback(null);
 		}
+
+		SharedPreferences prefs = getActivity().getSharedPreferences("details",
+				0);
+		Editor editor = prefs.edit();
+
+		// save ListView scroll position
+		if (mUserChangedScroll) {
+			editor.putString("listProvider", mPlayer.getProvider());
+			editor.putString("listId", mPlayer.getId());
+			editor.putInt("listIndex", getListView().getFirstVisiblePosition());
+			View rcv = getListView().getChildAt(0);
+			editor.putInt("listTop", rcv == null ? 0 : rcv.getTop());
+		}
+
+		editor.commit();
 	}
 
 	private void updateCurrentNavigation() {
@@ -153,10 +200,13 @@ public class FragmentPlayerDetails extends ListFragment implements
 		} catch (Exception ex) {
 		}
 
-		boolean anotherRunning = app.detailsTask != null
-				&& !app.detailsTask.getPlayer().getProvider()
-						.equals(mPlayer.getProvider())
-				&& !app.detailsTask.getPlayer().getId().equals(mPlayer.getId());
+		boolean anotherRunning = false;
+		if (app.detailsTask != null) {
+			PlayerModel player = app.detailsTask.getPlayer();
+			anotherRunning = player != null
+					&& !player.getProvider().equals(mPlayer.getProvider())
+					&& !player.getId().equals(mPlayer.getId());
+		}
 
 		if (anotherRunning) {
 			app.rcSearchTask.cancel(true);
@@ -186,7 +236,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 			text.setVisibility(View.VISIBLE);
 			getView().findViewById(R.id.retry).setVisibility(View.VISIBLE);
 		}
-		
+
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 	}
 }
