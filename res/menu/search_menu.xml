@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:icon="@drawable/ic_menu_add" android:title="Import History" android:titleCondensed="Import" android:id="@+id/import_item"></item>
+    <item android:id="@+id/export" android:icon="@drawable/ic_menu_save" android:title="Export History" android:titleCondensed="Export"></item>
+    
+</menu>

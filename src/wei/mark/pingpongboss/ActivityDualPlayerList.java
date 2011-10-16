@@ -1,13 +1,14 @@
 package wei.mark.pingpongboss;
 
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
-import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.model.Refreshable;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class ActivityDualPlayerList extends FragmentActivity {
+public class ActivityDualPlayerList extends FragmentActivity implements
+		Refreshable {
 	PingPongBoss app;
 
 	@Override
@@ -42,5 +43,17 @@ public class ActivityDualPlayerList extends FragmentActivity {
 		app.CurrentNavigation = Navigation.IDLE;
 		startActivity(new Intent().setClass(this, ActivityPlayerSearch.class)
 				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+	}
+
+	@Override
+	public void refresh() {
+		FragmentPlayerList usattFragment = (FragmentPlayerList) getSupportFragmentManager()
+				.findFragmentById(R.id.usatt);
+		FragmentPlayerList rcFragment = (FragmentPlayerList) getSupportFragmentManager()
+				.findFragmentById(R.id.rc);
+		if (usattFragment != null)
+			usattFragment.startSearch(true);
+		if (rcFragment != null)
+			rcFragment.startSearch(true);
 	}
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.model.Refreshable;
 import wei.mark.pingpongboss.util.PlayerModelAdapter;
 import wei.mark.pingpongboss.util.SearchTask;
 import wei.mark.pingpongboss.util.SearchTask.SearchCallback;
@@ -16,6 +17,9 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,6 +66,8 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (PingPongBoss) getActivity().getApplication();
+		
+		setHasOptionsMenu(true);
 
 		Bundle b = getArguments();
 
@@ -123,7 +129,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 			@Override
 			public void onClick(View v) {
-				startSearch();
+				startSearch(false);
 			}
 		});
 
@@ -156,7 +162,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	public void onResume() {
 		super.onResume();
 
-		startSearch();
+		startSearch(false);
 
 		if (mQuery.equals(mListQuery))
 			getListView().setSelectionFromTop(mListIndex, mListTop);
@@ -203,13 +209,34 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 		editor.commit();
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		if (menu.findItem(R.id.refresh) == null)
+			inflater.inflate(R.menu.result_menu, menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.refresh:
+			((Refreshable)getActivity()).refresh();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
 	private void updateCurrentNavigation() {
 		app.CurrentNavigation = Navigation.LIST;
 	}
 
-	private void startSearch() {
+	public void startSearch(boolean fresh) {
 		try {
+			mPlayers.clear();
+			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+			
 			TextView text = (TextView) getView().findViewById(
 					R.id.emptyListText);
 			text.setVisibility(View.VISIBLE);
@@ -223,24 +250,24 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			if (app.usattSearchTask == null) {
 				app.usattSearchTask = new SearchTask(this);
 				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
-						mQuery, String.valueOf(mUser));
+						mQuery, String.valueOf(mUser), String.valueOf(fresh));
 			} else if (app.usattSearchTask.getQuery() != mQuery) {
 				app.usattSearchTask.cancel(true);
 				app.usattSearchTask = new SearchTask(this);
 				app.usattSearchTask.execute(app.getDeviceId(), mProvider,
-						mQuery, String.valueOf(mUser));
+						mQuery, String.valueOf(mUser), String.valueOf(fresh));
 			}
 			app.usattSearchTask.setSearchCallback(this);
 		} else if ("rc".equals(mProvider)) {
 			if (app.rcSearchTask == null) {
 				app.rcSearchTask = new SearchTask(this);
 				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
-						String.valueOf(mUser));
+						String.valueOf(mUser), String.valueOf(fresh));
 			} else if (app.rcSearchTask.getQuery() != mQuery) {
 				app.rcSearchTask.cancel(true);
 				app.rcSearchTask = new SearchTask(this);
 				app.rcSearchTask.execute(app.getDeviceId(), mProvider, mQuery,
-						String.valueOf(mUser));
+						String.valueOf(mUser), String.valueOf(fresh));
 			}
 			app.rcSearchTask.setSearchCallback(this);
 		}

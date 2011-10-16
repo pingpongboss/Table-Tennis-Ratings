@@ -39,6 +39,6 @@
 		<ProgressBar android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/progress"></ProgressBar>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/empty_text" android:text="@string/fetching_details"></TextView>
-		<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/retry" style="@style/Button" android:visibility="gone" android:text="@string/fetching_details"></Button>
+		<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/retry" style="@style/Button" android:visibility="gone" android:text="@string/retry"></Button>
 	</LinearLayout>
 </LinearLayout>

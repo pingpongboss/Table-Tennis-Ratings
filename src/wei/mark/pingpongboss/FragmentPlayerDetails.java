@@ -16,6 +16,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -55,6 +58,8 @@ public class FragmentPlayerDetails extends ListFragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (PingPongBoss) getActivity().getApplication();
+
+		setHasOptionsMenu(true);
 
 		mPlayer = getArguments().getParcelable("player");
 
@@ -128,6 +133,16 @@ public class FragmentPlayerDetails extends ListFragment implements
 				: mPlayer.getState());
 		fromTextView.setOnTouchListener(l);
 
+		Button retryButton = (Button) v.findViewById(R.id.retry);
+		retryButton.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				fetchDetails(false);
+			}
+		});
+		retryButton.setOnTouchListener(l);
+
 		v.setOnTouchListener(l);
 		return v;
 	}
@@ -142,7 +157,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 	public void onResume() {
 		super.onResume();
 
-		fetchDetails();
+		fetchDetails(false);
 
 		if (mPlayer.getProvider().equals(mListProvider)
 				&& mPlayer.getId().equals(mListId))
@@ -186,12 +201,33 @@ public class FragmentPlayerDetails extends ListFragment implements
 		editor.commit();
 	}
 
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		if (menu.findItem(R.id.refresh) == null)
+			inflater.inflate(R.menu.result_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.refresh:
+			fetchDetails(true);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	private void updateCurrentNavigation() {
 		app.CurrentNavigation = Navigation.DETAILS;
 	}
 
-	private void fetchDetails() {
+	public void fetchDetails(boolean fresh) {
 		try {
+			mEvents.clear();
+			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+			
 			TextView text = (TextView) getView().findViewById(R.id.empty_text);
 			text.setVisibility(View.VISIBLE);
 			text.setText(R.string.fetching_details);
@@ -214,7 +250,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 
 		if (app.detailsTask == null || anotherRunning) {
 			app.detailsTask = new DetailsTask(this);
-			app.detailsTask.execute(app.getDeviceId(), mPlayer);
+			app.detailsTask.execute(app.getDeviceId(), mPlayer, fresh);
 		} else {
 			app.detailsTask.setDetailsCallback(this);
 		}

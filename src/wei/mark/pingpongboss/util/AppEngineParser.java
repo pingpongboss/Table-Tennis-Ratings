@@ -112,10 +112,11 @@ public class AppEngineParser {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=search&id=%s&provider=%s&query=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=search&id=%s&provider=%s&query=%s&fresh=%s",
 							URLEncoder.encode(id, "UTF-8"),
 							URLEncoder.encode(provider, "UTF-8"),
-							URLEncoder.encode(query, "UTF-8"));
+							URLEncoder.encode(query, "UTF-8"),
+							URLEncoder.encode(String.valueOf(fresh), "UTF-8"));
 
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
@@ -166,10 +167,11 @@ public class AppEngineParser {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=details&id=%s&provider=%s&query=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=details&id=%s&provider=%s&query=%s&fresh=%s",
 							URLEncoder.encode(id, "UTF-8"),
 							URLEncoder.encode(player.getProvider(), "UTF-8"),
-							URLEncoder.encode(player.getId(), "UTF-8"));
+							URLEncoder.encode(player.getId(), "UTF-8"),
+							URLEncoder.encode(String.valueOf(fresh), "UTF-8"));
 
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();

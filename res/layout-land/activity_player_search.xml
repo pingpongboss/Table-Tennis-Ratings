@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	style="@style/RootLayout" android:orientation="horizontal">
-	<fragment style="@style/RootLayout.Search.Landscape"></fragment>
+	<fragment style="@style/RootLayout.Search.Landscape">
+	    <!-- Preview: layout=@layout/fragment_player_search -->
+	</fragment>
 	<RelativeLayout android:layout_height="fill_parent"
 		android:layout_width="fill_parent" android:id="@+id/content">
 		<ViewStub android:layout_width="wrap_content"

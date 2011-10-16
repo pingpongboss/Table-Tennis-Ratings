@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> {
 	SearchCallback callback;
 	String provider, query, id;
-	boolean user, hasSavedResult;
+	boolean user, fresh, hasSavedResult;
 	ArrayList<PlayerModel> savedResult;
 
 	public SearchTask(SearchCallback searchCallback) {
@@ -22,10 +22,11 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 			provider = params[1];
 			query = params[2];
 			user = Boolean.parseBoolean(params[3]);
+			fresh = Boolean.parseBoolean(params[4]);
 
 			AppEngineParser parser = AppEngineParser.getParser();
 
-			return parser.search(id, provider, query);
+			return parser.search(id, provider, query, fresh);
 		} catch (Exception ex) {
 			return null;
 		}

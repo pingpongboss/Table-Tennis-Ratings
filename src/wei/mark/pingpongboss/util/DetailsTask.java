@@ -10,7 +10,7 @@ public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> 
 	DetailsCallback callback;
 	PlayerModel player;
 	String id;
-	boolean hasSavedResult;
+	boolean fresh, hasSavedResult;
 	ArrayList<EventModel> savedResult;
 
 	public DetailsTask(DetailsCallback detailsCallback) {
@@ -22,10 +22,11 @@ public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> 
 		try {
 			id = (String) params[0];
 			player = (PlayerModel) params[1];
+			fresh = (Boolean)params[2];
 
 			AppEngineParser parser = AppEngineParser.getParser();
 
-			return parser.details(id, player, false);
+			return parser.details(id, player, fresh);
 		} catch (Exception ex) {
 			return null;
 		}

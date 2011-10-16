@@ -1,12 +1,14 @@
 package wei.mark.pingpongboss;
 
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.model.Refreshable;
 import wei.mark.pingpongboss.R;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class ActivityPlayerSearch extends FragmentActivity {
+public class ActivityPlayerSearch extends FragmentActivity implements
+		Refreshable {
 	PingPongBoss app;
 
 	/** Called when the activity is first created. */
@@ -28,5 +30,25 @@ public class ActivityPlayerSearch extends FragmentActivity {
 		} else {
 			super.onBackPressed();
 		}
+	}
+
+	@Override
+	public void refresh() {
+		FragmentPlayerDetails detailsFragment = (FragmentPlayerDetails) getSupportFragmentManager()
+				.findFragmentByTag("details");
+		if (detailsFragment != null) {
+			detailsFragment.fetchDetails(true);
+			return;
+		}
+
+		FragmentPlayerList usattFragment = (FragmentPlayerList) getSupportFragmentManager()
+				.findFragmentByTag("usatt");
+		FragmentPlayerList rcFragment = (FragmentPlayerList) getSupportFragmentManager()
+				.findFragmentByTag("rc");
+		if (usattFragment != null)
+			usattFragment.startSearch(true);
+		if (rcFragment != null)
+			rcFragment.startSearch(true);
+		return;
 	}
 }
