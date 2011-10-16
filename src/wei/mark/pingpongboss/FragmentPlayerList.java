@@ -304,7 +304,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		showDetails(player);
 	}
 
-	private void showDetails(PlayerModel player) {
+	protected void showDetails(PlayerModel player) {
 		if (player == null)
 			return;
 

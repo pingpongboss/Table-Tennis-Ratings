@@ -18,8 +18,12 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,6 +58,8 @@ public class FragmentPlayerSearch extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (PingPongBoss) getActivity().getApplication();
+
+		setHasOptionsMenu(true);
 
 		mHistory = retrieveHistory();
 
@@ -275,6 +281,27 @@ public class FragmentPlayerSearch extends ListFragment {
 		super.onLowMemory();
 		mQuery = null;
 		AppEngineParser.getParser().onLowMemory();
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		if (menu.findItem(R.id.import_item) == null)
+			inflater.inflate(R.menu.search_menu, menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.import_item:
+			Log.d("Search", "import");
+			return true;
+		case R.id.export:
+			Log.d("Search", "export");
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	private ArrayList<String> retrieveHistory() {

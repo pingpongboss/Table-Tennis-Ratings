@@ -26,6 +26,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class FragmentPlayerDetails extends ListFragment implements
@@ -227,7 +228,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 		try {
 			mEvents.clear();
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-			
+
 			TextView text = (TextView) getView().findViewById(R.id.empty_text);
 			text.setVisibility(View.VISIBLE);
 			text.setText(R.string.fetching_details);
@@ -274,5 +275,16 @@ public class FragmentPlayerDetails extends ListFragment implements
 		}
 
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		EventModel event = mEvents.get(position);
+		showEventDetails(event);
+	}
+
+	protected void showEventDetails(EventModel event) {
+		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ParserUtils
+				.getEventDetailsUrl(event.getProvider(), event.getId()))));
 	}
 }
