@@ -285,6 +285,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 
 	protected void showEventDetails(EventModel event) {
 		startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ParserUtils
-				.getEventDetailsUrl(event.getProvider(), event.getId()))));
+				.getEventDetailsUrl(event.getProvider(),
+						mPlayer.getProviderId(), event.getId()))));
 	}
 }
