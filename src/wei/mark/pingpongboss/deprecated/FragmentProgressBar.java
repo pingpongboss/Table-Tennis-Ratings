@@ -1,4 +1,4 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.deprecated;
 
 import wei.mark.pingpongboss.R;
 import android.app.AlertDialog;

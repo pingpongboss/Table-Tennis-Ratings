@@ -5,8 +5,8 @@ import java.util.Arrays;
 
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.util.AppEngineParser;
+import wei.mark.pingpongboss.util.FileUtils;
 import wei.mark.pingpongboss.util.StringAdapter;
-import wei.mark.pingpongboss.R;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,11 +14,11 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,6 +41,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FragmentPlayerSearch extends ListFragment {
 	PingPongBoss app;
@@ -293,11 +294,38 @@ public class FragmentPlayerSearch extends ListFragment {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case R.id.import_item:
-			Log.d("Search", "import");
+		case R.id.import_item: {
+			ArrayList<String> history = FileUtils.importHistory();
+			String message = null;
+			int counter = 0;
+			if (history != null) {
+				for (String query : history) {
+					if (!mHistory.contains(query)) {
+						mHistory.add(query);
+						counter++;
+					}
+				}
+				((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+				saveHistory();
+
+				message = String.format("Imported %d new queries.", counter);
+			} else {
+				message = "Import failed.";
+			}
+			Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 			return true;
+		}
 		case R.id.export:
-			Log.d("Search", "export");
+			boolean success = FileUtils.exportHistory(mHistory);
+			String message = null;
+			if (success) {
+				message = String.format("Search history exported to\n%s/%s.",
+						Environment.getExternalStorageDirectory()
+								.getAbsolutePath(), FileUtils.HISTORY);
+			} else {
+				message = "Export failed.";
+			}
+			Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -361,9 +389,6 @@ public class FragmentPlayerSearch extends ListFragment {
 							public void onClick(DialogInterface dialog,
 									int which) {
 								mHistory.clear();
-								mHistory.addAll(Arrays.asList(getResources()
-										.getStringArray(
-												R.array.example_searches)));
 								((ArrayAdapter<?>) getListAdapter())
 										.notifyDataSetChanged();
 								saveHistory();

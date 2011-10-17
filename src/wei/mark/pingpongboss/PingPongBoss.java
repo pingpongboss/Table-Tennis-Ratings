@@ -2,7 +2,7 @@ package wei.mark.pingpongboss;
 
 import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.util.DetailsTask;
-import wei.mark.pingpongboss.util.Installation;
+import wei.mark.pingpongboss.util.FileUtils;
 import wei.mark.pingpongboss.util.SearchTask;
 import wei.mark.pingpongboss.R;
 import android.app.Application;
@@ -38,7 +38,7 @@ public class PingPongBoss extends Application {
 	}
 
 	public String getDeviceId() {
-		return Installation.id(this);
+		return FileUtils.id(this);
 	}
 
 	public static Toast getToast(Context context, int imageResourceId,
