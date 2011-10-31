@@ -4,7 +4,6 @@ import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.util.DetailsTask;
 import wei.mark.pingpongboss.util.FileUtils;
 import wei.mark.pingpongboss.util.SearchTask;
-import wei.mark.pingpongboss.R;
 import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,13 +12,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.android.Facebook;
+
 public class PingPongBoss extends Application {
+	public Facebook facebook;
+
 	public Navigation CurrentNavigation;
 	public PlayerModel CurrentPlayerModel;
 	public boolean DualPane;
 
 	public SearchTask usattSearchTask, rcSearchTask;
 	public DetailsTask detailsTask;
+
 
 	public enum Navigation {
 		IDLE, LIST, DETAILS
@@ -28,6 +32,8 @@ public class PingPongBoss extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		facebook = new Facebook(getResources().getString(R.string.fb_app_id));
 
 		getSharedPreferences("usatt", 0).edit().clear().commit();
 		getSharedPreferences("rc", 0).edit().clear().commit();

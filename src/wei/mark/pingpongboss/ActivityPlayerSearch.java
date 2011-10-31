@@ -2,14 +2,19 @@ package wei.mark.pingpongboss;
 
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.model.Refreshable;
-import wei.mark.pingpongboss.R;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+
+import com.facebook.android.DialogError;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 
 public class ActivityPlayerSearch extends FragmentActivity implements
 		Refreshable {
 	PingPongBoss app;
+	SharedPreferences facebookPrefs;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -18,6 +23,53 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 		app = (PingPongBoss) getApplication();
 
 		setContentView(R.layout.activity_player_search);
+
+		facebookPrefs = getSharedPreferences("facebook", MODE_PRIVATE);
+		String access_token = facebookPrefs.getString("access_token", null);
+		long expires = facebookPrefs.getLong("access_expires", 0);
+		if (access_token != null) {
+			app.facebook.setAccessToken(access_token);
+		}
+		if (expires != 0) {
+			app.facebook.setAccessExpires(expires);
+		}
+
+		/*
+		 * Only call authorize if the access_token has expired.
+		 */
+		if (!app.facebook.isSessionValid()) {
+
+			app.facebook.authorize(this, new String[] {}, new DialogListener() {
+				@Override
+				public void onComplete(Bundle values) {
+					SharedPreferences.Editor editor = facebookPrefs.edit();
+					editor.putString("access_token",
+							app.facebook.getAccessToken());
+					editor.putLong("access_expires",
+							app.facebook.getAccessExpires());
+					editor.commit();
+				}
+
+				@Override
+				public void onFacebookError(FacebookError error) {
+				}
+
+				@Override
+				public void onError(DialogError e) {
+				}
+
+				@Override
+				public void onCancel() {
+				}
+			});
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		app.facebook.authorizeCallback(requestCode, resultCode, data);
 	}
 
 	@Override
