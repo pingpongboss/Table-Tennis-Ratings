@@ -8,7 +8,7 @@ import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.util.DetailsTask;
 import wei.mark.pingpongboss.util.DetailsTask.DetailsCallback;
 import wei.mark.pingpongboss.util.EventModelAdapter;
-import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
+import wei.mark.pingpongboss.util.ParserUtils;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

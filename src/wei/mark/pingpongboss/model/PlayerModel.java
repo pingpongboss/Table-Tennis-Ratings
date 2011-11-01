@@ -3,7 +3,7 @@ package wei.mark.pingpongboss.model;
 import java.util.Date;
 import java.util.List;
 
-import wei.mark.tabletennisratingsserver.util.ProviderParser.ParserUtils;
+import wei.mark.pingpongboss.util.ParserUtils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
