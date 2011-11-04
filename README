@@ -6,3 +6,5 @@ pingpongbos supports major rating providers USATT <www.usatt.org> and RatingsCen
 This app is not sponsored or endorsed by USATT and RatingsCentral.
 
 https://market.android.com/details?id=wei.mark.pingpongboss
+
+To build this project, download https://github.com/JakeWharton/Android-ViewPagerIndicator/ and https://github.com/facebook/facebook-android-sdk and add them to Eclipse as library projects.

@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="wei.mark.pingpongboss" android:versionName="1.6" android:versionCode="6">
-	<uses-sdk android:minSdkVersion="4"></uses-sdk>
-	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    package="wei.mark.pingpongboss"
+    android:versionCode="6"
+    android:versionName="1.6" >
 
+    <uses-sdk android:minSdkVersion="4" >
+    </uses-sdk>
 
-	<application android:icon="@drawable/icon" android:label="@string/app_name"
-		android:theme="@style/Theme.DarkWithOrangeHighlights" android:name="wei.mark.pingpongboss.PingPongBoss">
-		<activity android:label="@string/app_name"
-			android:windowSoftInputMode="stateAlwaysHidden"
-			android:name="wei.mark.pingpongboss.ActivityPlayerSearch">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<activity android:label="@string/app_name" android:name="wei.mark.pingpongboss.ActivityDualPlayerList"></activity>
-		<activity android:name="wei.mark.pingpongboss.ActivityPlayerDetails"
-			android:label="@string/app_name">
-		</activity>
+    <uses-permission android:name="android.permission.INTERNET" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
 
-	</application>
+    <application
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:name="wei.mark.pingpongboss.PingPongBoss"
+        android:theme="@style/Theme.DarkWithOrangeHighlights" >
+        <activity
+            android:label="@string/app_name"
+            android:name="wei.mark.pingpongboss.ActivityPlayerSearch"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name="wei.mark.pingpongboss.ActivityDualPlayerList" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name="wei.mark.pingpongboss.ActivityPlayerDetails" >
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name="wei.mark.pingpongboss.ActivityMainViewPager" android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
 </manifest>
