@@ -1,12 +1,12 @@
 package wei.mark.pingpongboss.util;
 
-import com.viewpagerindicator.TitleProvider;
-
-import wei.mark.pingpongboss.FragmentPlayerList;
+import wei.mark.pingpongboss.FragmentPlayerFriends;
 import wei.mark.pingpongboss.FragmentPlayerSearch;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.viewpagerindicator.TitleProvider;
 
 public class MainFragmentAdapter extends FragmentPagerAdapter implements
 		TitleProvider {
@@ -21,7 +21,7 @@ public class MainFragmentAdapter extends FragmentPagerAdapter implements
 		case 0:
 			return new FragmentPlayerSearch();
 		case 1:
-			return FragmentPlayerList.getInstance("rc", "Wei, Mark", true);
+			return new FragmentPlayerFriends();
 		default:
 			return null;
 		}
