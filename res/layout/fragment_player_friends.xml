@@ -12,23 +12,21 @@
         android:background="@drawable/facebook"
         android:orientation="vertical" >
 
-        <Button
+        <ImageView
             android:id="@+id/login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/facebook_button"
-            android:visibility="gone" />
+            android:visibility="gone" android:scaleType="fitCenter" android:src="@drawable/facebook_button"/>
 
-        <Button
+        <ImageView
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/facebook_logout_button"
-            android:visibility="gone" />
+            android:visibility="gone" android:src="@drawable/facebook_logout_button" android:scaleType="fitCenter"/>
 
         <ProgressBar
             android:id="@+id/progress"
@@ -44,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:src="@android:drawable/arrow_down_float" />
+            android:src="@android:drawable/arrow_down_float" android:visibility="gone"/>
     </LinearLayout>
 
     <ListView

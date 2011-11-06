@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -59,7 +58,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 		View view = inflater.inflate(R.layout.fragment_player_friends, null,
 				false);
 
-		final Button login = (Button) view.findViewById(R.id.login);
+		final View login = (View) view.findViewById(R.id.login);
 		login.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -71,7 +70,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 			}
 		});
 
-		final Button logout = (Button) view.findViewById(R.id.logout);
+		final View logout = (View) view.findViewById(R.id.logout);
 		logout.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -171,7 +170,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 		ProgressBar progress = (ProgressBar) getView().findViewById(
 				R.id.progress);
 		progress.setVisibility(View.VISIBLE);
-		Button login = (Button) getView().findViewById(R.id.login);
+		View login = (View) getView().findViewById(R.id.login);
 		login.setVisibility(View.GONE);
 		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
 		arrow.setVisibility(View.VISIBLE);
@@ -200,7 +199,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 		final ProgressBar progress = (ProgressBar) getView().findViewById(
 				R.id.progress);
 		progress.setVisibility(View.GONE);
-		Button login = (Button) getView().findViewById(R.id.login);
+		View login = (View) getView().findViewById(R.id.login);
 		login.setVisibility(View.GONE);
 
 		mFriends.clear();
@@ -231,6 +230,14 @@ public class FragmentPlayerFriends extends ListFragment implements
 	}
 
 	private void facebookAuthorizeOnline() {
+		ProgressBar progress = (ProgressBar) getView().findViewById(
+				R.id.progress);
+		progress.setVisibility(View.VISIBLE);
+		View login = (View) getView().findViewById(R.id.login);
+		login.setVisibility(View.GONE);
+		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
+		arrow.setVisibility(View.VISIBLE);
+
 		app.facebook.authorize(getActivity(), new String[] {},
 				new DialogListener() {
 					@Override
@@ -327,7 +334,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 		ProgressBar progress = (ProgressBar) getView().findViewById(
 				R.id.progress);
 		progress.setVisibility(View.GONE);
-		Button login = (Button) getView().findViewById(R.id.login);
+		View login = (View) getView().findViewById(R.id.login);
 		login.setVisibility(View.VISIBLE);
 	}
 }
