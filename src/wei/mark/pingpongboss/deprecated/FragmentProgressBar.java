@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+@Deprecated
 public class FragmentProgressBar extends DialogFragment {
 	String mTitle, mMessage;
 	int mProgressState;
