@@ -1,11 +1,16 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.deprecated;
 
+import wei.mark.pingpongboss.FragmentPlayerDetails;
+import wei.mark.pingpongboss.FragmentPlayerList;
+import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.model.Refreshable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+@Deprecated
 public class ActivityPlayerSearch extends FragmentActivity implements
 		Refreshable {
 	PingPongBoss app;

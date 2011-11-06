@@ -19,7 +19,7 @@
         android:theme="@style/Theme.DarkWithOrangeHighlights" >
         <activity
             android:label="@string/app_name"
-            android:name="wei.mark.pingpongboss.ActivityPlayerSearch"
+            android:name=".deprecated.ActivityPlayerSearch"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity

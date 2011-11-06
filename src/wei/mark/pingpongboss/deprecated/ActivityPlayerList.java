@@ -1,6 +1,5 @@
 package wei.mark.pingpongboss.deprecated;
 
-import wei.mark.pingpongboss.ActivityPlayerSearch;
 import wei.mark.pingpongboss.FragmentPlayerList;
 import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
