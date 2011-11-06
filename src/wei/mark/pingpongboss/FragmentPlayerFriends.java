@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.facebook.android.AsyncFacebookRunner;
@@ -58,7 +59,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 		View view = inflater.inflate(R.layout.fragment_player_friends, null,
 				false);
 
-		Button login = (Button) view.findViewById(R.id.login);
+		final Button login = (Button) view.findViewById(R.id.login);
 		login.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -67,6 +68,53 @@ public class FragmentPlayerFriends extends ListFragment implements
 					retrieveFriends();
 				else
 					facebookAuthorizeOnline();
+			}
+		});
+
+		final Button logout = (Button) view.findViewById(R.id.logout);
+		logout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				try {
+					app.facebook.logout(getActivity());
+
+					SharedPreferences.Editor editor = facebookPrefs.edit();
+					editor.remove("access_token");
+					editor.remove("access_expires");
+					editor.remove("facebookId");
+					editor.commit();
+
+					FriendModelAdapter listAdapter = ((FriendModelAdapter) getListAdapter());
+					listAdapter.getLoader().clearCache();
+					listAdapter.clear();
+					listAdapter.notifyDataSetChanged();
+
+					ProgressBar progress = (ProgressBar) getView()
+							.findViewById(R.id.progress);
+					progress.setVisibility(View.GONE);
+					login.setVisibility(View.VISIBLE);
+					logout.setVisibility(View.GONE);
+					ImageView arrow = (ImageView) getView().findViewById(
+							R.id.arrow);
+					arrow.setVisibility(View.GONE);
+				} catch (Exception e) {
+					fail(e);
+					e.printStackTrace();
+				}
+			}
+		});
+
+		ViewGroup facebookLayout = (ViewGroup) view
+				.findViewById(R.id.facebook_layout);
+		facebookLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (logout.getVisibility() == View.VISIBLE)
+					logout.setVisibility(View.GONE);
+				else if (login.getVisibility() == View.GONE)
+					logout.setVisibility(View.VISIBLE);
 			}
 		});
 
@@ -89,7 +137,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 									if (mFriends.isEmpty())
 										retrieveFriends();
 								} else
-									fail();
+									fail("onPageSelected failed to authorize from cache");
 							}
 						}
 
@@ -114,7 +162,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 
 	private void retrieveFriends() {
 		if (app.facebookId == null) {
-			fail();
+			fail("retriveFriends facebookId is null");
 			return;
 		}
 
@@ -123,6 +171,8 @@ public class FragmentPlayerFriends extends ListFragment implements
 		progress.setVisibility(View.VISIBLE);
 		Button login = (Button) getView().findViewById(R.id.login);
 		login.setVisibility(View.GONE);
+		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
+		arrow.setVisibility(View.VISIBLE);
 
 		mFriends.clear();
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
@@ -145,7 +195,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 	public void friendsCompleted(ArrayList<FriendModel> friends) {
 		app.friendsTask = null;
 
-		ProgressBar progress = (ProgressBar) getView().findViewById(
+		final ProgressBar progress = (ProgressBar) getView().findViewById(
 				R.id.progress);
 		progress.setVisibility(View.GONE);
 		Button login = (Button) getView().findViewById(R.id.login);
@@ -156,7 +206,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 			mFriends.addAll(friends);
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 		} else
-			fail();
+			fail("friendsCompleted friends is null");
 	}
 
 	private boolean facebookAuthorizeCached() {
@@ -190,26 +240,26 @@ public class FragmentPlayerFriends extends ListFragment implements
 									public void onMalformedURLException(
 											MalformedURLException e,
 											Object state) {
-										fail();
+										fail(e);
 									}
 
 									@Override
 									public void onIOException(IOException e,
 											Object state) {
-										fail();
+										fail(e);
 									}
 
 									@Override
 									public void onFileNotFoundException(
 											FileNotFoundException e,
 											Object state) {
-										fail();
+										fail(e);
 									}
 
 									@Override
 									public void onFacebookError(
 											FacebookError e, Object state) {
-										fail();
+										fail(e);
 									}
 
 									@Override
@@ -245,7 +295,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 
 																	retrieveFriends();
 																} catch (Exception e) {
-																	fail();
+																	fail(e);
 																	e.printStackTrace();
 																}
 															}
@@ -256,22 +306,22 @@ public class FragmentPlayerFriends extends ListFragment implements
 
 					@Override
 					public void onFacebookError(FacebookError error) {
-						fail();
+						fail(error);
 					}
 
 					@Override
 					public void onError(DialogError e) {
-						fail();
+						fail(e);
 					}
 
 					@Override
 					public void onCancel() {
-						fail();
+						fail("authorizeOnline cancel");
 					}
 				});
 	}
 
-	private void fail() {
+	private void fail(Object error) {
 		ProgressBar progress = (ProgressBar) getView().findViewById(
 				R.id.progress);
 		progress.setVisibility(View.GONE);

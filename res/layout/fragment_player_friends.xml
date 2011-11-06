@@ -6,7 +6,7 @@
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/LinearLayout1"
+        android:id="@+id/facebook_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/facebook"
@@ -17,8 +17,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/facebook_button" android:visibility="gone"/>
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/facebook_button"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/facebook_logout_button"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -26,12 +36,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="5dp" />
 
+        <ImageView
+            android:id="@+id/arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="5dp"
+            android:src="@android:drawable/arrow_down_float" />
     </LinearLayout>
 
     <ListView
         android:id="@id/android:list"
+        style="@style/ListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
     </ListView>
