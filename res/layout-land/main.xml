@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/RootLayout"
+    android:orientation="horizontal" >
+
+    <fragment style="@style/RootLayout.Search.Landscape" >
+
+        <!-- Preview: layout=@layout/fragment_player_search -->
+    </fragment>
+
+    <RelativeLayout
+        android:id="@+id/content"
+        style="@style/RootLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ViewStub
+            android:id="@+id/promo_search_stub_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/promo_search_input"
+            android:layout="@layout/toast" >
+        </ViewStub>
+
+        <ViewStub
+            android:id="@+id/promo_search_stub_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inflatedId="@+id/promo_search_history"
+            android:layout="@layout/toast" >
+        </ViewStub>
+
+        <LinearLayout
+            style="@style/RootLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <FrameLayout
+                android:id="@+id/usatt"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/rc"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" >
+            </FrameLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

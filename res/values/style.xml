@@ -50,6 +50,12 @@
 	<style name="RootLayout.Search.Landscape">
 		<item name="android:layout_width">150dp</item>
 	</style>
+	<style name="RootLayout.Friends">
+		<item name="android:name">wei.mark.pingpongboss.FragmentPlayerFriends</item>
+	</style>
+	<style name="RootLayout.Friends.Landscape">
+		<item name="android:layout_width">150dp</item>
+	</style>
 	<style name="RootLayout.List">
 		<item name="android:name">wei.mark.pingpongboss.FragmentPlayerList</item>
 	</style>

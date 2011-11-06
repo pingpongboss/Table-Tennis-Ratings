@@ -125,7 +125,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
-		if (getActivity() instanceof ActivityMainViewPager) {
+		try {
 			((ActivityMainViewPager) getActivity()).getViewPagerListener()
 					.addOnPageChangeListener(new OnPageChangeListener() {
 
@@ -150,6 +150,8 @@ public class FragmentPlayerFriends extends ListFragment implements
 						public void onPageScrollStateChanged(int arg0) {
 						}
 					});
+		} catch (Exception e) {
+			fail(e);
 		}
 	}
 
