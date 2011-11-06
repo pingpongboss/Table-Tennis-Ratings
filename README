@@ -7,4 +7,6 @@ This app is not sponsored or endorsed by USATT and RatingsCentral.
 
 https://market.android.com/details?id=wei.mark.pingpongboss
 
-To build this project, download https://github.com/JakeWharton/Android-ViewPagerIndicator/ and https://github.com/facebook/facebook-android-sdk and add them to Eclipse as library projects.
+To build this project, download these dependencies and add them to Ecilpse as library projects
+https://github.com/JakeWharton/Android-ViewPagerIndicator/
+https://github.com/facebook/facebook-android-sdk

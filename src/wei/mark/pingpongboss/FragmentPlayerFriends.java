@@ -9,8 +9,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import wei.mark.pingpongboss.model.FriendModel;
 import wei.mark.pingpongboss.util.Constants;
-import wei.mark.pingpongboss.util.StringAdapter;
+import wei.mark.pingpongboss.util.FriendModelAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class FragmentPlayerFriends extends ListFragment {
 	PingPongBoss app;
 	SharedPreferences facebookPrefs;
 
-	ArrayList<String> mFriends;
+	ArrayList<FriendModel> mFriends;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -41,10 +42,10 @@ public class FragmentPlayerFriends extends ListFragment {
 
 		app = (PingPongBoss) getActivity().getApplication();
 
-		mFriends = new ArrayList<String>();
+		mFriends = new ArrayList<FriendModel>();
 
-		setListAdapter(new StringAdapter(getActivity(),
-				R.layout.item_player_search, mFriends, this));
+		setListAdapter(new FriendModelAdapter(getActivity(),
+				R.layout.item_player_friends, mFriends));
 	}
 
 	@Override
@@ -98,7 +99,9 @@ public class FragmentPlayerFriends extends ListFragment {
 							for (int i = 0; i < friends.length(); i++) {
 								final JSONObject friend = friends
 										.getJSONObject(i);
-								mFriends.add(friend.getString("name"));
+								mFriends.add(new FriendModel(friend
+										.getString("id"), friend
+										.getString("name")));
 							}
 
 							FragmentPlayerFriends.this.getActivity()

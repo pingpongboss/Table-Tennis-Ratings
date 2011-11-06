@@ -10,7 +10,9 @@
 			android:id="@+id/searchEditText"></EditText>
 		<ImageButton android:id="@+id/searchButton" style="@style/Button.Right.Search"></ImageButton>
 	</LinearLayout>
-	<ListView style="@style/ListView" android:id="@id/android:list" android:layout_height="wrap_content" android:layout_width="fill_parent"></ListView>
+	<ListView style="@style/ListView" android:id="@id/android:list" android:layout_height="wrap_content" android:layout_width="fill_parent">
+	    <!-- Preview: listitem=@layout/item_player_friends -->
+	</ListView>
 	<FrameLayout style="@style/EmptyListLayout">
 		<TextView style="@style/EmptyListIndicator" android:text="No history"></TextView>
 	</FrameLayout>
