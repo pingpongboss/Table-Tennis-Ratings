@@ -213,7 +213,7 @@ public class AppEngineParser {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://26.ttratings.appspot.com/table_tennis_ratings_server?action=friends&id=%s&query=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=friends&id=%s&query=%s",
 							URLEncoder.encode(facebookId, "UTF-8"),
 							URLEncoder.encode(accessToken, "UTF-8"));
 			URL url = new URL(uri);

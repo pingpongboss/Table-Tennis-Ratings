@@ -1,5 +1,7 @@
 package wei.mark.pingpongboss.util;
 
+import java.util.HashMap;
+
 import wei.mark.pingpongboss.FragmentPlayerFriends;
 import wei.mark.pingpongboss.FragmentPlayerSearch;
 import android.support.v4.app.Fragment;
@@ -10,21 +12,26 @@ import com.viewpagerindicator.TitleProvider;
 
 public class MainFragmentAdapter extends FragmentPagerAdapter implements
 		TitleProvider {
+	static HashMap<Integer, String> fragmentPosition;
 
 	public MainFragmentAdapter(FragmentManager fm) {
 		super(fm);
+
+		fragmentPosition = new HashMap<Integer, String>();
+		fragmentPosition.put(0, FragmentPlayerSearch.TAG);
+		fragmentPosition.put(1, FragmentPlayerFriends.TAG);
 	}
 
 	@Override
 	public Fragment getItem(int position) {
-		switch (position) {
-		case 0:
-			return new FragmentPlayerSearch();
-		case 1:
-			return new FragmentPlayerFriends();
-		default:
-			return null;
-		}
+		Fragment fragment = null;
+		String fragmentTag = fragmentPosition.get(position);
+		if (fragmentTag.equals(FragmentPlayerSearch.TAG))
+			fragment = new FragmentPlayerSearch();
+		else if (fragmentTag.equals(FragmentPlayerFriends.TAG))
+			fragment = new FragmentPlayerFriends();
+		
+		return fragment;
 	}
 
 	@Override
@@ -34,14 +41,17 @@ public class MainFragmentAdapter extends FragmentPagerAdapter implements
 
 	@Override
 	public String getTitle(int position) {
-		switch (position) {
-		case 0:
+		String fragment = fragmentPosition.get(position);
+		if (fragment.equals(FragmentPlayerSearch.TAG))
 			return "Search";
-		case 1:
+		else if (fragment.equals(FragmentPlayerFriends.TAG))
 			return "Friends";
-		default:
+		else
 			return null;
-		}
+	}
+
+	public static HashMap<Integer, String> getFragmentPosition() {
+		return fragmentPosition;
 	}
 
 }

@@ -44,6 +44,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class FragmentPlayerSearch extends ListFragment {
+	public static final String TAG = "FragmentPlayerSearch";
 	PingPongBoss app;
 
 	int mListIndex, mListTop;

@@ -11,16 +11,19 @@ import wei.mark.pingpongboss.model.FriendModel;
 import wei.mark.pingpongboss.util.FriendModelAdapter;
 import wei.mark.pingpongboss.util.FriendsTask;
 import wei.mark.pingpongboss.util.FriendsTask.FriendsCallback;
+import wei.mark.pingpongboss.util.MainFragmentAdapter;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 
 import com.facebook.android.AsyncFacebookRunner;
 import com.facebook.android.AsyncFacebookRunner.RequestListener;
@@ -30,6 +33,8 @@ import com.facebook.android.FacebookError;
 
 public class FragmentPlayerFriends extends ListFragment implements
 		FriendsCallback {
+	public static final String TAG = "FragmentPlayerFriend";
+
 	PingPongBoss app;
 	SharedPreferences facebookPrefs;
 
@@ -58,7 +63,10 @@ public class FragmentPlayerFriends extends ListFragment implements
 
 			@Override
 			public void onClick(View v) {
-				facebookAuthorize();
+				if (facebookAuthorizeCached())
+					retrieveFriends();
+				else
+					facebookAuthorizeOnline();
 			}
 		});
 
@@ -66,15 +74,55 @@ public class FragmentPlayerFriends extends ListFragment implements
 	}
 
 	@Override
-	public void onDestroy() {
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+
+		if (getActivity() instanceof ActivityMainViewPager) {
+			((ActivityMainViewPager) getActivity()).getViewPagerListener()
+					.addOnPageChangeListener(new OnPageChangeListener() {
+
+						@Override
+						public void onPageSelected(int position) {
+							if (TAG.equals(MainFragmentAdapter
+									.getFragmentPosition().get(position))) {
+								if (facebookAuthorizeCached()) {
+									if (mFriends.isEmpty())
+										retrieveFriends();
+								} else
+									fail();
+							}
+						}
+
+						@Override
+						public void onPageScrolled(int arg0, float arg1,
+								int arg2) {
+						}
+
+						@Override
+						public void onPageScrollStateChanged(int arg0) {
+						}
+					});
+		}
+	}
+
+	@Override
+	public void onLowMemory() {
 		((FriendModelAdapter) getListAdapter()).getLoader().clearCache();
 
-		super.onDestroy();
+		super.onLowMemory();
 	}
 
 	private void retrieveFriends() {
-		if (app.facebookId == null)
+		if (app.facebookId == null) {
+			fail();
 			return;
+		}
+
+		ProgressBar progress = (ProgressBar) getView().findViewById(
+				R.id.progress);
+		progress.setVisibility(View.VISIBLE);
+		Button login = (Button) getView().findViewById(R.id.login);
+		login.setVisibility(View.GONE);
 
 		mFriends.clear();
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
@@ -96,14 +144,22 @@ public class FragmentPlayerFriends extends ListFragment implements
 	@Override
 	public void friendsCompleted(ArrayList<FriendModel> friends) {
 		app.friendsTask = null;
-		
+
+		ProgressBar progress = (ProgressBar) getView().findViewById(
+				R.id.progress);
+		progress.setVisibility(View.GONE);
+		Button login = (Button) getView().findViewById(R.id.login);
+		login.setVisibility(View.GONE);
+
 		mFriends.clear();
-		if (friends != null)
+		if (friends != null) {
 			mFriends.addAll(friends);
-		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+		} else
+			fail();
 	}
 
-	private void facebookAuthorize() {
+	private boolean facebookAuthorizeCached() {
 		facebookPrefs = getActivity().getSharedPreferences("facebook",
 				Context.MODE_PRIVATE);
 		String access_token = facebookPrefs.getString("access_token", null);
@@ -119,84 +175,107 @@ public class FragmentPlayerFriends extends ListFragment implements
 		/*
 		 * Only call authorize if the access_token has expired.
 		 */
-		if (app.facebook.isSessionValid() && app.facebookId != null) {
-			retrieveFriends();
-		} else {
-			app.facebook.authorize(getActivity(), new String[] {},
-					new DialogListener() {
-						@Override
-						public void onComplete(Bundle values) {
-							new AsyncFacebookRunner(app.facebook).request("me",
-									new RequestListener() {
+		return app.facebook.isSessionValid() && app.facebookId != null;
+	}
 
-										@Override
-										public void onMalformedURLException(
-												MalformedURLException e,
-												Object state) {
-										}
+	private void facebookAuthorizeOnline() {
+		app.facebook.authorize(getActivity(), new String[] {},
+				new DialogListener() {
+					@Override
+					public void onComplete(Bundle values) {
+						new AsyncFacebookRunner(app.facebook).request("me",
+								new RequestListener() {
 
-										@Override
-										public void onIOException(
-												IOException e, Object state) {
-										}
+									@Override
+									public void onMalformedURLException(
+											MalformedURLException e,
+											Object state) {
+										fail();
+									}
 
-										@Override
-										public void onFileNotFoundException(
-												FileNotFoundException e,
-												Object state) {
-										}
+									@Override
+									public void onIOException(IOException e,
+											Object state) {
+										fail();
+									}
 
-										@Override
-										public void onFacebookError(
-												FacebookError e, Object state) {
-										}
+									@Override
+									public void onFileNotFoundException(
+											FileNotFoundException e,
+											Object state) {
+										fail();
+									}
 
-										@Override
-										public void onComplete(String response,
-												Object state) {
-											JSONObject me;
-											try {
-												me = new JSONObject(response);
-												app.facebookId = me
-														.getString("id");
+									@Override
+									public void onFacebookError(
+											FacebookError e, Object state) {
+										fail();
+									}
 
-												SharedPreferences.Editor editor = facebookPrefs
-														.edit();
-												editor.putString(
-														"access_token",
-														app.facebook
-																.getAccessToken());
-												editor.putLong(
-														"access_expires",
-														app.facebook
-																.getAccessExpires());
-												editor.putString("facebookId",
-														app.facebookId);
-												editor.commit();
+									@Override
+									public void onComplete(
+											final String response, Object state) {
+										FragmentPlayerFriends.this
+												.getActivity().runOnUiThread(
+														new Runnable() {
 
-												retrieveFriends();
-											} catch (Exception e) {
-												e.printStackTrace();
-											}
-										}
-									});
-						}
+															@Override
+															public void run() {
+																JSONObject me;
+																try {
+																	me = new JSONObject(
+																			response);
+																	app.facebookId = me
+																			.getString("id");
 
-						@Override
-						public void onFacebookError(FacebookError error) {
-							return;
-						}
+																	SharedPreferences.Editor editor = facebookPrefs
+																			.edit();
+																	editor.putString(
+																			"access_token",
+																			app.facebook
+																					.getAccessToken());
+																	editor.putLong(
+																			"access_expires",
+																			app.facebook
+																					.getAccessExpires());
+																	editor.putString(
+																			"facebookId",
+																			app.facebookId);
+																	editor.commit();
 
-						@Override
-						public void onError(DialogError e) {
-							return;
-						}
+																	retrieveFriends();
+																} catch (Exception e) {
+																	fail();
+																	e.printStackTrace();
+																}
+															}
+														});
+									}
+								});
+					}
 
-						@Override
-						public void onCancel() {
-							return;
-						}
-					});
-		}
+					@Override
+					public void onFacebookError(FacebookError error) {
+						fail();
+					}
+
+					@Override
+					public void onError(DialogError e) {
+						fail();
+					}
+
+					@Override
+					public void onCancel() {
+						fail();
+					}
+				});
+	}
+
+	private void fail() {
+		ProgressBar progress = (ProgressBar) getView().findViewById(
+				R.id.progress);
+		progress.setVisibility(View.GONE);
+		Button login = (Button) getView().findViewById(R.id.login);
+		login.setVisibility(View.VISIBLE);
 	}
 }
