@@ -5,13 +5,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import wei.mark.pingpongboss.model.FriendModel;
-import wei.mark.pingpongboss.util.Constants;
 import wei.mark.pingpongboss.util.FriendModelAdapter;
+import wei.mark.pingpongboss.util.FriendsTask;
+import wei.mark.pingpongboss.util.FriendsTask.FriendsCallback;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,9 +27,9 @@ import com.facebook.android.AsyncFacebookRunner.RequestListener;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
-import com.facebook.android.Util;
 
-public class FragmentPlayerFriends extends ListFragment {
+public class FragmentPlayerFriends extends ListFragment implements
+		FriendsCallback {
 	PingPongBoss app;
 	SharedPreferences facebookPrefs;
 
@@ -66,63 +65,42 @@ public class FragmentPlayerFriends extends ListFragment {
 		return view;
 	}
 
+	@Override
+	public void onDestroy() {
+		((FriendModelAdapter) getListAdapter()).getLoader().clearCache();
+
+		super.onDestroy();
+	}
+
 	private void retrieveFriends() {
-		new AsyncFacebookRunner(app.facebook).request(
-				Constants.GRAPH_PATH_FRIENDS, new RequestListener() {
+		if (app.facebookId == null)
+			return;
 
-					@Override
-					public void onMalformedURLException(
-							MalformedURLException e, Object state) {
-					}
+		mFriends.clear();
+		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 
-					@Override
-					public void onIOException(IOException e, Object state) {
-					}
+		if (app.friendsTask == null) {
+			app.friendsTask = new FriendsTask(this);
+			app.friendsTask.execute(app.facebookId,
+					app.facebook.getAccessToken());
+		} else if (!app.facebookId.equals(app.friendsTask.getFacebookId())) {
+			app.friendsTask.cancel(true);
+			app.friendsTask = new FriendsTask(this);
+			app.friendsTask.execute(app.facebookId,
+					app.facebook.getAccessToken());
+		}
 
-					@Override
-					public void onFileNotFoundException(
-							FileNotFoundException e, Object state) {
-					}
+		app.friendsTask.setFriendsCallback(this);
+	}
 
-					@Override
-					public void onFacebookError(FacebookError e, Object state) {
-					}
-
-					@Override
-					public void onComplete(String response, Object state) {
-						try {
-							JSONObject data = Util.parseJson(response);
-
-							mFriends.clear();
-
-							JSONArray friends = data.getJSONArray("data");
-							for (int i = 0; i < friends.length(); i++) {
-								final JSONObject friend = friends
-										.getJSONObject(i);
-								mFriends.add(new FriendModel(friend
-										.getString("id"), friend
-										.getString("name")));
-							}
-
-							FragmentPlayerFriends.this.getActivity()
-									.runOnUiThread(new Runnable() {
-
-										@Override
-										public void run() {
-											((ArrayAdapter<?>) getListAdapter())
-													.notifyDataSetChanged();
-										}
-									});
-
-						} catch (JSONException e) {
-							e.printStackTrace();
-						} catch (FacebookError e) {
-							if (e.getErrorType() == "OAuthException") {
-								facebookAuthorize();
-							}
-						}
-					}
-				});
+	@Override
+	public void friendsCompleted(ArrayList<FriendModel> friends) {
+		app.friendsTask = null;
+		
+		mFriends.clear();
+		if (friends != null)
+			mFriends.addAll(friends);
+		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 	}
 
 	private void facebookAuthorize() {
@@ -130,6 +108,7 @@ public class FragmentPlayerFriends extends ListFragment {
 				Context.MODE_PRIVATE);
 		String access_token = facebookPrefs.getString("access_token", null);
 		long expires = facebookPrefs.getLong("access_expires", 0);
+		app.facebookId = facebookPrefs.getString("facebookId", null);
 		if (access_token != null) {
 			app.facebook.setAccessToken(access_token);
 		}
@@ -140,22 +119,67 @@ public class FragmentPlayerFriends extends ListFragment {
 		/*
 		 * Only call authorize if the access_token has expired.
 		 */
-		if (app.facebook.isSessionValid()) {
+		if (app.facebook.isSessionValid() && app.facebookId != null) {
 			retrieveFriends();
 		} else {
 			app.facebook.authorize(getActivity(), new String[] {},
 					new DialogListener() {
 						@Override
 						public void onComplete(Bundle values) {
-							SharedPreferences.Editor editor = facebookPrefs
-									.edit();
-							editor.putString("access_token",
-									app.facebook.getAccessToken());
-							editor.putLong("access_expires",
-									app.facebook.getAccessExpires());
-							editor.commit();
+							new AsyncFacebookRunner(app.facebook).request("me",
+									new RequestListener() {
 
-							retrieveFriends();
+										@Override
+										public void onMalformedURLException(
+												MalformedURLException e,
+												Object state) {
+										}
+
+										@Override
+										public void onIOException(
+												IOException e, Object state) {
+										}
+
+										@Override
+										public void onFileNotFoundException(
+												FileNotFoundException e,
+												Object state) {
+										}
+
+										@Override
+										public void onFacebookError(
+												FacebookError e, Object state) {
+										}
+
+										@Override
+										public void onComplete(String response,
+												Object state) {
+											JSONObject me;
+											try {
+												me = new JSONObject(response);
+												app.facebookId = me
+														.getString("id");
+
+												SharedPreferences.Editor editor = facebookPrefs
+														.edit();
+												editor.putString(
+														"access_token",
+														app.facebook
+																.getAccessToken());
+												editor.putLong(
+														"access_expires",
+														app.facebook
+																.getAccessExpires());
+												editor.putString("facebookId",
+														app.facebookId);
+												editor.commit();
+
+												retrieveFriends();
+											} catch (Exception e) {
+												e.printStackTrace();
+											}
+										}
+									});
 						}
 
 						@Override

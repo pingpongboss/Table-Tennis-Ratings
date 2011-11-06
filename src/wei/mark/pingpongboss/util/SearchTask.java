@@ -34,18 +34,24 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 
 	@Override
 	protected void onPostExecute(ArrayList<PlayerModel> result) {
-		hasSavedResult = true;
-		savedResult = result;
 
-		if (callback != null)
-			callback.searchCompleted(savedResult);
+		if (callback != null) {
+			callback.searchCompleted(result);
+		} else {
+			hasSavedResult = true;
+			savedResult = result;
+		}
 	}
 
 	public void setSearchCallback(SearchCallback searchCallback) {
 		callback = searchCallback;
 
-		if (callback != null && hasSavedResult)
+		if (callback != null && hasSavedResult) {
 			callback.searchCompleted(savedResult);
+
+			hasSavedResult = false;
+			savedResult = null;
+		}
 	}
 
 	public String getProvider() {
@@ -57,9 +63,7 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 	}
 
 	public interface SearchCallback {
-
 		void searchCompleted(ArrayList<PlayerModel> players);
-
 	}
 
 }

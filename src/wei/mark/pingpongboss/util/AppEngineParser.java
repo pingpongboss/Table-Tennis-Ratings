@@ -8,10 +8,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import wei.mark.pingpongboss.model.EventModel;
+import wei.mark.pingpongboss.model.FriendModel;
 import wei.mark.pingpongboss.model.PlayerModel;
 
 import com.google.gson.Gson;
@@ -135,11 +135,7 @@ public class AppEngineParser {
 			Type type = new TypeToken<ArrayList<PlayerModel>>() {
 			}.getType();
 
-			@SuppressWarnings("unchecked")
-			LinkedList<PlayerModel> playersLinkedList = (LinkedList<PlayerModel>) gson
-					.fromJson(sb.toString(), type);
-
-			players = new ArrayList<PlayerModel>(playersLinkedList);
+			players = gson.fromJson(sb.toString(), type);
 
 			mPlayersCache.put(getCacheKey(provider, query), players);
 			return players;
@@ -190,11 +186,7 @@ public class AppEngineParser {
 			Type type = new TypeToken<ArrayList<EventModel>>() {
 			}.getType();
 
-			@SuppressWarnings("unchecked")
-			LinkedList<EventModel> eventsLinkedList = (LinkedList<EventModel>) gson
-					.fromJson(sb.toString(), type);
-
-			events = new ArrayList<EventModel>(eventsLinkedList);
+			events = gson.fromJson(sb.toString(), type);
 
 			mEventsCache.put(getCacheKey(player.getProvider(), player.getId()),
 					events);
@@ -202,6 +194,51 @@ public class AppEngineParser {
 		} catch (Exception ex) {
 			return mEventsCache.get(getCacheKey(player.getProvider(),
 					player.getId()));
+		} finally {
+			if (connection != null)
+				connection.disconnect();
+		}
+	}
+
+	public ArrayList<FriendModel> friends(String facebookId, String accessToken) {
+		ArrayList<FriendModel> friends;
+
+		// if (!fresh) {
+		// // first check cache
+		// players = mPlayersCache.get(getCacheKey(provider, query));
+		// if (players != null)
+		// return players;
+		// }
+
+		HttpURLConnection connection = null;
+		try {
+			String uri = String
+					.format("http://26.ttratings.appspot.com/table_tennis_ratings_server?action=friends&id=%s&query=%s",
+							URLEncoder.encode(facebookId, "UTF-8"),
+							URLEncoder.encode(accessToken, "UTF-8"));
+			URL url = new URL(uri);
+			connection = (HttpURLConnection) url.openConnection();
+
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					connection.getInputStream(), "UTF-8"));
+
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			rd.close();
+
+			Gson gson = new Gson();
+			Type type = new TypeToken<ArrayList<FriendModel>>() {
+			}.getType();
+
+			friends = gson.fromJson(sb.toString(), type);
+			// mPlayersCache.put(getCacheKey(provider, query), players);
+			return friends;
+		} catch (Exception ex) {
+			// return mPlayersCache.get(getCacheKey(provider, query));
+			return null;
 		} finally {
 			if (connection != null)
 				connection.disconnect();

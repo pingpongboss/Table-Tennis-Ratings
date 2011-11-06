@@ -22,7 +22,7 @@ public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> 
 		try {
 			id = (String) params[0];
 			player = (PlayerModel) params[1];
-			fresh = (Boolean)params[2];
+			fresh = (Boolean) params[2];
 
 			AppEngineParser parser = AppEngineParser.getParser();
 
@@ -34,18 +34,23 @@ public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> 
 
 	@Override
 	protected void onPostExecute(ArrayList<EventModel> result) {
-		hasSavedResult = true;
-		savedResult = result;
-
-		if (callback != null)
-			callback.detailsCompleted(savedResult);
+		if (callback != null) {
+			callback.detailsCompleted(result);
+		} else {
+			hasSavedResult = true;
+			savedResult = result;
+		}
 	}
 
 	public void setDetailsCallback(DetailsCallback detailsCallback) {
 		callback = detailsCallback;
 
-		if (callback != null && hasSavedResult)
+		if (callback != null && hasSavedResult) {
 			callback.detailsCompleted(savedResult);
+
+			hasSavedResult = false;
+			savedResult = null;
+		}
 	}
 
 	public PlayerModel getPlayer() {

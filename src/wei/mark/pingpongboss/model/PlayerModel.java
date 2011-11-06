@@ -30,6 +30,7 @@ public class PlayerModel implements Parcelable {
 	String lastName;
 	String firstName;
 	long popularity;
+	String facebookId;
 
 	// @Unindexed
 	String rating;
@@ -65,6 +66,7 @@ public class PlayerModel implements Parcelable {
 		out.writeString(id);
 		out.writeString(lastName);
 		out.writeString(firstName);
+		out.writeString(facebookId);
 		out.writeString(rating);
 		out.writeStringArray(clubs);
 		out.writeString(state);
@@ -82,6 +84,7 @@ public class PlayerModel implements Parcelable {
 		id = in.readString();
 		lastName = in.readString();
 		firstName = in.readString();
+		facebookId = in.readString();
 		rating = in.readString();
 		clubs = in.createStringArray();
 		state = in.readString();
@@ -215,6 +218,14 @@ public class PlayerModel implements Parcelable {
 
 	public void setPopularity(long popularity) {
 		this.popularity = popularity;
+	}
+
+	public String getFacebookId() {
+		return facebookId;
+	}
+
+	public void setFacebookId(String facebookId) {
+		this.facebookId = facebookId;
 	}
 
 	public String getId() {

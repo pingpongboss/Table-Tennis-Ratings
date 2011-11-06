@@ -3,6 +3,7 @@ package wei.mark.pingpongboss;
 import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.util.DetailsTask;
 import wei.mark.pingpongboss.util.FileUtils;
+import wei.mark.pingpongboss.util.FriendsTask;
 import wei.mark.pingpongboss.util.SearchTask;
 import android.app.Application;
 import android.content.Context;
@@ -16,6 +17,7 @@ import com.facebook.android.Facebook;
 
 public class PingPongBoss extends Application {
 	public Facebook facebook;
+	public String facebookId;
 
 	public Navigation CurrentNavigation;
 	public PlayerModel CurrentPlayerModel;
@@ -23,7 +25,7 @@ public class PingPongBoss extends Application {
 
 	public SearchTask usattSearchTask, rcSearchTask;
 	public DetailsTask detailsTask;
-
+	public FriendsTask friendsTask;
 
 	public enum Navigation {
 		IDLE, LIST, DETAILS

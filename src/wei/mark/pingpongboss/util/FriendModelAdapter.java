@@ -61,12 +61,16 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	}
 
 	private String getFacebookPictureUrl(String id) {
-		return Constants.GRAPH_PATH_BASE + id + "/picture";
+		return Constants.GRAPH_PATH_BASE + id + "/picture?type=square";
 	}
 
 	@Override
 	public int getViewTypeCount() {
 		return 1;
+	}
+	
+	public ImageLoader getLoader() {
+		return loader;
 	}
 
 	static class ViewHolder {
