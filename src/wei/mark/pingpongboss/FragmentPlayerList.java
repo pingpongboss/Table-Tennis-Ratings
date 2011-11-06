@@ -33,9 +33,9 @@ import android.widget.TextView;
 public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	PingPongBoss app;
 	ArrayList<PlayerModel> mPlayers;
-	
+
 	String mProvider, mQuery, mListQuery;
-	
+
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll, mUser;
 
@@ -66,7 +66,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		app = (PingPongBoss) getActivity().getApplication();
-		
+
 		setHasOptionsMenu(true);
 
 		Bundle b = getArguments();
@@ -209,19 +209,19 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 
 		editor.commit();
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		super.onCreateOptionsMenu(menu, inflater);
 		if (menu.findItem(R.id.refresh) == null)
 			inflater.inflate(R.menu.result_menu, menu);
 	}
-	
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.refresh:
-			((Refreshable)getActivity()).refresh();
+			((Refreshable) getActivity()).refresh();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -236,7 +236,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		try {
 			mPlayers.clear();
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
-			
+
 			TextView text = (TextView) getView().findViewById(
 					R.id.emptyListText);
 			text.setVisibility(View.VISIBLE);

@@ -41,7 +41,7 @@ public class ActivityDualPlayerList extends FragmentActivity implements
 	public void onBackPressed() {
 		super.onBackPressed();
 		app.CurrentNavigation = Navigation.IDLE;
-		startActivity(new Intent().setClass(this, ActivityPlayerSearch.class)
+		startActivity(new Intent().setClass(this, ActivityMainViewPager.class)
 				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 
