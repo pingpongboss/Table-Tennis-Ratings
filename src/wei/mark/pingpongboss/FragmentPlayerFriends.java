@@ -176,11 +176,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 						public void onPageSelected(int position) {
 							if (TAG.equals(MainFragmentAdapter
 									.getFragmentPosition().get(position))) {
-								if (facebookAuthorizeCached()) {
-									if (mFriends.isEmpty())
-										retrieveFriends();
-								} else
-									fail("onPageSelected failed to authorize from cache");
+								pageSelected();
 							}
 						}
 
@@ -193,6 +189,9 @@ public class FragmentPlayerFriends extends ListFragment implements
 						public void onPageScrollStateChanged(int arg0) {
 						}
 					});
+			if (TAG.equals(MainFragmentAdapter.getFragmentPosition().get(
+					app.CurrentMainViewPagerPosition)))
+				pageSelected();
 		} catch (Exception e) {
 			fail(e);
 		}
@@ -212,6 +211,14 @@ public class FragmentPlayerFriends extends ListFragment implements
 		((FriendModelAdapter) getListAdapter()).getLoader().clearCache();
 
 		super.onLowMemory();
+	}
+
+	private void pageSelected() {
+		if (facebookAuthorizeCached()) {
+			if (mFriends.isEmpty())
+				retrieveFriends();
+		} else
+			fail("onPageSelected failed to authorize from cache");
 	}
 
 	private void retrieveFriends() {

@@ -20,6 +20,8 @@ public class PingPongBoss extends Application {
 	public String facebookId;
 
 	public Navigation CurrentNavigation;
+	public int CurrentMainViewPagerPosition;
+
 	public PlayerModel CurrentPlayerModel;
 	public boolean DualPane;
 
@@ -42,6 +44,8 @@ public class PingPongBoss extends Application {
 		getSharedPreferences("search", 0).edit().clear().commit();
 
 		CurrentNavigation = Navigation.IDLE;
+		CurrentMainViewPagerPosition = 0;
+
 		CurrentPlayerModel = null;
 	}
 

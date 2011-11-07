@@ -40,7 +40,27 @@ public class ActivityMainViewPager extends FragmentActivity {
 			viewPagerListener = new MainOnPageChangeListener();
 			viewPagerListener.addOnPageChangeListener(indicator);
 
+			viewPagerListener
+					.addOnPageChangeListener(new OnPageChangeListener() {
+
+						@Override
+						public void onPageSelected(int position) {
+							app.CurrentMainViewPagerPosition = position;
+						}
+
+						@Override
+						public void onPageScrolled(int arg0, float arg1,
+								int arg2) {
+						}
+
+						@Override
+						public void onPageScrollStateChanged(int arg0) {
+						}
+					});
+
 			viewPager.setOnPageChangeListener(viewPagerListener);
+
+			viewPager.setCurrentItem(app.CurrentMainViewPagerPosition);
 		}
 	}
 
