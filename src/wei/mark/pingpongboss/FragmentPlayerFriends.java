@@ -199,6 +199,15 @@ public class FragmentPlayerFriends extends ListFragment implements
 	}
 
 	@Override
+	public void onPause() {
+		super.onPause();
+
+		if (app.friendsTask != null) {
+			app.friendsTask.setFriendsCallback(null);
+		}
+	}
+
+	@Override
 	public void onLowMemory() {
 		((FriendModelAdapter) getListAdapter()).getLoader().clearCache();
 
