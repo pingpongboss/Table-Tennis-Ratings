@@ -26,6 +26,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -92,16 +93,17 @@ public class FragmentPlayerDetails extends ListFragment implements
 
 		v.findViewById(R.id.logo).setVisibility(View.GONE);
 
-		Button providerLogoButton = (Button) v.findViewById(R.id.provider_logo);
+		ImageView providerLogo = (ImageView) v
+				.findViewById(R.id.provider_logo);
 
 		if ("usatt".equals(mPlayer.getProvider())) {
-			providerLogoButton.setBackgroundResource(R.drawable.usatt_selector);
+			providerLogo.setImageResource(R.drawable.usatt_selector);
 		} else if ("rc".equals(mPlayer.getProvider())) {
-			providerLogoButton.setBackgroundResource(R.drawable.rc_selector);
+			providerLogo.setImageResource(R.drawable.rc_selector);
 		} else {
-			providerLogoButton.setVisibility(View.GONE);
+			providerLogo.setVisibility(View.GONE);
 		}
-		providerLogoButton.setOnClickListener(new OnClickListener() {
+		providerLogo.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
@@ -114,7 +116,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 				}
 			}
 		});
-		providerLogoButton.setOnTouchListener(l);
+		providerLogo.setOnTouchListener(l);
 
 		TextView nameTextView = (TextView) v.findViewById(R.id.name);
 		nameTextView.setText(mPlayer.getName());

@@ -32,7 +32,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -83,7 +82,6 @@ public class FragmentPlayerSearch extends ListFragment {
 				false);
 
 		((TextView) view.findViewById(R.id.title)).setText("pingpongboss");
-		view.findViewById(R.id.provider_logo).setVisibility(View.GONE);
 
 		searchInput = (EditText) view.findViewById(R.id.searchEditText);
 		if (mPreviousInput != null) {
@@ -129,19 +127,15 @@ public class FragmentPlayerSearch extends ListFragment {
 	}
 
 	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		String query = mHistory.get(position);
+		searchInput.setText(query);
+		search(query, true);
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
-		getListView().setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> l, View v, int position,
-					long id) {
-				String query = mHistory.get(position);
-				searchInput.setText(query);
-				search(query, true);
-			}
-		});
 
 		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 
@@ -187,9 +181,12 @@ public class FragmentPlayerSearch extends ListFragment {
 					& Configuration.SCREENLAYOUT_SIZE_MASK;
 			getResources().getConfiguration();
 			if (size < Configuration.SCREENLAYOUT_SIZE_LARGE
-					|| getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+					|| getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
 				getView().findViewById(R.id.logo).setBackgroundResource(
 						R.drawable.logo_small_selector);
+			}
+			((ImageView) getView().findViewById(R.id.provider_logo))
+					.setImageResource(R.drawable.facebook_favicon);
 
 			ViewStub input_stub = (ViewStub) getActivity().findViewById(
 					R.id.promo_search_stub_input);

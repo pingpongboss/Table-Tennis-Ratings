@@ -83,7 +83,8 @@
 	</style>
 	<style name="ActionBarItem.ProviderLogo">
 		<item name="android:layout_gravity">center</item>
-		<item name="android:background">@color/background_dark_gray</item>
+		<item name="android:src">@color/background_dark_gray</item>
+		<item name="android:scaleType">fitCenter</item>
 	</style>
 	<style name="ActionBarItem.Text">
 		<item name="android:textColor">#ffffff</item>
