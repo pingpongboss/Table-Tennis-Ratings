@@ -58,6 +58,9 @@ public class FragmentPlayerFriends extends ListFragment implements
 		View view = inflater.inflate(R.layout.fragment_player_friends, null,
 				false);
 
+		final ProgressBar progress = (ProgressBar) view
+				.findViewById(R.id.progress);
+
 		final View login = (View) view.findViewById(R.id.login);
 		login.setOnClickListener(new OnClickListener() {
 
@@ -76,27 +79,67 @@ public class FragmentPlayerFriends extends ListFragment implements
 			@Override
 			public void onClick(View v) {
 				try {
-					app.facebook.logout(getActivity());
-
-					SharedPreferences.Editor editor = facebookPrefs.edit();
-					editor.remove("access_token");
-					editor.remove("access_expires");
-					editor.remove("facebookId");
-					editor.commit();
-
-					FriendModelAdapter listAdapter = ((FriendModelAdapter) getListAdapter());
-					listAdapter.getLoader().clearCache();
-					listAdapter.clear();
-					listAdapter.notifyDataSetChanged();
-
-					ProgressBar progress = (ProgressBar) getView()
-							.findViewById(R.id.progress);
-					progress.setVisibility(View.GONE);
-					login.setVisibility(View.VISIBLE);
+					progress.setVisibility(View.VISIBLE);
 					logout.setVisibility(View.GONE);
 					ImageView arrow = (ImageView) getView().findViewById(
 							R.id.arrow);
 					arrow.setVisibility(View.GONE);
+
+					new AsyncFacebookRunner(app.facebook).logout(getActivity(),
+							new RequestListener() {
+
+								@Override
+								public void onMalformedURLException(
+										MalformedURLException e, Object state) {
+									fail(e);
+								}
+
+								@Override
+								public void onIOException(IOException e,
+										Object state) {
+									fail(e);
+								}
+
+								@Override
+								public void onFileNotFoundException(
+										FileNotFoundException e, Object state) {
+									fail(e);
+								}
+
+								@Override
+								public void onFacebookError(FacebookError e,
+										Object state) {
+									fail(e);
+								}
+
+								@Override
+								public void onComplete(String response,
+										Object state) {
+									SharedPreferences.Editor editor = facebookPrefs
+											.edit();
+									editor.remove("access_token");
+									editor.remove("access_expires");
+									editor.remove("facebookId");
+									editor.commit();
+
+									FragmentPlayerFriends.this.getActivity()
+											.runOnUiThread(new Runnable() {
+
+												@Override
+												public void run() {
+													FriendModelAdapter listAdapter = ((FriendModelAdapter) getListAdapter());
+													listAdapter.getLoader()
+															.clearCache();
+													listAdapter.clear();
+													listAdapter
+															.notifyDataSetChanged();
+
+													progress.setVisibility(View.GONE);
+													login.setVisibility(View.VISIBLE);
+												}
+											});
+								}
+							});
 				} catch (Exception e) {
 					fail(e);
 					e.printStackTrace();
@@ -112,7 +155,8 @@ public class FragmentPlayerFriends extends ListFragment implements
 			public void onClick(View v) {
 				if (logout.getVisibility() == View.VISIBLE)
 					logout.setVisibility(View.GONE);
-				else if (login.getVisibility() == View.GONE)
+				else if (login.getVisibility() == View.GONE
+						&& progress.getVisibility() == View.GONE)
 					logout.setVisibility(View.VISIBLE);
 			}
 		});
@@ -172,8 +216,6 @@ public class FragmentPlayerFriends extends ListFragment implements
 		progress.setVisibility(View.VISIBLE);
 		View login = (View) getView().findViewById(R.id.login);
 		login.setVisibility(View.GONE);
-		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
-		arrow.setVisibility(View.VISIBLE);
 
 		mFriends.clear();
 		((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
@@ -201,6 +243,8 @@ public class FragmentPlayerFriends extends ListFragment implements
 		progress.setVisibility(View.GONE);
 		View login = (View) getView().findViewById(R.id.login);
 		login.setVisibility(View.GONE);
+		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
+		arrow.setVisibility(View.VISIBLE);
 
 		mFriends.clear();
 		if (friends != null) {
@@ -235,8 +279,6 @@ public class FragmentPlayerFriends extends ListFragment implements
 		progress.setVisibility(View.VISIBLE);
 		View login = (View) getView().findViewById(R.id.login);
 		login.setVisibility(View.GONE);
-		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
-		arrow.setVisibility(View.VISIBLE);
 
 		app.facebook.authorize(getActivity(), new String[] {},
 				new DialogListener() {
