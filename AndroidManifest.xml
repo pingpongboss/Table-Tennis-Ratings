@@ -4,7 +4,7 @@
     android:versionCode="6"
     android:versionName="1.6" >
 
-    <uses-sdk android:minSdkVersion="4" >
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="14">
     </uses-sdk>
 
     <uses-permission android:name="android.permission.INTERNET" >
@@ -15,7 +15,7 @@
     <application
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:name="wei.mark.pingpongboss.PingPongBoss"
+        android:name=".PingPongBoss"
         android:theme="@style/Theme.DarkWithOrangeHighlights" >
         <activity
             android:label="@string/app_name"
@@ -32,7 +32,7 @@
         </activity>
         <activity
             android:label="@string/app_name"
-            android:name="wei.mark.pingpongboss.ActivityMainViewPager" android:windowSoftInputMode="stateAlwaysHidden">
+            android:name=".ActivityMainViewPager" android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 

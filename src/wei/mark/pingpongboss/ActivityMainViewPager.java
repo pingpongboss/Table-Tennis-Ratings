@@ -11,7 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 
-import com.viewpagerindicator.TitlePageIndicator;
+import com.viewpagerindicator.PageIndicator;
 
 public class ActivityMainViewPager extends FragmentActivity {
 	PingPongBoss app;
@@ -29,39 +29,35 @@ public class ActivityMainViewPager extends FragmentActivity {
 		app.DualPane = contentFrame != null
 				&& contentFrame.getVisibility() == View.VISIBLE;
 
-		if (!app.DualPane) {
-			ViewPager viewPager = (ViewPager) findViewById(R.id.mainViewPager);
-			viewPager.setAdapter(new MainFragmentAdapter(
-					getSupportFragmentManager()));
+		ViewPager viewPager = (ViewPager) findViewById(R.id.mainViewPager);
+		viewPager.setAdapter(new MainFragmentAdapter(
+				getSupportFragmentManager()));
 
-			TitlePageIndicator indicator = (TitlePageIndicator) findViewById(R.id.titles);
-			indicator.setViewPager(viewPager);
+		PageIndicator indicator = (PageIndicator) findViewById(R.id.titles);
+		indicator.setViewPager(viewPager);
 
-			viewPagerListener = new MainOnPageChangeListener();
-			viewPagerListener.addOnPageChangeListener(indicator);
+		viewPagerListener = new MainOnPageChangeListener();
+		viewPagerListener.addOnPageChangeListener(indicator);
 
-			viewPagerListener
-					.addOnPageChangeListener(new OnPageChangeListener() {
+		viewPagerListener.addOnPageChangeListener(new OnPageChangeListener() {
 
-						@Override
-						public void onPageSelected(int position) {
-							app.CurrentMainViewPagerPosition = position;
-						}
+			@Override
+			public void onPageSelected(int position) {
+				app.CurrentMainViewPagerPosition = position;
+			}
 
-						@Override
-						public void onPageScrolled(int arg0, float arg1,
-								int arg2) {
-						}
+			@Override
+			public void onPageScrolled(int arg0, float arg1, int arg2) {
+			}
 
-						@Override
-						public void onPageScrollStateChanged(int arg0) {
-						}
-					});
+			@Override
+			public void onPageScrollStateChanged(int arg0) {
+			}
+		});
 
-			viewPager.setOnPageChangeListener(viewPagerListener);
+		viewPager.setOnPageChangeListener(viewPagerListener);
 
-			viewPager.setCurrentItem(app.CurrentMainViewPagerPosition);
-		}
+		viewPager.setCurrentItem(app.CurrentMainViewPagerPosition);
 	}
 
 	@Override

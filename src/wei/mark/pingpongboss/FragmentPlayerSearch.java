@@ -185,8 +185,6 @@ public class FragmentPlayerSearch extends ListFragment {
 				getView().findViewById(R.id.logo).setBackgroundResource(
 						R.drawable.logo_small_selector);
 			}
-			((ImageView) getView().findViewById(R.id.provider_logo))
-					.setImageResource(R.drawable.facebook_favicon);
 
 			ViewStub input_stub = (ViewStub) getActivity().findViewById(
 					R.id.promo_search_stub_input);

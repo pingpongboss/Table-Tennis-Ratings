@@ -1,4 +1,4 @@
-package com.fedorvlasov.lazylist;
+package wei.mark.pingpongboss.util.lazylist;
 
 import java.lang.ref.SoftReference;
 import java.util.HashMap;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.model.FriendModel;
+import wei.mark.pingpongboss.util.lazylist.ImageLoader;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.fedorvlasov.lazylist.ImageLoader;
 
 public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	List<FriendModel> friends;

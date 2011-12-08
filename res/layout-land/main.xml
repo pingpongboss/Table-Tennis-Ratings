@@ -3,10 +3,24 @@
     style="@style/RootLayout"
     android:orientation="horizontal" >
 
-    <fragment style="@style/RootLayout.Search.Landscape" >
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainLinearLayout"
+        android:layout_width="150dp"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-        <!-- Preview: layout=@layout/fragment_player_search -->
-    </fragment>
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/titles"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mainViewPager"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/content"

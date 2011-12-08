@@ -1,4 +1,4 @@
-package com.fedorvlasov.lazylist;
+package wei.mark.pingpongboss.util.lazylist;
 
 import java.io.File;
 import android.content.Context;
