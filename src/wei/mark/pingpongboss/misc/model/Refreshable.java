@@ -1,4 +1,4 @@
-package wei.mark.pingpongboss.model;
+package wei.mark.pingpongboss.misc.model;
 
 public interface Refreshable {
 	public void refresh();

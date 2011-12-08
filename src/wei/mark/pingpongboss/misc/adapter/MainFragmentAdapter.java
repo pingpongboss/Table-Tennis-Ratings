@@ -1,4 +1,4 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.adapter;
 
 import java.util.HashMap;
 

@@ -1,9 +1,9 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.adapter;
 
 import java.util.List;
 
 import wei.mark.pingpongboss.R;
-import wei.mark.pingpongboss.model.EventModel;
+import wei.mark.pingpongboss.misc.model.EventModel;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;

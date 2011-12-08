@@ -5,7 +5,7 @@ import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.fragment.PlayerDetailsFragment;
 import wei.mark.pingpongboss.fragment.PlayerListFragment;
-import wei.mark.pingpongboss.model.Refreshable;
+import wei.mark.pingpongboss.misc.model.Refreshable;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

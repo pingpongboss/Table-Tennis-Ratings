@@ -1,10 +1,10 @@
 package wei.mark.pingpongboss;
 
-import wei.mark.pingpongboss.model.PlayerModel;
-import wei.mark.pingpongboss.util.DetailsTask;
+import wei.mark.pingpongboss.misc.model.PlayerModel;
+import wei.mark.pingpongboss.misc.task.DetailsTask;
+import wei.mark.pingpongboss.misc.task.FriendsTask;
+import wei.mark.pingpongboss.misc.task.SearchTask;
 import wei.mark.pingpongboss.util.FileUtils;
-import wei.mark.pingpongboss.util.FriendsTask;
-import wei.mark.pingpongboss.util.SearchTask;
 import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;

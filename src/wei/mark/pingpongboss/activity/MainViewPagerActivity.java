@@ -5,7 +5,7 @@ import java.util.Set;
 
 import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.R;
-import wei.mark.pingpongboss.util.MainFragmentAdapter;
+import wei.mark.pingpongboss.misc.adapter.MainFragmentAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

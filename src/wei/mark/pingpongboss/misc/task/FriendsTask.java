@@ -1,8 +1,9 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.task;
 
 import java.util.ArrayList;
 
-import wei.mark.pingpongboss.model.FriendModel;
+import wei.mark.pingpongboss.misc.model.FriendModel;
+import wei.mark.pingpongboss.util.ServerUtils;
 import android.os.AsyncTask;
 
 public class FriendsTask extends
@@ -22,7 +23,7 @@ public class FriendsTask extends
 			facebookId = params[0];
 			accessToken = params[1];
 
-			return AppEngineParser.getParser().friends(facebookId, accessToken);
+			return ServerUtils.getParser().friends(facebookId, accessToken);
 		} catch (Exception ex) {
 			return null;
 		}

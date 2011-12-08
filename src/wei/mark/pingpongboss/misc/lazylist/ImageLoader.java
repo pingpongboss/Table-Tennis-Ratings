@@ -1,4 +1,4 @@
-package wei.mark.pingpongboss.util.lazylist;
+package wei.mark.pingpongboss.misc.lazylist;
 
 import java.io.File;
 import java.io.FileInputStream;

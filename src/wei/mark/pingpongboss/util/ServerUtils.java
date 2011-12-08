@@ -10,21 +10,21 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import wei.mark.pingpongboss.model.EventModel;
-import wei.mark.pingpongboss.model.FriendModel;
-import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.misc.model.EventModel;
+import wei.mark.pingpongboss.misc.model.FriendModel;
+import wei.mark.pingpongboss.misc.model.PlayerModel;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-public class AppEngineParser {
-	private static AppEngineParser mParser;
+public class ServerUtils {
+	private static ServerUtils mParser;
 
 	private Map<String, ArrayList<PlayerModel>> mPlayersCache;
 	private Map<String, ArrayList<EventModel>> mEventsCache;
 	public static final int MAX_CACHE = 100;
 
-	private AppEngineParser() {
+	private ServerUtils() {
 		mPlayersCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(
 				MAX_CACHE, .75f, true) {
 			private static final long serialVersionUID = 1L;
@@ -47,9 +47,9 @@ public class AppEngineParser {
 		};
 	}
 
-	public static synchronized AppEngineParser getParser() {
+	public static synchronized ServerUtils getParser() {
 		if (mParser == null)
-			mParser = new AppEngineParser();
+			mParser = new ServerUtils();
 		return mParser;
 	}
 

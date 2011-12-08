@@ -1,9 +1,9 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.adapter;
 
 import java.util.List;
 
 import wei.mark.pingpongboss.R;
-import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.misc.model.PlayerModel;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

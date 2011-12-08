@@ -1,9 +1,10 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.task;
 
 import java.util.ArrayList;
 
-import wei.mark.pingpongboss.model.EventModel;
-import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.misc.model.EventModel;
+import wei.mark.pingpongboss.misc.model.PlayerModel;
+import wei.mark.pingpongboss.util.ServerUtils;
 import android.os.AsyncTask;
 
 public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> {
@@ -24,7 +25,7 @@ public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> 
 			player = (PlayerModel) params[1];
 			fresh = (Boolean) params[2];
 
-			AppEngineParser parser = AppEngineParser.getParser();
+			ServerUtils parser = ServerUtils.getParser();
 
 			return parser.details(id, player, fresh);
 		} catch (Exception ex) {

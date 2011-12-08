@@ -1,10 +1,11 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.adapter;
 
 import java.util.List;
 
 import wei.mark.pingpongboss.R;
-import wei.mark.pingpongboss.model.FriendModel;
-import wei.mark.pingpongboss.util.lazylist.ImageLoader;
+import wei.mark.pingpongboss.misc.lazylist.ImageLoader;
+import wei.mark.pingpongboss.misc.model.FriendModel;
+import wei.mark.pingpongboss.util.Constants;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;

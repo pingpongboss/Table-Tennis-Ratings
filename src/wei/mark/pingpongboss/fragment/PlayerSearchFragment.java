@@ -7,9 +7,9 @@ import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.activity.DualPlayerListActivity;
-import wei.mark.pingpongboss.util.AppEngineParser;
+import wei.mark.pingpongboss.misc.adapter.StringAdapter;
+import wei.mark.pingpongboss.util.ServerUtils;
 import wei.mark.pingpongboss.util.FileUtils;
-import wei.mark.pingpongboss.util.StringAdapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -280,7 +280,7 @@ public class PlayerSearchFragment extends ListFragment {
 	public void onLowMemory() {
 		super.onLowMemory();
 		mQuery = null;
-		AppEngineParser.getParser().onLowMemory();
+		ServerUtils.getParser().onLowMemory();
 	}
 
 	@Override

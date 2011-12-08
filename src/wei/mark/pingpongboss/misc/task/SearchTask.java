@@ -1,8 +1,9 @@
-package wei.mark.pingpongboss.util;
+package wei.mark.pingpongboss.misc.task;
 
 import java.util.ArrayList;
 
-import wei.mark.pingpongboss.model.PlayerModel;
+import wei.mark.pingpongboss.misc.model.PlayerModel;
+import wei.mark.pingpongboss.util.ServerUtils;
 import android.os.AsyncTask;
 
 public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> {
@@ -24,7 +25,7 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 			user = Boolean.parseBoolean(params[3]);
 			fresh = Boolean.parseBoolean(params[4]);
 
-			AppEngineParser parser = AppEngineParser.getParser();
+			ServerUtils parser = ServerUtils.getParser();
 
 			return parser.search(id, provider, query, fresh);
 		} catch (Exception ex) {
