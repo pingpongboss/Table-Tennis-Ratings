@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/RootLayout"
+<LinearLayout style="@style/RootLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
         android:id="@+id/facebook_layout"
@@ -18,7 +17,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:visibility="gone" android:scaleType="fitCenter" android:src="@drawable/facebook_button"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/facebook_button"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/logout"
@@ -26,7 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:visibility="gone" android:src="@drawable/facebook_logout_button" android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/facebook_logout_button"
+            android:visibility="gone" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -42,14 +45,101 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="5dp"
-            android:src="@android:drawable/arrow_down_float" android:visibility="gone"/>
+            android:src="@android:drawable/arrow_down_float"
+            android:visibility="gone" />
     </LinearLayout>
 
     <ListView
         android:id="@id/android:list"
         style="@style/ListView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" android:visibility="visible">
+
+        <!-- Preview: listitem=@layout/item_player_friends -->
     </ListView>
+
+    <ScrollView
+        android:id="@+id/facebook_tutorial"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:visibility="gone" >
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="You must first link your Facebook profile. Follow the steps below." android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Step 1"
+                android:textStyle="bold" android:textSize="30sp" android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search for your name." android:gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook_step1" android:padding="1dp" android:background="#333333"/>
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Step 2"
+                android:textStyle="bold" android:textSize="30sp" android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select your name from the results." android:gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook_step2" android:background="#333333" android:padding="1dp"/>
+
+            <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="Step 3"
+                android:textStyle="bold" android:textSize="30sp" android:gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Link your Facebook profile." android:gravity="center_horizontal"/>
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook_step3" android:background="#333333" android:padding="1dp"/>
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

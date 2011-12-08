@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="fill_parent" android:layout_height="fill_parent"
 	style="@style/RootLayout" android:orientation="vertical">
+
 	<RelativeLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:padding="5dp">
 		<include layout="@layout/action_bar" android:id="@+id/action_bar"
@@ -30,15 +31,33 @@
 			android:layout_below="@+id/rating" android:id="@+id/from"
 			android:text="from" style="@style/FromDetailsText"></TextView>
 	</RelativeLayout>
+
+	<FrameLayout
+	    android:id="@+id/facebook_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+
+		<Button
+		    android:id="@+id/facebook_link"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_gravity="center_horizontal"
+		    android:background="@drawable/facebook_link" />
+
+	</FrameLayout>
+
 	<ListView android:layout_width="fill_parent" android:id="@android:id/list"
-		android:layout_height="wrap_content" style="@style/ListView"></ListView>
+		android:layout_height="0px" style="@style/ListView" android:layout_weight="1">
+	    <!-- Preview: listitem=@layout/item_player_event -->
+	</ListView>
 	<LinearLayout android:id="@android:id/empty"
 		android:layout_gravity="center" android:layout_width="wrap_content"
-		android:layout_height="fill_parent" android:gravity="center"
+		android:layout_height="wrap_content" android:gravity="center"
 		android:orientation="vertical">
 		<ProgressBar android:layout_width="wrap_content"
 			android:layout_height="wrap_content" android:id="@+id/progress"></ProgressBar>
 		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/empty_text" android:text="@string/fetching_details"></TextView>
 		<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/retry" style="@style/Button" android:visibility="gone" android:text="@string/retry"></Button>
 	</LinearLayout>
+
 </LinearLayout>

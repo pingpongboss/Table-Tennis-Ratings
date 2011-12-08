@@ -87,6 +87,9 @@ public class PlayerFriendsFragment extends ListFragment implements
 					ImageView arrow = (ImageView) getView().findViewById(
 							R.id.arrow);
 					arrow.setVisibility(View.GONE);
+					View tutorial = getView().findViewById(
+							R.id.facebook_tutorial);
+					tutorial.setVisibility(View.GONE);
 
 					new AsyncFacebookRunner(app.facebook).logout(getActivity(),
 							new RequestListener() {
@@ -264,10 +267,16 @@ public class PlayerFriendsFragment extends ListFragment implements
 		login.setVisibility(View.GONE);
 		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
 		arrow.setVisibility(View.VISIBLE);
+		View tutorial = getView().findViewById(R.id.facebook_tutorial);
 
 		mFriends.clear();
 		if (friends != null) {
-			mFriends.addAll(friends);
+			if (friends.isEmpty()) {
+				// user did not link his profile
+				tutorial.setVisibility(View.VISIBLE);
+			} else {
+				mFriends.addAll(friends);
+			}
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 		} else
 			fail("friendsCompleted friends is null");
