@@ -51,23 +51,25 @@ public class FileUtils {
 	}
 
 	public synchronized static boolean exportHistory(ArrayList<String> history) {
-		if (history == null) return false;
+		if (history == null)
+			return false;
 		try {
 			File sdcard = Environment.getExternalStorageDirectory();
 			File file = new File(sdcard, FileUtils.HISTORY);
-			
-			if (file.exists()) file.delete();
+
+			if (file.exists())
+				file.delete();
 			file.createNewFile();
-			
+
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
 			for (String query : history) {
 				writer.write(query);
 				writer.newLine();
 			}
-			
+
 			writer.close();
-			
+
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -79,23 +81,24 @@ public class FileUtils {
 		try {
 			File sdcard = Environment.getExternalStorageDirectory();
 			File file = new File(sdcard, FileUtils.HISTORY);
-			
-			if (!file.exists()) return null;
-			
+
+			if (!file.exists())
+				return null;
+
 			BufferedReader reader = new BufferedReader(new FileReader(file));
-			
+
 			ArrayList<String> history = new ArrayList<String>();
 			String query;
 			while ((query = reader.readLine()) != null) {
 				history.add(query);
 			}
-			
+
 			reader.close();
-			
+
 			return history;
 		} catch (IOException e) {
 			e.printStackTrace();
-			
+
 			return null;
 		}
 	}

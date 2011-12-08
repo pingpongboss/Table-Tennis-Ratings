@@ -1,8 +1,10 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.activity;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import wei.mark.pingpongboss.PingPongBoss;
+import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.util.MainFragmentAdapter;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +15,7 @@ import android.view.View;
 
 import com.viewpagerindicator.PageIndicator;
 
-public class ActivityMainViewPager extends FragmentActivity {
+public class MainViewPagerActivity extends FragmentActivity {
 	PingPongBoss app;
 	MainOnPageChangeListener viewPagerListener;
 

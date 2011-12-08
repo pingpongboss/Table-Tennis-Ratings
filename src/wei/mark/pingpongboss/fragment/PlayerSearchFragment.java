@@ -1,9 +1,12 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.fragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.activity.DualPlayerListActivity;
 import wei.mark.pingpongboss.util.AppEngineParser;
 import wei.mark.pingpongboss.util.FileUtils;
 import wei.mark.pingpongboss.util.StringAdapter;
@@ -42,7 +45,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FragmentPlayerSearch extends ListFragment {
+public class PlayerSearchFragment extends ListFragment {
 	public static final String TAG = "FragmentPlayerSearch";
 	PingPongBoss app;
 
@@ -434,9 +437,9 @@ public class FragmentPlayerSearch extends ListFragment {
 									.getLastVisiblePosition()), 0);
 
 		if (app.DualPane) {
-			FragmentPlayerList usattFragment = FragmentPlayerList.getInstance(
+			PlayerListFragment usattFragment = PlayerListFragment.getInstance(
 					"usatt", query, user);
-			FragmentPlayerList rcFragment = FragmentPlayerList.getInstance(
+			PlayerListFragment rcFragment = PlayerListFragment.getInstance(
 					"rc", query, user);
 
 			FragmentTransaction txn = getFragmentManager().beginTransaction()
@@ -455,7 +458,7 @@ public class FragmentPlayerSearch extends ListFragment {
 			txn.commit();
 		} else {
 			Intent intent = new Intent();
-			intent.setClass(getActivity(), ActivityDualPlayerList.class);
+			intent.setClass(getActivity(), DualPlayerListActivity.class);
 			intent.putExtra("query", query);
 			intent.putExtra("user", user);
 			startActivity(intent);

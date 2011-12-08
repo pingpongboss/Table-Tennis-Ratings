@@ -24,8 +24,7 @@ public class ParserUtils {
 			if ("usatt".equals(provider)) {
 				return String
 						.format("http://www.usatt.org/history/rating/history/Allplayers.asp?NSearch=%s",
-								URLEncoder.encode(getLastName(query),
-										"UTF-8"));
+								URLEncoder.encode(getLastName(query), "UTF-8"));
 			} else if ("rc".equals(provider)) {
 				return String
 						.format("http://www.ratingscentral.com/PlayerList.php?SortOrder=Name&PlayerName=%s",
@@ -52,7 +51,8 @@ public class ParserUtils {
 		return null;
 	}
 
-	public static String getEventDetailsUrl(String provider, String playerId, String eventId) {
+	public static String getEventDetailsUrl(String provider, String playerId,
+			String eventId) {
 		try {
 			if ("usatt".equals(provider)) {
 				return String

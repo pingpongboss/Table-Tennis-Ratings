@@ -2,8 +2,8 @@ package wei.mark.pingpongboss.util;
 
 import java.util.HashMap;
 
-import wei.mark.pingpongboss.FragmentPlayerFriends;
-import wei.mark.pingpongboss.FragmentPlayerSearch;
+import wei.mark.pingpongboss.fragment.PlayerFriendsFragment;
+import wei.mark.pingpongboss.fragment.PlayerSearchFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,19 +18,19 @@ public class MainFragmentAdapter extends FragmentPagerAdapter implements
 		super(fm);
 
 		fragmentPosition = new HashMap<Integer, String>();
-		fragmentPosition.put(0, FragmentPlayerSearch.TAG);
-		fragmentPosition.put(1, FragmentPlayerFriends.TAG);
+		fragmentPosition.put(0, PlayerSearchFragment.TAG);
+		fragmentPosition.put(1, PlayerFriendsFragment.TAG);
 	}
 
 	@Override
 	public Fragment getItem(int position) {
 		Fragment fragment = null;
 		String fragmentTag = fragmentPosition.get(position);
-		if (fragmentTag.equals(FragmentPlayerSearch.TAG))
-			fragment = new FragmentPlayerSearch();
-		else if (fragmentTag.equals(FragmentPlayerFriends.TAG))
-			fragment = new FragmentPlayerFriends();
-		
+		if (fragmentTag.equals(PlayerSearchFragment.TAG))
+			fragment = new PlayerSearchFragment();
+		else if (fragmentTag.equals(PlayerFriendsFragment.TAG))
+			fragment = new PlayerFriendsFragment();
+
 		return fragment;
 	}
 
@@ -42,9 +42,9 @@ public class MainFragmentAdapter extends FragmentPagerAdapter implements
 	@Override
 	public String getTitle(int position) {
 		String fragment = fragmentPosition.get(position);
-		if (fragment.equals(FragmentPlayerSearch.TAG))
+		if (fragment.equals(PlayerSearchFragment.TAG))
 			return "Search";
-		else if (fragment.equals(FragmentPlayerFriends.TAG))
+		else if (fragment.equals(PlayerFriendsFragment.TAG))
 			return "Friends";
 		else
 			return null;

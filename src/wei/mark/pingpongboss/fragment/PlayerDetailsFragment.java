@@ -1,8 +1,10 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.fragment;
 
 import java.util.ArrayList;
 
+import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.model.EventModel;
 import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.util.DetailsTask;
@@ -30,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FragmentPlayerDetails extends ListFragment implements
+public class PlayerDetailsFragment extends ListFragment implements
 		DetailsCallback {
 	PingPongBoss app;
 	ArrayList<EventModel> mEvents;
@@ -41,8 +43,8 @@ public class FragmentPlayerDetails extends ListFragment implements
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll;
 
-	public static FragmentPlayerDetails getInstance(PlayerModel player) {
-		FragmentPlayerDetails fragment = new FragmentPlayerDetails();
+	public static PlayerDetailsFragment getInstance(PlayerModel player) {
+		PlayerDetailsFragment fragment = new PlayerDetailsFragment();
 		Bundle b = new Bundle();
 		b.putParcelable("player", player);
 		fragment.setArguments(b);
@@ -50,7 +52,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 		return fragment;
 	}
 
-	public FragmentPlayerDetails() {
+	public PlayerDetailsFragment() {
 		mEvents = new ArrayList<EventModel>();
 
 		mListIndex = -1;
@@ -93,8 +95,7 @@ public class FragmentPlayerDetails extends ListFragment implements
 
 		v.findViewById(R.id.logo).setVisibility(View.GONE);
 
-		ImageView providerLogo = (ImageView) v
-				.findViewById(R.id.provider_logo);
+		ImageView providerLogo = (ImageView) v.findViewById(R.id.provider_logo);
 
 		if ("usatt".equals(mPlayer.getProvider())) {
 			providerLogo.setImageResource(R.drawable.usatt_selector);

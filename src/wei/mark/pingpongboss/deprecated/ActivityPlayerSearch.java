@@ -1,10 +1,10 @@
 package wei.mark.pingpongboss.deprecated;
 
-import wei.mark.pingpongboss.FragmentPlayerDetails;
-import wei.mark.pingpongboss.FragmentPlayerList;
 import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.fragment.PlayerDetailsFragment;
+import wei.mark.pingpongboss.fragment.PlayerListFragment;
 import wei.mark.pingpongboss.model.Refreshable;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,16 +38,16 @@ public class ActivityPlayerSearch extends FragmentActivity implements
 
 	@Override
 	public void refresh() {
-		FragmentPlayerDetails detailsFragment = (FragmentPlayerDetails) getSupportFragmentManager()
+		PlayerDetailsFragment detailsFragment = (PlayerDetailsFragment) getSupportFragmentManager()
 				.findFragmentByTag("details");
 		if (detailsFragment != null) {
 			detailsFragment.fetchDetails(true);
 			return;
 		}
 
-		FragmentPlayerList usattFragment = (FragmentPlayerList) getSupportFragmentManager()
+		PlayerListFragment usattFragment = (PlayerListFragment) getSupportFragmentManager()
 				.findFragmentByTag("usatt");
-		FragmentPlayerList rcFragment = (FragmentPlayerList) getSupportFragmentManager()
+		PlayerListFragment rcFragment = (PlayerListFragment) getSupportFragmentManager()
 				.findFragmentByTag("rc");
 		if (usattFragment != null)
 			usattFragment.startSearch(true);

@@ -1,9 +1,9 @@
 package wei.mark.pingpongboss.deprecated;
 
-import wei.mark.pingpongboss.FragmentPlayerList;
 import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.fragment.PlayerListFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -20,7 +20,7 @@ public class ActivityPlayerList extends FragmentActivity {
 		setContentView(R.layout.activity_player_list);
 
 		if (savedInstanceState == null) {
-			FragmentPlayerList fragment = new FragmentPlayerList();
+			PlayerListFragment fragment = new PlayerListFragment();
 			fragment.setArguments(getIntent().getExtras());
 
 			getSupportFragmentManager().beginTransaction()

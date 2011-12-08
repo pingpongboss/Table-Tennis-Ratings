@@ -1,4 +1,4 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.fragment;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import wei.mark.pingpongboss.PingPongBoss;
+import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.activity.MainViewPagerActivity;
 import wei.mark.pingpongboss.model.FriendModel;
 import wei.mark.pingpongboss.util.FriendModelAdapter;
 import wei.mark.pingpongboss.util.FriendsTask;
@@ -31,7 +34,7 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
 
-public class FragmentPlayerFriends extends ListFragment implements
+public class PlayerFriendsFragment extends ListFragment implements
 		FriendsCallback {
 	public static final String TAG = "FragmentPlayerFriend";
 
@@ -122,7 +125,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 									editor.remove("facebookId");
 									editor.commit();
 
-									FragmentPlayerFriends.this.getActivity()
+									PlayerFriendsFragment.this.getActivity()
 											.runOnUiThread(new Runnable() {
 
 												@Override
@@ -169,7 +172,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 		super.onActivityCreated(savedInstanceState);
 
 		try {
-			((ActivityMainViewPager) getActivity()).getViewPagerListener()
+			((MainViewPagerActivity) getActivity()).getViewPagerListener()
 					.addOnPageChangeListener(new OnPageChangeListener() {
 
 						@Override
@@ -332,7 +335,7 @@ public class FragmentPlayerFriends extends ListFragment implements
 									@Override
 									public void onComplete(
 											final String response, Object state) {
-										FragmentPlayerFriends.this
+										PlayerFriendsFragment.this
 												.getActivity().runOnUiThread(
 														new Runnable() {
 

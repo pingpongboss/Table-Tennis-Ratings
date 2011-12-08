@@ -1,13 +1,15 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.activity;
 
+import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
 import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.fragment.PlayerDetailsFragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class ActivityPlayerDetails extends FragmentActivity {
+public class PlayerDetailsActivity extends FragmentActivity {
 	PingPongBoss app;
 
 	@Override
@@ -23,7 +25,7 @@ public class ActivityPlayerDetails extends FragmentActivity {
 		setContentView(R.layout.activity_player_details);
 
 		if (savedInstanceState == null) {
-			FragmentPlayerDetails fragment = new FragmentPlayerDetails();
+			PlayerDetailsFragment fragment = new PlayerDetailsFragment();
 			fragment.setArguments(getIntent().getExtras());
 
 			getSupportFragmentManager().beginTransaction()
@@ -35,7 +37,7 @@ public class ActivityPlayerDetails extends FragmentActivity {
 	public void onBackPressed() {
 		super.onBackPressed();
 		app.CurrentNavigation = Navigation.LIST;
-		startActivity(new Intent().setClass(this, ActivityMainViewPager.class)
+		startActivity(new Intent().setClass(this, MainViewPagerActivity.class)
 				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 

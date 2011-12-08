@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	List<FriendModel> friends;
 
@@ -68,7 +67,7 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	public int getViewTypeCount() {
 		return 1;
 	}
-	
+
 	public ImageLoader getLoader() {
 		return loader;
 	}

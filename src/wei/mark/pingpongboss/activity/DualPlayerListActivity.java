@@ -1,13 +1,16 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.activity;
 
+import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.fragment.PlayerListFragment;
 import wei.mark.pingpongboss.model.Refreshable;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-public class ActivityDualPlayerList extends FragmentActivity implements
+public class DualPlayerListActivity extends FragmentActivity implements
 		Refreshable {
 	PingPongBoss app;
 
@@ -24,10 +27,10 @@ public class ActivityDualPlayerList extends FragmentActivity implements
 		setContentView(R.layout.activity_dual_player_list);
 
 		if (savedInstanceState == null) {
-			FragmentPlayerList usattFragment = new FragmentPlayerList();
+			PlayerListFragment usattFragment = new PlayerListFragment();
 			usattFragment.setArguments(getIntent().getExtras());
 			usattFragment.getArguments().putString("provider", "usatt");
-			FragmentPlayerList rcFragment = new FragmentPlayerList();
+			PlayerListFragment rcFragment = new PlayerListFragment();
 			rcFragment.setArguments(getIntent().getExtras());
 			rcFragment.getArguments().putString("provider", "rc");
 
@@ -41,15 +44,15 @@ public class ActivityDualPlayerList extends FragmentActivity implements
 	public void onBackPressed() {
 		super.onBackPressed();
 		app.CurrentNavigation = Navigation.IDLE;
-		startActivity(new Intent().setClass(this, ActivityMainViewPager.class)
+		startActivity(new Intent().setClass(this, MainViewPagerActivity.class)
 				.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
 	}
 
 	@Override
 	public void refresh() {
-		FragmentPlayerList usattFragment = (FragmentPlayerList) getSupportFragmentManager()
+		PlayerListFragment usattFragment = (PlayerListFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.usatt);
-		FragmentPlayerList rcFragment = (FragmentPlayerList) getSupportFragmentManager()
+		PlayerListFragment rcFragment = (PlayerListFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.rc);
 		if (usattFragment != null)
 			usattFragment.startSearch(true);

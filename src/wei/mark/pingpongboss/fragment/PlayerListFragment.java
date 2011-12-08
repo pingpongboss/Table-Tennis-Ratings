@@ -1,8 +1,11 @@
-package wei.mark.pingpongboss;
+package wei.mark.pingpongboss.fragment;
 
 import java.util.ArrayList;
 
+import wei.mark.pingpongboss.PingPongBoss;
 import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.activity.PlayerDetailsActivity;
 import wei.mark.pingpongboss.model.PlayerModel;
 import wei.mark.pingpongboss.model.Refreshable;
 import wei.mark.pingpongboss.util.ParserUtils;
@@ -31,7 +34,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FragmentPlayerList extends ListFragment implements SearchCallback {
+public class PlayerListFragment extends ListFragment implements SearchCallback {
 	PingPongBoss app;
 	ArrayList<PlayerModel> mPlayers;
 
@@ -40,9 +43,9 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll, mUser;
 
-	public static FragmentPlayerList getInstance(String provider, String query,
+	public static PlayerListFragment getInstance(String provider, String query,
 			boolean user) {
-		FragmentPlayerList fragment = new FragmentPlayerList();
+		PlayerListFragment fragment = new PlayerListFragment();
 		Bundle b = new Bundle();
 		b.putString("provider", provider);
 		b.putString("query", query);
@@ -52,7 +55,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 		return fragment;
 	}
 
-	public FragmentPlayerList() {
+	public PlayerListFragment() {
 		mPlayers = new ArrayList<PlayerModel>();
 		mProvider = null;
 		mQuery = null;
@@ -310,7 +313,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 			return;
 
 		if (app.DualPane) {
-			FragmentPlayerDetails fragment = FragmentPlayerDetails
+			PlayerDetailsFragment fragment = PlayerDetailsFragment
 					.getInstance(player);
 			getFragmentManager().beginTransaction()
 					.replace(R.id.content, fragment, "details")
@@ -318,7 +321,7 @@ public class FragmentPlayerList extends ListFragment implements SearchCallback {
 					.addToBackStack("details").commit();
 		} else {
 			Intent intent = new Intent();
-			intent.setClass(getActivity(), ActivityPlayerDetails.class);
+			intent.setClass(getActivity(), PlayerDetailsActivity.class);
 			intent.putExtra("player", player);
 			startActivity(intent);
 		}
