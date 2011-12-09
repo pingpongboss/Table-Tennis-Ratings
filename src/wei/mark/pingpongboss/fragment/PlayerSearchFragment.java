@@ -22,6 +22,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -103,6 +105,24 @@ public class PlayerSearchFragment extends ListFragment {
 			}
 		});
 
+		searchInput.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				((StringAdapter) getListAdapter()).getFilter().filter(s);
+			}
+		});
+
 		searchButton = (ImageButton) view.findViewById(R.id.searchButton);
 		searchButton.setOnClickListener(new OnClickListener() {
 
@@ -131,7 +151,7 @@ public class PlayerSearchFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		String query = mHistory.get(position);
+		String query = ((StringAdapter) getListAdapter()).getString(position);
 		searchInput.setText(query);
 		search(query, true);
 	}

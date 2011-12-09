@@ -1,6 +1,6 @@
 package wei.mark.pingpongboss.misc.adapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import wei.mark.pingpongboss.R;
 import android.app.ListActivity;
@@ -11,24 +11,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.Filter;
 
 public class StringAdapter extends ArrayAdapter<String> {
 	ViewHolder holder;
-	List<String> strings;
+	ArrayList<String> strings;
+	ArrayList<String> filteredStrings;
 	ListFragment listFragment;
 	ListActivity listActivity;
 
 	public StringAdapter(Context context, int textViewResourceId,
-			List<String> objects, ListFragment fragment) {
+			ArrayList<String> objects, ListFragment fragment) {
 		super(context, textViewResourceId, objects);
 		strings = objects;
+		filteredStrings = strings;
 		listFragment = fragment;
 	}
 
 	public StringAdapter(Context context, int textViewResourceId,
-			List<String> objects, ListActivity activity) {
+			ArrayList<String> objects, ListActivity activity) {
 		super(context, textViewResourceId, objects);
 		strings = objects;
+		filteredStrings = strings;
 		listActivity = activity;
 	}
 
@@ -51,7 +55,7 @@ public class StringAdapter extends ArrayAdapter<String> {
 		}
 
 		// fill in the Views
-		String s = strings.get(position);
+		String s = filteredStrings.get(position);
 		if (s != null) {
 			holder.name.setText(s);
 			if (listFragment != null)
@@ -65,8 +69,47 @@ public class StringAdapter extends ArrayAdapter<String> {
 	}
 
 	@Override
+	public int getCount() {
+		return filteredStrings.size();
+	}
+
+	@Override
 	public int getViewTypeCount() {
 		return 1;
+	}
+
+	@Override
+	public Filter getFilter() {
+		return new Filter() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void publishResults(CharSequence constraint,
+					FilterResults results) {
+				filteredStrings = (ArrayList<String>) results.values;
+				notifyDataSetChanged();
+			}
+
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				constraint = constraint.toString().toLowerCase();
+
+				ArrayList<String> list = new ArrayList<String>();
+				for (String string : strings) {
+					if (string.toLowerCase().contains(constraint))
+						list.add(string);
+				}
+
+				FilterResults results = new FilterResults();
+				results.values = list;
+				results.count = list.size();
+				return results;
+			}
+		};
+	}
+
+	public String getString(int position) {
+		return filteredStrings.get(position);
 	}
 
 	static class ViewHolder {
