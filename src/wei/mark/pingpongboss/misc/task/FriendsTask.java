@@ -10,6 +10,7 @@ public class FriendsTask extends
 		AsyncTask<String, Void, ArrayList<FriendModel>> {
 	FriendsCallback callback;
 	String facebookId, accessToken;
+	boolean linkedFriends;
 	boolean hasSavedResult;
 	ArrayList<FriendModel> savedResult;
 
@@ -22,8 +23,10 @@ public class FriendsTask extends
 		try {
 			facebookId = params[0];
 			accessToken = params[1];
+			linkedFriends = Boolean.parseBoolean(params[2]);
 
-			return ServerUtils.getParser().friends(facebookId, accessToken);
+			return ServerUtils.getParser().friends(facebookId, accessToken,
+					linkedFriends);
 		} catch (Exception ex) {
 			return null;
 		}

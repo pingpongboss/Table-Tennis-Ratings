@@ -3,8 +3,8 @@ package wei.mark.pingpongboss.fragment;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import wei.mark.pingpongboss.PingPongBoss;
-import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.Pingpongboss;
+import wei.mark.pingpongboss.Pingpongboss.Navigation;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.activity.DualPlayerListActivity;
 import wei.mark.pingpongboss.misc.adapter.StringAdapter;
@@ -47,7 +47,7 @@ import android.widget.Toast;
 
 public class PlayerSearchFragment extends ListFragment {
 	public static final String TAG = "FragmentPlayerSearch";
-	PingPongBoss app;
+	Pingpongboss app;
 
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll;
@@ -61,7 +61,7 @@ public class PlayerSearchFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (PingPongBoss) getActivity().getApplication();
+		app = (Pingpongboss) getActivity().getApplication();
 
 		setHasOptionsMenu(true);
 

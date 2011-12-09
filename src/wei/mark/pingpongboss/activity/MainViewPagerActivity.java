@@ -3,7 +3,7 @@ package wei.mark.pingpongboss.activity;
 import java.util.HashSet;
 import java.util.Set;
 
-import wei.mark.pingpongboss.PingPongBoss;
+import wei.mark.pingpongboss.Pingpongboss;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.misc.adapter.MainFragmentAdapter;
 import android.content.Intent;
@@ -16,14 +16,14 @@ import android.view.View;
 import com.viewpagerindicator.PageIndicator;
 
 public class MainViewPagerActivity extends FragmentActivity {
-	PingPongBoss app;
+	Pingpongboss app;
 	MainOnPageChangeListener viewPagerListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		app = (PingPongBoss) getApplication();
+		app = (Pingpongboss) getApplication();
 
 		setContentView(R.layout.main);
 

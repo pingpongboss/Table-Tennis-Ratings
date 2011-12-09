@@ -1,7 +1,7 @@
 package wei.mark.pingpongboss.activity;
 
-import wei.mark.pingpongboss.PingPongBoss;
-import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.Pingpongboss;
+import wei.mark.pingpongboss.Pingpongboss.Navigation;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.fragment.PlayerDetailsFragment;
 import android.content.Intent;
@@ -10,12 +10,12 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 public class PlayerDetailsActivity extends FragmentActivity {
-	PingPongBoss app;
+	Pingpongboss app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (PingPongBoss) getApplication();
+		app = (Pingpongboss) getApplication();
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			finish();

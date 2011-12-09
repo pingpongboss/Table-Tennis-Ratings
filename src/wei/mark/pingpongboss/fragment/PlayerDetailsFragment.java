@@ -1,16 +1,26 @@
 package wei.mark.pingpongboss.fragment;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import wei.mark.pingpongboss.PingPongBoss;
-import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import org.json.JSONObject;
+
+import wei.mark.pingpongboss.Pingpongboss;
+import wei.mark.pingpongboss.Pingpongboss.Navigation;
 import wei.mark.pingpongboss.R;
+import wei.mark.pingpongboss.activity.SelectFacebookProfileActivity;
 import wei.mark.pingpongboss.misc.adapter.EventModelAdapter;
+import wei.mark.pingpongboss.misc.lazylist.ImageLoader;
 import wei.mark.pingpongboss.misc.model.EventModel;
+import wei.mark.pingpongboss.misc.model.FriendModel;
 import wei.mark.pingpongboss.misc.model.PlayerModel;
 import wei.mark.pingpongboss.misc.task.DetailsTask;
 import wei.mark.pingpongboss.misc.task.DetailsTask.DetailsCallback;
+import wei.mark.pingpongboss.util.FacebookUtils;
 import wei.mark.pingpongboss.util.ParserUtils;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -32,9 +42,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.AsyncFacebookRunner.RequestListener;
+import com.facebook.android.FacebookError;
+
 public class PlayerDetailsFragment extends ListFragment implements
 		DetailsCallback {
-	PingPongBoss app;
+	private static final int SELECT_FACEBOOK_PROFILE_REQUEST = 0;
+	Pingpongboss app;
 	ArrayList<EventModel> mEvents;
 
 	PlayerModel mPlayer;
@@ -42,6 +57,8 @@ public class PlayerDetailsFragment extends ListFragment implements
 	String mListProvider, mListId;
 	int mListIndex, mListTop;
 	boolean mUserChangedScroll;
+
+	ImageLoader mLoader;
 
 	public static PlayerDetailsFragment getInstance(PlayerModel player) {
 		PlayerDetailsFragment fragment = new PlayerDetailsFragment();
@@ -61,7 +78,7 @@ public class PlayerDetailsFragment extends ListFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (PingPongBoss) getActivity().getApplication();
+		app = (Pingpongboss) getActivity().getApplication();
 
 		setHasOptionsMenu(true);
 
@@ -73,6 +90,8 @@ public class PlayerDetailsFragment extends ListFragment implements
 		mListId = prefs.getString("listId", null);
 		mListIndex = prefs.getInt("listIndex", 0);
 		mListTop = prefs.getInt("listTop", 0);
+
+		mLoader = new ImageLoader(getActivity());
 
 		setListAdapter(new EventModelAdapter(getActivity(),
 				R.layout.item_player_event, mEvents));
@@ -147,14 +166,45 @@ public class PlayerDetailsFragment extends ListFragment implements
 		});
 		retryButton.setOnTouchListener(l);
 
+		View facebookLink = v.findViewById(R.id.facebook_link);
+		View facebookProfile = v.findViewById(R.id.facebook_profile);
+		View facebookClose = v.findViewById(R.id.facebook_close);
+
+		if (mPlayer.getFacebookId() == null
+				|| mPlayer.getFacebookId().equals("")) {
+			facebookProfile.setVisibility(View.GONE);
+		} else {
+			facebookLink.setVisibility(View.GONE);
+		}
+
+		facebookLink.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				startActivityForResult(new Intent(getActivity(),
+						SelectFacebookProfileActivity.class),
+						SELECT_FACEBOOK_PROFILE_REQUEST);
+			}
+		});
+
+		facebookProfile.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onProfileClicked();
+			}
+		});
+
+		facebookClose.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onProfileUnlinked();
+			}
+		});
+
 		v.setOnTouchListener(l);
 		return v;
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-
 	}
 
 	@Override
@@ -162,6 +212,8 @@ public class PlayerDetailsFragment extends ListFragment implements
 		super.onResume();
 
 		fetchDetails(false);
+
+		onProfileLinked(mPlayer.getFacebookId(), false);
 
 		if (mPlayer.getProvider().equals(mListProvider)
 				&& mPlayer.getId().equals(mListId))
@@ -221,6 +273,110 @@ public class PlayerDetailsFragment extends ListFragment implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+		case SELECT_FACEBOOK_PROFILE_REQUEST:
+			if (resultCode == Activity.RESULT_OK) {
+				FriendModel profile = data.getParcelableExtra("profile");
+				onProfileLinked(profile.getId(), profile.getName(), true);
+			}
+			break;
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
+		}
+	}
+
+	private void onProfileLinked(String id, boolean newLink) {
+		if (id == null || id.equals("") || id.equals(mPlayer.getFacebookId()))
+			return;
+
+		onProfileLinked(id, null, newLink);
+	}
+
+	private void onProfileLinked(String id, String name, boolean newLink) {
+		if (newLink) {
+			mPlayer.setFacebookId(id);
+			// TODO set link on cache and server
+		}
+
+		View facebookLink = getView().findViewById(R.id.facebook_link);
+		View facebookProfile = getView().findViewById(R.id.facebook_profile);
+
+		facebookLink.setVisibility(View.GONE);
+		facebookProfile.setVisibility(View.VISIBLE);
+
+		ImageView picture = (ImageView) facebookProfile
+				.findViewById(R.id.image);
+		final TextView nameView = (TextView) facebookProfile
+				.findViewById(R.id.name);
+
+		mLoader.DisplayImage(FacebookUtils.getFacebookPictureUrl(id),
+				getActivity(), picture);
+		if (name == null) {
+			nameView.setText("Loading...");
+			AsyncFacebookRunner runner = new AsyncFacebookRunner(app.facebook);
+			runner.request(id, new RequestListener() {
+
+				@Override
+				public void onMalformedURLException(MalformedURLException e,
+						Object state) {
+				}
+
+				@Override
+				public void onIOException(IOException e, Object state) {
+				}
+
+				@Override
+				public void onFileNotFoundException(FileNotFoundException e,
+						Object state) {
+				}
+
+				@Override
+				public void onFacebookError(FacebookError e, Object state) {
+				}
+
+				@Override
+				public void onComplete(final String response, Object state) {
+					getActivity().runOnUiThread(new Runnable() {
+
+						@Override
+						public void run() {
+							try {
+								JSONObject profile = new JSONObject(response);
+
+								nameView.setText(profile.getString("name"));
+							} catch (Exception ex) {
+							}
+						}
+					});
+				}
+			});
+		} else {
+			nameView.setText(name);
+		}
+	}
+
+	private void onProfileUnlinked() {
+		mPlayer.setFacebookId(null);
+		// TODO set link on cache and server
+
+		View facebookLink = getView().findViewById(R.id.facebook_link);
+		View facebookProfile = getView().findViewById(R.id.facebook_profile);
+
+		facebookLink.setVisibility(View.VISIBLE);
+		facebookProfile.setVisibility(View.GONE);
+	}
+
+	private void onProfileClicked() {
+		Intent intent = new Intent(Intent.ACTION_VIEW,
+				Uri.parse(FacebookUtils.INTENT_URL_PROFILE
+						+ mPlayer.getFacebookId()));
+
+		startActivity(intent);
 	}
 
 	private void updateCurrentNavigation() {

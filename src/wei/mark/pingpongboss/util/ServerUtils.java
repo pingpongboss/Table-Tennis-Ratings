@@ -200,7 +200,8 @@ public class ServerUtils {
 		}
 	}
 
-	public ArrayList<FriendModel> friends(String facebookId, String accessToken) {
+	public ArrayList<FriendModel> friends(String facebookId,
+			String accessToken, boolean linkedFriends) {
 		ArrayList<FriendModel> friends;
 
 		// if (!fresh) {
@@ -213,9 +214,11 @@ public class ServerUtils {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=friends&id=%s&query=%s",
-							URLEncoder.encode(facebookId, "UTF-8"),
-							URLEncoder.encode(accessToken, "UTF-8"));
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=friends&id=%s&query=%s&linked=%s",
+							URLEncoder.encode(facebookId, "UTF-8"), URLEncoder
+									.encode(accessToken, "UTF-8"), URLEncoder
+									.encode(String.valueOf(linkedFriends),
+											"UTF-8"));
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
 

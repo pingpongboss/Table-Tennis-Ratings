@@ -1,7 +1,7 @@
 package wei.mark.pingpongboss.activity;
 
-import wei.mark.pingpongboss.PingPongBoss;
-import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.Pingpongboss;
+import wei.mark.pingpongboss.Pingpongboss.Navigation;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.fragment.PlayerListFragment;
 import wei.mark.pingpongboss.misc.model.Refreshable;
@@ -12,12 +12,12 @@ import android.support.v4.app.FragmentActivity;
 
 public class DualPlayerListActivity extends FragmentActivity implements
 		Refreshable {
-	PingPongBoss app;
+	Pingpongboss app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (PingPongBoss) getApplication();
+		app = (Pingpongboss) getApplication();
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			finish();

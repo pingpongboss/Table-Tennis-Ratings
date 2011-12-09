@@ -1,63 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	style="@style/RootLayout" android:orientation="vertical">
+    style="@style/RootLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-	<RelativeLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:padding="5dp">
-		<include layout="@layout/action_bar" android:id="@+id/action_bar"
-			android:layout_height="wrap_content" android:layout_width="wrap_content"
-			android:layout_centerHorizontal="true"></include>
-		<Button android:layout_width="wrap_content"
-			android:layout_toRightOf="@+id/action_bar" android:layout_height="wrap_content"
-			android:id="@+id/favorite" android:background="@android:color/transparent"></Button>
-		<ImageView android:id="@+id/badge" android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:layout_toLeftOf="@+id/action_bar"></ImageView>
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/name"
-			android:text="name" android:layout_alignParentLeft="true"
-			android:layout_below="@+id/action_bar" android:layout_toLeftOf="@+id/rating"
-			style="@style/NameDetailsText"></TextView>
-		<TextView android:layout_height="wrap_content"
-			android:layout_width="wrap_content" android:text="rating" android:id="@+id/rating"
-			android:layout_alignParentRight="true" android:layout_alignBottom="@+id/name"
-			style="@style/RatingDetailsText"></TextView>
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/id"
-			android:text="#id" android:layout_alignParentRight="true"
-			android:layout_above="@+id/rating" style="@style/IdDetailsText"></TextView>
-		<TextView android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:layout_alignParentRight="true"
-			android:layout_below="@+id/rating" android:id="@+id/from"
-			android:text="from" style="@style/FromDetailsText"></TextView>
-	</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp" >
 
-	<FrameLayout
-	    android:id="@+id/facebook_layout"
-	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content" >
+        <include
+            android:id="@+id/action_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            layout="@layout/action_bar" >
+        </include>
 
-		<Button
-		    android:id="@+id/facebook_link"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_gravity="center_horizontal"
-		    android:background="@drawable/facebook_link" />
+        <Button
+            android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/action_bar"
+            android:background="@android:color/transparent" >
+        </Button>
 
-	</FrameLayout>
+        <ImageView
+            android:id="@+id/badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/action_bar" >
+        </ImageView>
 
-	<ListView android:layout_width="fill_parent" android:id="@android:id/list"
-		android:layout_height="0px" style="@style/ListView" android:layout_weight="1">
-	    <!-- Preview: listitem=@layout/item_player_event -->
-	</ListView>
-	<LinearLayout android:id="@android:id/empty"
-		android:layout_gravity="center" android:layout_width="wrap_content"
-		android:layout_height="wrap_content" android:gravity="center"
-		android:orientation="vertical">
-		<ProgressBar android:layout_width="wrap_content"
-			android:layout_height="wrap_content" android:id="@+id/progress"></ProgressBar>
-		<TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/empty_text" android:text="@string/fetching_details"></TextView>
-		<Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/retry" style="@style/Button" android:visibility="gone" android:text="@string/retry"></Button>
-	</LinearLayout>
+        <TextView
+            android:id="@+id/name"
+            style="@style/NameDetailsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/action_bar"
+            android:layout_toLeftOf="@+id/rating"
+            android:text="name" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/rating"
+            style="@style/RatingDetailsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/name"
+            android:layout_alignParentRight="true"
+            android:text="rating" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/id"
+            style="@style/IdDetailsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rating"
+            android:layout_alignParentRight="true"
+            android:text="#id" >
+        </TextView>
+
+        <TextView
+            android:id="@+id/from"
+            style="@style/FromDetailsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/rating"
+            android:text="from" >
+        </TextView>
+
+        <FrameLayout
+            android:id="@+id/facebook_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/name"
+            android:layout_marginRight="20dp"
+            android:layout_toLeftOf="@id/from" >
+
+            <ImageView
+                android:id="@+id/facebook_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/facebook_link" />
+
+            <LinearLayout
+                android:id="@+id/facebook_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/facebook_background" >
+
+                    <include
+                        android:id="@+id/item_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/item_player_friends" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/facebook_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/facebook_close" >
+
+                </FrameLayout>
+
+            </LinearLayout>
+        </FrameLayout>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@android:id/list"
+        style="@style/ListView"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1" >
+
+        <!-- Preview: listitem=@layout/item_player_event -->
+    </ListView>
+
+    <LinearLayout
+        android:id="@android:id/empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+        </ProgressBar>
+
+        <TextView
+            android:id="@+id/empty_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fetching_details" >
+        </TextView>
+
+        <Button
+            android:id="@+id/retry"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/retry"
+            android:visibility="gone" >
+        </Button>
+    </LinearLayout>
 
 </LinearLayout>

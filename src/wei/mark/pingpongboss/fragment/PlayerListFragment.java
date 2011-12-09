@@ -2,8 +2,8 @@ package wei.mark.pingpongboss.fragment;
 
 import java.util.ArrayList;
 
-import wei.mark.pingpongboss.PingPongBoss;
-import wei.mark.pingpongboss.PingPongBoss.Navigation;
+import wei.mark.pingpongboss.Pingpongboss;
+import wei.mark.pingpongboss.Pingpongboss.Navigation;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.activity.PlayerDetailsActivity;
 import wei.mark.pingpongboss.misc.adapter.PlayerModelAdapter;
@@ -35,7 +35,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class PlayerListFragment extends ListFragment implements SearchCallback {
-	PingPongBoss app;
+	Pingpongboss app;
 	ArrayList<PlayerModel> mPlayers;
 
 	String mProvider, mQuery, mListQuery;
@@ -69,7 +69,7 @@ public class PlayerListFragment extends ListFragment implements SearchCallback {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		app = (PingPongBoss) getActivity().getApplication();
+		app = (Pingpongboss) getActivity().getApplication();
 
 		setHasOptionsMenu(true);
 

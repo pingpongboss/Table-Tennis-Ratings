@@ -12,15 +12,6 @@ import android.os.Parcelable;
 
 //@Cached
 public class PlayerModel implements Parcelable {
-	public static final Parcelable.Creator<PlayerModel> CREATOR = new Parcelable.Creator<PlayerModel>() {
-		public PlayerModel createFromParcel(Parcel in) {
-			return new PlayerModel(in);
-		}
-
-		public PlayerModel[] newArray(int size) {
-			return new PlayerModel[size];
-		}
-	};
 
 	// @Id
 	Long key;
@@ -52,48 +43,6 @@ public class PlayerModel implements Parcelable {
 	String playerId;
 
 	public PlayerModel() {
-	}
-
-	@Override
-	public int describeContents() {
-		return 0;
-	}
-
-	@Override
-	public void writeToParcel(Parcel out, int flags) {
-		out.writeLong(key);
-		out.writeString(provider);
-		out.writeString(id);
-		out.writeString(lastName);
-		out.writeString(firstName);
-		out.writeString(facebookId);
-		out.writeString(rating);
-		out.writeStringArray(clubs);
-		out.writeString(state);
-		out.writeString(country);
-		out.writeString(lastPlayed);
-		out.writeString(expires);
-		out.writeSerializable(refreshed);
-		out.writeStringList(searchHistory);
-		out.writeString(playerId);
-	}
-
-	private PlayerModel(Parcel in) {
-		key = in.readLong();
-		provider = in.readString();
-		id = in.readString();
-		lastName = in.readString();
-		firstName = in.readString();
-		facebookId = in.readString();
-		rating = in.readString();
-		clubs = in.createStringArray();
-		state = in.readString();
-		country = in.readString();
-		lastPlayed = in.readString();
-		expires = in.readString();
-		refreshed = (Date) in.readSerializable();
-		searchHistory = in.createStringArrayList();
-		playerId = in.readString();
 	}
 
 	@Override
@@ -302,5 +251,57 @@ public class PlayerModel implements Parcelable {
 
 	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
+	}
+
+	public static final Parcelable.Creator<PlayerModel> CREATOR = new Parcelable.Creator<PlayerModel>() {
+		public PlayerModel createFromParcel(Parcel in) {
+			return new PlayerModel(in);
+		}
+
+		public PlayerModel[] newArray(int size) {
+			return new PlayerModel[size];
+		}
+	};
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel out, int flags) {
+		out.writeLong(key);
+		out.writeString(provider);
+		out.writeString(id);
+		out.writeString(lastName);
+		out.writeString(firstName);
+		out.writeString(facebookId);
+		out.writeString(rating);
+		out.writeStringArray(clubs);
+		out.writeString(state);
+		out.writeString(country);
+		out.writeString(lastPlayed);
+		out.writeString(expires);
+		out.writeSerializable(refreshed);
+		out.writeStringList(searchHistory);
+		out.writeString(playerId);
+	}
+
+	private PlayerModel(Parcel in) {
+		key = in.readLong();
+		provider = in.readString();
+		id = in.readString();
+		lastName = in.readString();
+		firstName = in.readString();
+		facebookId = in.readString();
+		rating = in.readString();
+		clubs = in.createStringArray();
+		state = in.readString();
+		country = in.readString();
+		lastPlayed = in.readString();
+		expires = in.readString();
+		refreshed = (Date) in.readSerializable();
+		searchHistory = in.createStringArrayList();
+		playerId = in.readString();
 	}
 }

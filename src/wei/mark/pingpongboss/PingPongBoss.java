@@ -1,21 +1,36 @@
 package wei.mark.pingpongboss;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import wei.mark.pingpongboss.misc.model.PlayerModel;
 import wei.mark.pingpongboss.misc.task.DetailsTask;
 import wei.mark.pingpongboss.misc.task.FriendsTask;
 import wei.mark.pingpongboss.misc.task.SearchTask;
 import wei.mark.pingpongboss.util.FileUtils;
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.android.AsyncFacebookRunner;
+import com.facebook.android.AsyncFacebookRunner.RequestListener;
+import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
+import com.facebook.android.Facebook.DialogListener;
+import com.facebook.android.FacebookError;
 
-public class PingPongBoss extends Application {
+public class Pingpongboss extends Application {
 	public Facebook facebook;
 	public String facebookId;
 
@@ -51,6 +66,101 @@ public class PingPongBoss extends Application {
 
 	public String getDeviceId() {
 		return FileUtils.id(this);
+	}
+
+	public void login(final Activity activity, boolean cachedOnly,
+			final Runnable onCompleteRunnable) {
+		SharedPreferences facebookPrefs = activity.getSharedPreferences(
+				"facebook", Context.MODE_PRIVATE);
+		String access_token = facebookPrefs.getString("access_token", null);
+		long expires = facebookPrefs.getLong("access_expires", 0);
+		facebookId = facebookPrefs.getString("facebookId", null);
+		if (access_token != null) {
+			facebook.setAccessToken(access_token);
+		}
+		if (expires != 0) {
+			facebook.setAccessExpires(expires);
+		}
+
+		/*
+		 * Only call authorize if the access_token has expired.
+		 */
+		if (facebook.isSessionValid() && facebookId != null) {
+			activity.runOnUiThread(onCompleteRunnable);
+			return;
+		}
+
+		// cached login failed
+		if (cachedOnly)
+			return;
+
+		// login online
+		facebook.authorize(activity, new String[] {}, new DialogListener() {
+			@Override
+			public void onComplete(Bundle values) {
+				new AsyncFacebookRunner(facebook).request("me",
+						new RequestListener() {
+
+							@Override
+							public void onMalformedURLException(
+									MalformedURLException e, Object state) {
+							}
+
+							@Override
+							public void onIOException(IOException e,
+									Object state) {
+							}
+
+							@Override
+							public void onFileNotFoundException(
+									FileNotFoundException e, Object state) {
+							}
+
+							@Override
+							public void onFacebookError(FacebookError e,
+									Object state) {
+							}
+
+							@Override
+							public void onComplete(final String response,
+									Object state) {
+								JSONObject me;
+								try {
+									me = new JSONObject(response);
+
+									facebookId = me.getString("id");
+								} catch (JSONException e1) {
+									e1.printStackTrace();
+								}
+
+								SharedPreferences facebookPrefs = getSharedPreferences(
+										"facebook", Context.MODE_PRIVATE);
+								SharedPreferences.Editor editor = facebookPrefs
+										.edit();
+								editor.putString("access_token",
+										facebook.getAccessToken());
+								editor.putLong("access_expires",
+										facebook.getAccessExpires());
+								editor.putString("facebookId", facebookId);
+								editor.commit();
+
+								activity.runOnUiThread(onCompleteRunnable);
+							}
+						});
+			}
+
+			@Override
+			public void onFacebookError(FacebookError error) {
+			}
+
+			@Override
+			public void onError(DialogError e) {
+			}
+
+			@Override
+			public void onCancel() {
+			}
+		});
 	}
 
 	public static Toast getToast(Context context, int imageResourceId,

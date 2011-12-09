@@ -5,7 +5,7 @@ import java.util.List;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.misc.lazylist.ImageLoader;
 import wei.mark.pingpongboss.misc.model.FriendModel;
-import wei.mark.pingpongboss.util.Constants;
+import wei.mark.pingpongboss.util.FacebookUtils;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -53,15 +53,12 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 		// fill in the Views
 		FriendModel friend = friends.get(position);
 		if (friend != null) {
-			loader.DisplayImage(getFacebookPictureUrl(friend.getId()),
+			loader.DisplayImage(
+					FacebookUtils.getFacebookPictureUrl(friend.getId()),
 					activity, holder.image);
 			holder.name.setText(friend.getName());
 		}
 		return convertView;
-	}
-
-	private String getFacebookPictureUrl(String id) {
-		return Constants.GRAPH_PATH_BASE + id + "/picture?type=square";
 	}
 
 	@Override
