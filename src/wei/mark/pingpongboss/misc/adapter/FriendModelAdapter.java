@@ -1,6 +1,6 @@
 package wei.mark.pingpongboss.misc.adapter;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.misc.lazylist.ImageLoader;
@@ -12,11 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
-	List<FriendModel> friends;
+	ArrayList<FriendModel> friends;
+	ArrayList<FriendModel> filteredFriends;
 
 	Activity activity;
 	LayoutInflater inflater;
@@ -25,9 +27,10 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	ViewHolder holder;
 
 	public FriendModelAdapter(Activity activity, int textViewResourceId,
-			List<FriendModel> objects) {
+			ArrayList<FriendModel> objects) {
 		super(activity, textViewResourceId, objects);
 		friends = objects;
+		filteredFriends = friends;
 
 		this.activity = activity;
 		inflater = (LayoutInflater) getContext().getSystemService(
@@ -51,7 +54,7 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 		}
 
 		// fill in the Views
-		FriendModel friend = friends.get(position);
+		FriendModel friend = filteredFriends.get(position);
 		if (friend != null) {
 			loader.DisplayImage(
 					FacebookUtils.getFacebookPictureUrl(friend.getId()),
@@ -62,12 +65,52 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	}
 
 	@Override
+	public int getCount() {
+		return filteredFriends.size();
+	}
+
+	@Override
 	public int getViewTypeCount() {
 		return 1;
 	}
 
+	@Override
+	public Filter getFilter() {
+		return new Filter() {
+
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void publishResults(CharSequence constraint,
+					FilterResults results) {
+				filteredFriends = (ArrayList<FriendModel>) results.values;
+				notifyDataSetChanged();
+			}
+
+			@Override
+			protected FilterResults performFiltering(CharSequence constraint) {
+				constraint = constraint.toString().toLowerCase();
+
+				ArrayList<FriendModel> list = new ArrayList<FriendModel>();
+				for (FriendModel friendModel : friends) {
+					if (friendModel.getName().toLowerCase()
+							.contains(constraint))
+						list.add(friendModel);
+				}
+
+				FilterResults results = new FilterResults();
+				results.values = list;
+				results.count = list.size();
+				return results;
+			}
+		};
+	}
+
 	public ImageLoader getLoader() {
 		return loader;
+	}
+
+	public FriendModel getFriendModel(int position) {
+		return filteredFriends.get(position);
 	}
 
 	static class ViewHolder {

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" android:layout_margin="10dp">
 
     <TextView
         android:id="@+id/textView1"
@@ -12,10 +12,23 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <EditText
+        android:id="@+id/search"
+        style="@style/EditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </EditText>
+
     <ListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:fastScrollEnabled="true" >
+
         <!-- Preview: listitem=@layout/item_player_friends -->
     </ListView>
 
@@ -24,11 +37,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_gravity="center"/>
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" android:layout_gravity="center">
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading your Facebook friends" />
+        </LinearLayout>
     </FrameLayout>
 
 </LinearLayout>

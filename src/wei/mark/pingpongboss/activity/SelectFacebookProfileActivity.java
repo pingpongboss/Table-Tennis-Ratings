@@ -11,8 +11,11 @@ import wei.mark.pingpongboss.misc.task.FriendsTask.FriendsCallback;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 public class SelectFacebookProfileActivity extends ListActivity implements
@@ -27,6 +30,25 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 		setContentView(R.layout.activity_select_facebook_profile);
 
 		app = (Pingpongboss) getApplication();
+
+		EditText search = (EditText) findViewById(R.id.search);
+		search.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				((FriendModelAdapter) getListAdapter()).getFilter().filter(s);
+			}
+		});
 
 		mFriends = new ArrayList<FriendModel>();
 
@@ -106,7 +128,8 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		FriendModel profile = mFriends.get(position);
+		FriendModel profile = ((FriendModelAdapter) getListAdapter())
+				.getFriendModel(position);
 		Intent data = new Intent();
 		data.putExtra("profile", profile);
 		setResult(RESULT_OK, data);
