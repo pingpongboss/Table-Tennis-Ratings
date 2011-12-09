@@ -60,15 +60,20 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 	protected void onResume() {
 		super.onResume();
 
-		Runnable runnable = new Runnable() {
+		app.login(this, false, new Runnable() {
 
 			@Override
 			public void run() {
 				retrieveFriends();
 			}
-		};
+		}, new Runnable() {
 
-		app.login(this, false, runnable);
+			@Override
+			public void run() {
+				setResult(RESULT_CANCELED);
+				finish();
+			}
+		});
 	}
 
 	@Override

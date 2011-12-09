@@ -5,12 +5,12 @@
 		android:layout_height="wrap_content" android:layout_width="fill_parent"></include>
 	<LinearLayout android:layout_width="fill_parent"
 		android:layout_height="wrap_content" android:orientation="horizontal"
-		android:id="@+id/searchLinearLayout">
+		android:id="@+id/searchLinearLayout" android:layout_margin="10dp">
 		<EditText style="@style/EditText.Left.Search" android:hint="Last, First"
 			android:id="@+id/searchEditText"></EditText>
 		<ImageButton android:id="@+id/searchButton" style="@style/Button.Right.Search"></ImageButton>
 	</LinearLayout>
-	<ListView style="@style/ListView" android:id="@id/android:list" android:layout_height="wrap_content" android:layout_width="fill_parent">
+	<ListView style="@style/ListView" android:id="@id/android:list" android:layout_height="wrap_content" android:layout_width="fill_parent" android:layout_margin="10dp">
 	    <!-- Preview: listitem=@layout/item_player_friends -->
 	</ListView>
 	<FrameLayout style="@style/EmptyListLayout">

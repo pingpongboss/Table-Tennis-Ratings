@@ -69,7 +69,7 @@ public class Pingpongboss extends Application {
 	}
 
 	public void login(final Activity activity, boolean cachedOnly,
-			final Runnable onCompleteRunnable) {
+			final Runnable onCompleteRunnable, final Runnable onFailRunnable) {
 		SharedPreferences facebookPrefs = activity.getSharedPreferences(
 				"facebook", Context.MODE_PRIVATE);
 		String access_token = facebookPrefs.getString("access_token", null);
@@ -91,8 +91,10 @@ public class Pingpongboss extends Application {
 		}
 
 		// cached login failed
-		if (cachedOnly)
+		if (cachedOnly) {
+			activity.runOnUiThread(onFailRunnable);
 			return;
+		}
 
 		// login online
 		facebook.authorize(activity, new String[] {}, new DialogListener() {
@@ -104,21 +106,25 @@ public class Pingpongboss extends Application {
 							@Override
 							public void onMalformedURLException(
 									MalformedURLException e, Object state) {
+								activity.runOnUiThread(onFailRunnable);
 							}
 
 							@Override
 							public void onIOException(IOException e,
 									Object state) {
+								activity.runOnUiThread(onFailRunnable);
 							}
 
 							@Override
 							public void onFileNotFoundException(
 									FileNotFoundException e, Object state) {
+								activity.runOnUiThread(onFailRunnable);
 							}
 
 							@Override
 							public void onFacebookError(FacebookError e,
 									Object state) {
+								activity.runOnUiThread(onFailRunnable);
 							}
 
 							@Override
@@ -151,14 +157,17 @@ public class Pingpongboss extends Application {
 
 			@Override
 			public void onFacebookError(FacebookError error) {
+				activity.runOnUiThread(onFailRunnable);
 			}
 
 			@Override
 			public void onError(DialogError e) {
+				activity.runOnUiThread(onFailRunnable);
 			}
 
 			@Override
 			public void onCancel() {
+				activity.runOnUiThread(onFailRunnable);
 			}
 		});
 	}

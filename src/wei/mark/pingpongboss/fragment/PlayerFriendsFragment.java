@@ -81,6 +81,12 @@ public class PlayerFriendsFragment extends ListFragment implements
 					public void run() {
 						retrieveFriends();
 					}
+				}, new Runnable() {
+
+					@Override
+					public void run() {
+						fail(null);
+					}
 				});
 			}
 		});
@@ -264,6 +270,12 @@ public class PlayerFriendsFragment extends ListFragment implements
 			@Override
 			public void run() {
 				retrieveFriends();
+			}
+		}, new Runnable() {
+
+			@Override
+			public void run() {
+				fail(null);
 			}
 		});
 	}
