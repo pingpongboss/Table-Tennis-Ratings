@@ -181,9 +181,10 @@ public class PlayerDetailsFragment extends ListFragment implements
 
 			@Override
 			public void onClick(View v) {
-				startActivityForResult(new Intent(getActivity(),
-						SelectFacebookProfileActivity.class),
-						SELECT_FACEBOOK_PROFILE_REQUEST);
+				Intent intent = new Intent(getActivity(),
+						SelectFacebookProfileActivity.class);
+				intent.putExtra("player", mPlayer);
+				startActivityForResult(intent, SELECT_FACEBOOK_PROFILE_REQUEST);
 			}
 		});
 

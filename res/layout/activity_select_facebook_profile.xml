@@ -8,7 +8,15 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose a Facebook profile"
+        android:text="Choose a Facebook profile for"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="name"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -18,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Search"
-        android:inputType="textPersonName" >
+        android:inputType="textPersonName" android:layout_marginTop="10dp">
 
         <requestFocus />
     </EditText>

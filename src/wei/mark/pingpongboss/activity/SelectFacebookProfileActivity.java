@@ -6,6 +6,7 @@ import wei.mark.pingpongboss.Pingpongboss;
 import wei.mark.pingpongboss.R;
 import wei.mark.pingpongboss.misc.adapter.FriendModelAdapter;
 import wei.mark.pingpongboss.misc.model.FriendModel;
+import wei.mark.pingpongboss.misc.model.PlayerModel;
 import wei.mark.pingpongboss.misc.task.FriendsTask;
 import wei.mark.pingpongboss.misc.task.FriendsTask.FriendsCallback;
 import android.app.ListActivity;
@@ -17,11 +18,14 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class SelectFacebookProfileActivity extends ListActivity implements
 		FriendsCallback {
-	ArrayList<FriendModel> mFriends;
 	Pingpongboss app;
+
+	PlayerModel mPlayer;
+	ArrayList<FriendModel> mFriends;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +34,8 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 		setContentView(R.layout.activity_select_facebook_profile);
 
 		app = (Pingpongboss) getApplication();
+
+		mPlayer = getIntent().getParcelableExtra("player");
 
 		EditText search = (EditText) findViewById(R.id.search);
 		search.addTextChangedListener(new TextWatcher() {
@@ -49,6 +55,9 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 				((FriendModelAdapter) getListAdapter()).getFilter().filter(s);
 			}
 		});
+
+		TextView name = (TextView) findViewById(R.id.name);
+		name.setText(mPlayer.getName());
 
 		mFriends = new ArrayList<FriendModel>();
 
