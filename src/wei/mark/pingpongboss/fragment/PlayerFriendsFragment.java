@@ -18,12 +18,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.facebook.android.AsyncFacebookRunner;
@@ -174,6 +179,25 @@ public class PlayerFriendsFragment extends ListFragment implements
 			}
 		});
 
+		EditText search = (EditText) view.findViewById(R.id.search);
+		search.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+				((FriendModelAdapter) getListAdapter()).getFilter().filter(s);
+			}
+		});
+
 		return view;
 	}
 
@@ -224,6 +248,14 @@ public class PlayerFriendsFragment extends ListFragment implements
 		((FriendModelAdapter) getListAdapter()).getLoader().clearCache();
 
 		super.onLowMemory();
+	}
+
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		FriendModel profile = ((FriendModelAdapter) getListAdapter())
+				.getFriendModel(position);
+		// TODO
+		Log.d(TAG, String.format("Profile selected: %s", profile.getName()));
 	}
 
 	private void pageSelected() {

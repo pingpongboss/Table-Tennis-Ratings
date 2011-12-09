@@ -49,6 +49,15 @@
             android:visibility="gone" />
     </LinearLayout>
 
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName" style="@style/EditText" android:hint="Search">
+
+        <requestFocus />
+    </EditText>
+
     <ListView
         android:id="@id/android:list"
         style="@style/ListView"
