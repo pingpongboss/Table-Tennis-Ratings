@@ -137,6 +137,8 @@ public class Pingpongboss extends Application {
 									facebookId = me.getString("id");
 								} catch (JSONException e1) {
 									e1.printStackTrace();
+									activity.runOnUiThread(onFailRunnable);
+									return;
 								}
 
 								SharedPreferences facebookPrefs = getSharedPreferences(

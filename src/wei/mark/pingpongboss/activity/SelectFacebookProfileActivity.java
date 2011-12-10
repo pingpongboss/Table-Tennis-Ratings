@@ -63,11 +63,6 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 
 		setListAdapter(new FriendModelAdapter(this,
 				R.layout.item_player_friends, mFriends));
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
 
 		app.login(this, false, new Runnable() {
 
@@ -83,6 +78,11 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 				finish();
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 
 	@Override
