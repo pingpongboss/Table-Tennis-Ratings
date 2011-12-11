@@ -205,6 +205,7 @@ public class PlayerFriendsFragment extends ListFragment implements
 				((FriendModelAdapter) getListAdapter()).getFilter().filter(s);
 			}
 		});
+		search.setVisibility(View.GONE);
 
 		return view;
 	}
