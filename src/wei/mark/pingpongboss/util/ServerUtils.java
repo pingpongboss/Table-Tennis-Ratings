@@ -261,8 +261,8 @@ public class ServerUtils {
 		}
 	}
 
-	public static void link(String id, String playerId, String facebookId,
-			String editor) {
+	public static void link(String id, String playerId, String provider,
+			String facebookId, String editor) {
 
 		// if (!fresh) {
 		// // first check cache
@@ -274,9 +274,10 @@ public class ServerUtils {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server/link?id=%s&%playerId=%s&facebookId=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server/link?id=%s&%playerId=%s%provider=%s&facebookId=%s",
 							URLEncoder.encode(id, "UTF-8"),
 							URLEncoder.encode(playerId, "UTF-8"),
+							URLEncoder.encode(provider, "UTF-8"),
 							URLEncoder.encode(facebookId, "UTF-8"));
 			if (testing)
 				uri = "http://" + testingVersion + "." + uri.substring(7);

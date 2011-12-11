@@ -225,10 +225,10 @@ public class PlayerFriendsFragment extends ListFragment implements
 
 					if (!usattId.equals(""))
 						new LinkTask().execute(app.getDeviceId(), usattId,
-								app.facebookId, app.facebookId);
+								"usatt", app.facebookId, app.facebookId);
 
 					if (!rcId.equals(""))
-						new LinkTask().execute(app.getDeviceId(), rcId,
+						new LinkTask().execute(app.getDeviceId(), rcId, "rc",
 								app.facebookId, app.facebookId);
 				}
 			}

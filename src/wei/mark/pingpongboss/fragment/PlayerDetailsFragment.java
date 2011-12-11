@@ -306,7 +306,7 @@ public class PlayerDetailsFragment extends ListFragment implements
 			mPlayer.setFacebookId(facebookId);
 
 			new LinkTask().execute(app.getDeviceId(), mPlayer.getId(),
-					facebookId, app.facebookId);
+					mPlayer.getProvider(), facebookId, app.facebookId);
 		}
 
 		View facebookLink = getView().findViewById(R.id.facebook_link);
