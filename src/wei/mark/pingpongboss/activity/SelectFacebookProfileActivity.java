@@ -81,11 +81,6 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 	}
 
 	@Override
-	protected void onResume() {
-		super.onResume();
-	}
-
-	@Override
 	public void onPause() {
 		super.onPause();
 
