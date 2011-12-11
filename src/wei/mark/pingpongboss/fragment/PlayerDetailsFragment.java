@@ -18,6 +18,7 @@ import wei.mark.pingpongboss.misc.model.FriendModel;
 import wei.mark.pingpongboss.misc.model.PlayerModel;
 import wei.mark.pingpongboss.misc.task.DetailsTask;
 import wei.mark.pingpongboss.misc.task.DetailsTask.DetailsCallback;
+import wei.mark.pingpongboss.misc.task.LinkTask;
 import wei.mark.pingpongboss.util.FacebookUtils;
 import wei.mark.pingpongboss.util.ParserUtils;
 import android.app.Activity;
@@ -291,17 +292,21 @@ public class PlayerDetailsFragment extends ListFragment implements
 		}
 	}
 
-	private void onProfileLinked(String id, boolean newLink) {
-		if (id == null || id.equals("") || id.equals(mPlayer.getFacebookId()))
+	private void onProfileLinked(String facebookId, boolean newLink) {
+		if (facebookId == null || facebookId.equals("")
+				|| facebookId.equals(mPlayer.getFacebookId()))
 			return;
 
-		onProfileLinked(id, null, newLink);
+		onProfileLinked(facebookId, null, newLink);
 	}
 
-	private void onProfileLinked(String id, String name, boolean newLink) {
+	private void onProfileLinked(String facebookId, String facebookName,
+			boolean newLink) {
 		if (newLink) {
-			mPlayer.setFacebookId(id);
-			// TODO set link on cache and server
+			mPlayer.setFacebookId(facebookId);
+
+			new LinkTask().execute(app.getDeviceId(), mPlayer.getId(),
+					facebookId, app.facebookId);
 		}
 
 		View facebookLink = getView().findViewById(R.id.facebook_link);
@@ -315,12 +320,12 @@ public class PlayerDetailsFragment extends ListFragment implements
 		final TextView nameView = (TextView) facebookProfile
 				.findViewById(R.id.name);
 
-		mLoader.DisplayImage(FacebookUtils.getFacebookPictureUrl(id),
+		mLoader.DisplayImage(FacebookUtils.getFacebookPictureUrl(facebookId),
 				getActivity(), picture);
-		if (name == null) {
+		if (facebookName == null) {
 			nameView.setText("Loading...");
 			AsyncFacebookRunner runner = new AsyncFacebookRunner(app.facebook);
-			runner.request(id, new RequestListener() {
+			runner.request(facebookId, new RequestListener() {
 
 				@Override
 				public void onMalformedURLException(MalformedURLException e,
@@ -357,7 +362,7 @@ public class PlayerDetailsFragment extends ListFragment implements
 				}
 			});
 		} else {
-			nameView.setText(name);
+			nameView.setText(facebookName);
 		}
 	}
 

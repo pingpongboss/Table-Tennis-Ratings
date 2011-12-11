@@ -12,6 +12,7 @@ import wei.mark.pingpongboss.misc.adapter.FriendModelAdapter;
 import wei.mark.pingpongboss.misc.adapter.MainFragmentAdapter;
 import wei.mark.pingpongboss.misc.model.FriendModel;
 import wei.mark.pingpongboss.misc.task.FriendsTask;
+import wei.mark.pingpongboss.misc.task.LinkTask;
 import wei.mark.pingpongboss.misc.task.FriendsTask.FriendsCallback;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -206,6 +207,32 @@ public class PlayerFriendsFragment extends ListFragment implements
 			}
 		});
 		search.setVisibility(View.GONE);
+
+		View tutorial = view.findViewById(R.id.facebook_tutorial);
+		tutorial.setVisibility(View.GONE);
+
+		View link = view.findViewById(R.id.link);
+		link.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (app.facebookId != null && !app.facebookId.equals("")) {
+					EditText usatt = (EditText) getView().findViewById(
+							R.id.usatt);
+					EditText rc = (EditText) getView().findViewById(R.id.rc);
+					String usattId = usatt.getText().toString();
+					String rcId = rc.getText().toString();
+
+					if (!usattId.equals(""))
+						new LinkTask().execute(app.getDeviceId(), usattId,
+								app.facebookId, app.facebookId);
+
+					if (!rcId.equals(""))
+						new LinkTask().execute(app.getDeviceId(), rcId,
+								app.facebookId, app.facebookId);
+				}
+			}
+		});
 
 		return view;
 	}

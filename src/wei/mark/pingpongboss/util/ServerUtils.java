@@ -24,7 +24,7 @@ public class ServerUtils {
 	private static final int MAX_CACHE = 100;
 
 	private static boolean testing = true;
-	private static int testingVersion = 27;
+	private static int testingVersion = 28;
 
 	static {
 		mPlayersCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(
@@ -255,6 +255,58 @@ public class ServerUtils {
 		} catch (Exception ex) {
 			// return mPlayersCache.get(getCacheKey(provider, query));
 			return null;
+		} finally {
+			if (connection != null)
+				connection.disconnect();
+		}
+	}
+
+	public static void link(String id, String playerId, String facebookId,
+			String editor) {
+
+		// if (!fresh) {
+		// // first check cache
+		// players = mPlayersCache.get(getCacheKey(provider, query));
+		// if (players != null)
+		// return players;
+		// }
+
+		HttpURLConnection connection = null;
+		try {
+			String uri = String
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server/link?id=%s&%playerId=%s&facebookId=%s",
+							URLEncoder.encode(id, "UTF-8"),
+							URLEncoder.encode(playerId, "UTF-8"),
+							URLEncoder.encode(facebookId, "UTF-8"));
+			if (testing)
+				uri = "http://" + testingVersion + "." + uri.substring(7);
+			URL url = new URL(uri);
+			connection = (HttpURLConnection) url.openConnection();
+
+			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+
+			String params = String.format("editor=%s",
+					URLEncoder.encode(editor, "UTF-8"));
+
+			PrintWriter out = new PrintWriter(connection.getOutputStream());
+			out.print(params);
+			out.close();
+
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					connection.getInputStream(), "UTF-8"));
+
+			StringBuilder sb = new StringBuilder();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				sb.append(line);
+			}
+			rd.close();
+
+			return;
+		} catch (Exception ex) {
+			// return mPlayersCache.get(getCacheKey(provider, query));
+			return;
 		} finally {
 			if (connection != null)
 				connection.disconnect();
