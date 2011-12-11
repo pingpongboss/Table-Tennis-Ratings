@@ -38,6 +38,7 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 		mPlayer = getIntent().getParcelableExtra("player");
 
 		EditText search = (EditText) findViewById(R.id.search);
+		search.setVisibility(View.GONE);
 		search.addTextChangedListener(new TextWatcher() {
 
 			@Override
@@ -125,6 +126,9 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 
 		mFriends.clear();
 		if (friends != null && !friends.isEmpty()) {
+			View search = findViewById(R.id.search);
+			search.setVisibility(View.VISIBLE);
+
 			mFriends.addAll(friends);
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
 		} else

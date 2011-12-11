@@ -74,6 +74,8 @@ public class PlayerFriendsFragment extends ListFragment implements
 				progress.setVisibility(View.VISIBLE);
 				View login = (View) getView().findViewById(R.id.login);
 				login.setVisibility(View.GONE);
+				View search = getView().findViewById(R.id.search);
+				search.setVisibility(View.GONE);
 
 				app.login(getActivity(), false, new Runnable() {
 
@@ -265,6 +267,9 @@ public class PlayerFriendsFragment extends ListFragment implements
 	}
 
 	private void pageSelected() {
+		View search = getView().findViewById(R.id.search);
+		search.setVisibility(View.GONE);
+
 		app.login(getActivity(), true, new Runnable() {
 
 			@Override
@@ -328,6 +333,9 @@ public class PlayerFriendsFragment extends ListFragment implements
 				// user did not link his profile
 				tutorial.setVisibility(View.VISIBLE);
 			} else {
+				View search = getView().findViewById(R.id.search);
+				search.setVisibility(View.VISIBLE);
+
 				mFriends.addAll(friends);
 			}
 			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
