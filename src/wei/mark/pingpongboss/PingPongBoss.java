@@ -12,6 +12,7 @@ import wei.mark.pingpongboss.misc.task.DetailsTask;
 import wei.mark.pingpongboss.misc.task.FriendsTask;
 import wei.mark.pingpongboss.misc.task.SearchTask;
 import wei.mark.pingpongboss.util.FileUtils;
+import wei.mark.pingpongboss.util.ServerUtils;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -62,6 +63,13 @@ public class Pingpongboss extends Application {
 		CurrentMainViewPagerPosition = 0;
 
 		CurrentPlayerModel = null;
+	}
+
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+
+		ServerUtils.onLowMemory();
 	}
 
 	public String getDeviceId() {

@@ -107,12 +107,12 @@ public class SelectFacebookProfileActivity extends ListActivity implements
 
 		if (app.friendsTask == null) {
 			app.friendsTask = new FriendsTask(this);
-			app.friendsTask.execute(app.facebookId,
+			app.friendsTask.execute(app.getDeviceId(), app.facebookId,
 					app.facebook.getAccessToken(), "false");
 		} else if (!app.facebookId.equals(app.friendsTask.getFacebookId())) {
 			app.friendsTask.cancel(true);
 			app.friendsTask = new FriendsTask(this);
-			app.friendsTask.execute(app.facebookId,
+			app.friendsTask.execute(app.getDeviceId(), app.facebookId,
 					app.facebook.getAccessToken(), "false");
 		}
 

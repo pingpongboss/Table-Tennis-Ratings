@@ -25,9 +25,7 @@ public class DetailsTask extends AsyncTask<Object, Void, ArrayList<EventModel>> 
 			player = (PlayerModel) params[1];
 			fresh = (Boolean) params[2];
 
-			ServerUtils parser = ServerUtils.getParser();
-
-			return parser.details(id, player, fresh);
+			return ServerUtils.details(id, player, fresh);
 		} catch (Exception ex) {
 			return null;
 		}

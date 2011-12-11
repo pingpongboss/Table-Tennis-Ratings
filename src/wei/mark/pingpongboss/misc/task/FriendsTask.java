@@ -9,7 +9,7 @@ import android.os.AsyncTask;
 public class FriendsTask extends
 		AsyncTask<String, Void, ArrayList<FriendModel>> {
 	FriendsCallback callback;
-	String facebookId, accessToken;
+	String id, facebookId, accessToken;
 	boolean linkedFriends;
 	boolean hasSavedResult;
 	ArrayList<FriendModel> savedResult;
@@ -21,11 +21,12 @@ public class FriendsTask extends
 	@Override
 	protected ArrayList<FriendModel> doInBackground(String... params) {
 		try {
-			facebookId = params[0];
-			accessToken = params[1];
-			linkedFriends = Boolean.parseBoolean(params[2]);
+			id = params[0];
+			facebookId = params[1];
+			accessToken = params[2];
+			linkedFriends = Boolean.parseBoolean(params[3]);
 
-			return ServerUtils.getParser().friends(facebookId, accessToken,
+			return ServerUtils.friends(id, facebookId, accessToken,
 					linkedFriends);
 		} catch (Exception ex) {
 			return null;

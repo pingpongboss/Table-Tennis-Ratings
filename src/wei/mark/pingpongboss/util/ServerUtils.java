@@ -2,6 +2,7 @@ package wei.mark.pingpongboss.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -18,13 +19,14 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class ServerUtils {
-	private static ServerUtils mParser;
+	private static Map<String, ArrayList<PlayerModel>> mPlayersCache;
+	private static Map<String, ArrayList<EventModel>> mEventsCache;
+	private static final int MAX_CACHE = 100;
 
-	private Map<String, ArrayList<PlayerModel>> mPlayersCache;
-	private Map<String, ArrayList<EventModel>> mEventsCache;
-	public static final int MAX_CACHE = 100;
+	private static boolean testing = true;
+	private static int testingVersion = 27;
 
-	private ServerUtils() {
+	static {
 		mPlayersCache = new LinkedHashMap<String, ArrayList<PlayerModel>>(
 				MAX_CACHE, .75f, true) {
 			private static final long serialVersionUID = 1L;
@@ -47,13 +49,7 @@ public class ServerUtils {
 		};
 	}
 
-	public static synchronized ServerUtils getParser() {
-		if (mParser == null)
-			mParser = new ServerUtils();
-		return mParser;
-	}
-
-	public String ping(boolean sync) {
+	public static String ping(boolean sync) {
 		if (sync) {
 			return ping();
 		} else {
@@ -69,10 +65,12 @@ public class ServerUtils {
 	}
 
 	// synchronous ping
-	private String ping() {
+	private static String ping() {
 		HttpURLConnection connection = null;
 		try {
 			String uri = "http://ttratings.appspot.com/statuscheck_server";
+			if (testing)
+				uri = "http://" + testingVersion + "." + uri.substring(7);
 
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
@@ -93,12 +91,12 @@ public class ServerUtils {
 		}
 	}
 
-	public ArrayList<PlayerModel> search(String id, String provider,
+	public static ArrayList<PlayerModel> search(String id, String provider,
 			String query) {
 		return search(id, provider, query, false);
 	}
 
-	public ArrayList<PlayerModel> search(String id, String provider,
+	public static ArrayList<PlayerModel> search(String id, String provider,
 			String query, boolean fresh) {
 		ArrayList<PlayerModel> players;
 
@@ -112,11 +110,13 @@ public class ServerUtils {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=search&id=%s&provider=%s&query=%s&fresh=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server/search?id=%s&provider=%s&query=%s&fresh=%s",
 							URLEncoder.encode(id, "UTF-8"),
 							URLEncoder.encode(provider, "UTF-8"),
 							URLEncoder.encode(query, "UTF-8"),
 							URLEncoder.encode(String.valueOf(fresh), "UTF-8"));
+			if (testing)
+				uri = "http://" + testingVersion + "." + uri.substring(7);
 
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
@@ -148,7 +148,7 @@ public class ServerUtils {
 	}
 
 	// asynchronously alert server for now. Later, fetch player details
-	public ArrayList<EventModel> details(String id, PlayerModel player,
+	public static ArrayList<EventModel> details(String id, PlayerModel player,
 			boolean fresh) {
 		ArrayList<EventModel> events;
 
@@ -163,11 +163,13 @@ public class ServerUtils {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=details&id=%s&provider=%s&query=%s&fresh=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server/details?id=%s&provider=%s&query=%s&fresh=%s",
 							URLEncoder.encode(id, "UTF-8"),
 							URLEncoder.encode(player.getProvider(), "UTF-8"),
 							URLEncoder.encode(player.getId(), "UTF-8"),
 							URLEncoder.encode(String.valueOf(fresh), "UTF-8"));
+			if (testing)
+				uri = "http://" + testingVersion + "." + uri.substring(7);
 
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
@@ -200,7 +202,7 @@ public class ServerUtils {
 		}
 	}
 
-	public ArrayList<FriendModel> friends(String facebookId,
+	public static ArrayList<FriendModel> friends(String id, String facebookId,
 			String accessToken, boolean linkedFriends) {
 		ArrayList<FriendModel> friends;
 
@@ -214,13 +216,24 @@ public class ServerUtils {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server?action=friends&id=%s&query=%s&linked=%s",
-							URLEncoder.encode(facebookId, "UTF-8"), URLEncoder
-									.encode(accessToken, "UTF-8"), URLEncoder
-									.encode(String.valueOf(linkedFriends),
-											"UTF-8"));
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server/friends?id=%s&facebookId=%s&linked=%s",
+							URLEncoder.encode(id, "UTF-8"), URLEncoder.encode(
+									facebookId, "UTF-8"), URLEncoder.encode(
+									String.valueOf(linkedFriends), "UTF-8"));
+			if (testing)
+				uri = "http://" + testingVersion + "." + uri.substring(7);
 			URL url = new URL(uri);
 			connection = (HttpURLConnection) url.openConnection();
+
+			connection.setDoOutput(true);
+			connection.setRequestMethod("POST");
+
+			String params = String.format("accessToken=%s",
+					URLEncoder.encode(accessToken, "UTF-8"));
+
+			PrintWriter out = new PrintWriter(connection.getOutputStream());
+			out.print(params);
+			out.close();
 
 			BufferedReader rd = new BufferedReader(new InputStreamReader(
 					connection.getInputStream(), "UTF-8"));
@@ -248,7 +261,7 @@ public class ServerUtils {
 		}
 	}
 
-	private String getCacheKey(String provider, String query) {
+	private static String getCacheKey(String provider, String query) {
 		try {
 			return provider + query;
 		} catch (Exception ex) {
@@ -256,9 +269,8 @@ public class ServerUtils {
 		}
 	}
 
-	public void onLowMemory() {
+	public static void onLowMemory() {
 		mPlayersCache.clear();
 		mPlayersCache = null;
-		mParser = null;
 	}
 }

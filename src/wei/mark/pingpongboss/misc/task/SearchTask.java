@@ -25,9 +25,7 @@ public class SearchTask extends AsyncTask<String, Void, ArrayList<PlayerModel>> 
 			user = Boolean.parseBoolean(params[3]);
 			fresh = Boolean.parseBoolean(params[4]);
 
-			ServerUtils parser = ServerUtils.getParser();
-
-			return parser.search(id, provider, query, fresh);
+			return ServerUtils.search(id, provider, query, fresh);
 		} catch (Exception ex) {
 			return null;
 		}
