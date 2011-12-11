@@ -70,6 +70,8 @@ public class StringAdapter extends ArrayAdapter<String> {
 
 	@Override
 	public int getCount() {
+		if (filteredStrings == null)
+			return 0;
 		return filteredStrings.size();
 	}
 

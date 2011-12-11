@@ -274,7 +274,7 @@ public class ServerUtils {
 		HttpURLConnection connection = null;
 		try {
 			String uri = String
-					.format("http://ttratings.appspot.com/table_tennis_ratings_server/link?id=%s&%playerId=%s%provider=%s&facebookId=%s",
+					.format("http://ttratings.appspot.com/table_tennis_ratings_server/link?id=%s&playerId=%s&provider=%s&facebookId=%s",
 							URLEncoder.encode(id, "UTF-8"),
 							URLEncoder.encode(playerId, "UTF-8"),
 							URLEncoder.encode(provider, "UTF-8"),

@@ -241,6 +241,8 @@ public class PlayerFriendsFragment extends ListFragment implements
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 
+		getListView().setVisibility(View.VISIBLE);
+
 		try {
 			((MainViewPagerActivity) getActivity()).getViewPagerListener()
 					.addOnPageChangeListener(new OnPageChangeListener() {

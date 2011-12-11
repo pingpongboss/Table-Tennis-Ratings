@@ -17,6 +17,11 @@ public class FriendModel implements Parcelable {
 		name = in.readString();
 	}
 
+	@Override
+	public String toString() {
+		return String.format("%s(%s)", name, id);
+	}
+
 	public String getId() {
 		return id;
 	}
