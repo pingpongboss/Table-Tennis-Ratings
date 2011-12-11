@@ -19,6 +19,7 @@ import android.widget.TextView;
 public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 	ArrayList<FriendModel> friends;
 	ArrayList<FriendModel> filteredFriends;
+	String lastConstraint = "";
 
 	Activity activity;
 	LayoutInflater inflater;
@@ -54,7 +55,11 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 		}
 
 		// fill in the Views
-		FriendModel friend = filteredFriends.get(position);
+		FriendModel friend = null;
+		if (filteredFriends == null)
+			friend = friends.get(position);
+		else
+			friend = filteredFriends.get(position);
 		if (friend != null) {
 			loader.DisplayImage(
 					FacebookUtils.getFacebookPictureUrl(friend.getId()),
@@ -66,6 +71,8 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 
 	@Override
 	public int getCount() {
+		if (filteredFriends == null)
+			return friends.size();
 		return filteredFriends.size();
 	}
 
@@ -82,12 +89,18 @@ public class FriendModelAdapter extends ArrayAdapter<FriendModel> {
 			@Override
 			protected void publishResults(CharSequence constraint,
 					FilterResults results) {
-				filteredFriends = (ArrayList<FriendModel>) results.values;
+				//hack to work around a bug with the results coming back empty
+				if (constraint.equals("") && results.count == 0
+						&& !friends.isEmpty())
+					filteredFriends = friends;
+				else
+					filteredFriends = (ArrayList<FriendModel>) results.values;
 				notifyDataSetChanged();
 			}
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
+				lastConstraint = constraint.toString();
 				constraint = constraint.toString().toLowerCase();
 
 				ArrayList<FriendModel> list = new ArrayList<FriendModel>();

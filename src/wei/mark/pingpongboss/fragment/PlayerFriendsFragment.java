@@ -12,8 +12,8 @@ import wei.mark.pingpongboss.misc.adapter.FriendModelAdapter;
 import wei.mark.pingpongboss.misc.adapter.MainFragmentAdapter;
 import wei.mark.pingpongboss.misc.model.FriendModel;
 import wei.mark.pingpongboss.misc.task.FriendsTask;
-import wei.mark.pingpongboss.misc.task.LinkTask;
 import wei.mark.pingpongboss.misc.task.FriendsTask.FriendsCallback;
+import wei.mark.pingpongboss.misc.task.LinkTask;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -218,8 +218,8 @@ public class PlayerFriendsFragment extends ListFragment implements
 			public void onClick(View v) {
 				if (app.facebookId != null && !app.facebookId.equals("")) {
 					EditText usatt = (EditText) getView().findViewById(
-							R.id.usatt);
-					EditText rc = (EditText) getView().findViewById(R.id.rc);
+							R.id.usatt_id);
+					EditText rc = (EditText) getView().findViewById(R.id.rc_id);
 					String usattId = usatt.getText().toString();
 					String rcId = rc.getText().toString();
 
@@ -240,8 +240,6 @@ public class PlayerFriendsFragment extends ListFragment implements
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
-		getListView().setVisibility(View.VISIBLE);
 
 		try {
 			((MainViewPagerActivity) getActivity()).getViewPagerListener()
@@ -356,6 +354,7 @@ public class PlayerFriendsFragment extends ListFragment implements
 		ImageView arrow = (ImageView) getView().findViewById(R.id.arrow);
 		arrow.setVisibility(View.VISIBLE);
 		View tutorial = getView().findViewById(R.id.facebook_tutorial);
+		EditText search = (EditText) getView().findViewById(R.id.search);
 
 		mFriends.clear();
 		if (friends != null) {
@@ -363,12 +362,14 @@ public class PlayerFriendsFragment extends ListFragment implements
 				// user did not link his profile
 				tutorial.setVisibility(View.VISIBLE);
 			} else {
-				View search = getView().findViewById(R.id.search);
 				search.setVisibility(View.VISIBLE);
 
 				mFriends.addAll(friends);
 			}
-			((ArrayAdapter<?>) getListAdapter()).notifyDataSetChanged();
+
+			((FriendModelAdapter) getListAdapter()).getFilter().filter(
+					search.getText());
+			// ((FriendModelAdapter) getListAdapter()).notifyDataSetChanged();
 		} else
 			fail("friendsCompleted friends is null");
 	}

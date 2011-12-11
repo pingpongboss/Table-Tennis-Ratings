@@ -70,7 +70,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp" android:visibility="gone">
+        android:layout_marginRight="10dp">
 
         <!-- Preview: listitem=@layout/item_player_friends -->
     </ListView>
@@ -80,7 +80,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_margin="10dp"
-        android:layout_weight="1">
+        android:layout_weight="1" android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/LinearLayout1"
@@ -118,7 +118,7 @@
                     android:layout_height="wrap_content" >
 
                     <EditText
-                        android:id="@+id/usatt"
+                        android:id="@+id/usatt_id"
                         style="@style/EditText"
                         android:layout_width="0px"
                         android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                         android:hint="USATT" />
 
                     <EditText
-                        android:id="@+id/rc"
+                        android:id="@+id/rc_id"
                         style="@style/EditText"
                         android:layout_width="0px"
                         android:layout_height="wrap_content"
